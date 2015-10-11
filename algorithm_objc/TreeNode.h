@@ -8,8 +8,27 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TreeNode : NSObject
+@interface TreeNode : NSObject <NSCopying>
 
+@property (nonatomic) TreeNode *left;
+@property (nonatomic) TreeNode *right;
+@property (nonatomic) id value;
+
+typedef enum {
+    PreOrder = 1,
+    InOrder,
+    PostOrder
+} Order;
+
+- (id)initWithValue:(id)value;
+- (void)insertNode:(TreeNode *)node;
+- (void)insertValue:(id)value;
+- (void)depthFirstTraverse:(TreeNode *)node order:(Order)order;
+- (void)breadthFirstTraverse:(TreeNode *)node;
+- (void)breadthFirstTraverseByLevel:(TreeNode *)node;
+- (NSUInteger)depthOfTree:(TreeNode *)node;
+
+// For unit test demo only
 - (NSInteger)addNums:(NSInteger)num1 num2:(NSInteger)num2;
 
 @end
