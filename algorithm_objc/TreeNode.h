@@ -27,6 +27,8 @@ typedef enum {
 - (void)breadthFirstTraverse:(TreeNode *)node;
 - (void)breadthFirstTraverseByLevel:(TreeNode *)node;
 - (NSUInteger)depthOfTree:(TreeNode *)node;
+// lca, binary tree ad binary search tree
+// is BST balanced?
 
 // For unit test demo only
 - (NSInteger)addNums:(NSInteger)num1 num2:(NSInteger)num2;

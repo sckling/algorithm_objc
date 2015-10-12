@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E42659D71BCA39D3001B49C4 /* NSArray+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */; settings = {ASSET_TAGS = (); }; };
+		E42659DA1BCB1C67001B49C4 /* Array.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659D91BCB1C67001B49C4 /* Array.m */; settings = {ASSET_TAGS = (); }; };
+		E42659DD1BCB389D001B49C4 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659DC1BCB389D001B49C4 /* Tree.m */; settings = {ASSET_TAGS = (); }; };
 		E4A908A41BCA1B3A00FA77B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A908A31BCA1B3A00FA77B6 /* main.m */; };
 		E4A908B11BCA1BDE00FA77B6 /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A908B01BCA1BDE00FA77B6 /* Tests.m */; };
 		E4A908B81BCA1CD500FA77B6 /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A908B71BCA1CD500FA77B6 /* TreeNode.m */; settings = {ASSET_TAGS = (); }; };
@@ -27,6 +30,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E42659D51BCA39D3001B49C4 /* NSArray+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Methods.h"; sourceTree = "<group>"; };
+		E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Methods.m"; sourceTree = "<group>"; };
+		E42659D81BCB1C67001B49C4 /* Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Array.h; sourceTree = "<group>"; };
+		E42659D91BCB1C67001B49C4 /* Array.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Array.m; sourceTree = "<group>"; };
+		E42659DB1BCB389D001B49C4 /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
+		E42659DC1BCB389D001B49C4 /* Tree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tree.m; sourceTree = "<group>"; };
 		E4A908A01BCA1B3A00FA77B6 /* algorithm_objc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = algorithm_objc; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4A908A31BCA1B3A00FA77B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E4A908AE1BCA1BDE00FA77B6 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +86,12 @@
 			isa = PBXGroup;
 			children = (
 				E4A908A31BCA1B3A00FA77B6 /* main.m */,
+				E42659D81BCB1C67001B49C4 /* Array.h */,
+				E42659D91BCB1C67001B49C4 /* Array.m */,
+				E42659D51BCA39D3001B49C4 /* NSArray+Methods.h */,
+				E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */,
+				E42659DB1BCB389D001B49C4 /* Tree.h */,
+				E42659DC1BCB389D001B49C4 /* Tree.m */,
 				E4A908B61BCA1CD500FA77B6 /* TreeNode.h */,
 				E4A908B71BCA1CD500FA77B6 /* TreeNode.m */,
 			);
@@ -180,8 +195,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E42659DD1BCB389D001B49C4 /* Tree.m in Sources */,
 				E4A908A41BCA1B3A00FA77B6 /* main.m in Sources */,
+				E42659DA1BCB1C67001B49C4 /* Array.m in Sources */,
 				E4A908B81BCA1CD500FA77B6 /* TreeNode.m in Sources */,
+				E42659D71BCA39D3001B49C4 /* NSArray+Methods.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +348,7 @@
 				E4A908A91BCA1B3A00FA77B6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E4A908B31BCA1BDE00FA77B6 /* Build configuration list for PBXNativeTarget "Tests" */ = {
 			isa = XCConfigurationList;
@@ -338,6 +357,7 @@
 				E4A908B51BCA1BDE00FA77B6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,13 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TreeNode.h"
+#import "Array.h"
+#import "Tree.h"
+#import "NSArray+Methods.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        NSLog(@"Hello, World!");
-        TreeNode *node = [[TreeNode alloc] init];
-        NSLog(@"Addition: %ld", [node addNums:1 num2:2]);
+        Array *array = [[Array alloc] init];
+        [array setup];
+        
+        Tree *binarySearchTree = [[Tree alloc] init];
+        [binarySearchTree setup];
     }
     return 0;
 }
