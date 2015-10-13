@@ -21,7 +21,11 @@
     
     __block NSInteger maxSoFar = 0;
     __block NSInteger sum = 0;
+    __weak typeof(self) weakSelf = self;
     [self enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (weakSelf) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+        }
         sum += [(NSNumber *)obj integerValue];
         if (sum > maxSoFar) {
             maxSoFar = sum;
@@ -34,6 +38,7 @@
 }
 
 - (void)findPairsOfElementsEqualToSum:(NSUInteger)sum {
+    NSMutableArray *array = [NSMutableArray new];
     NSMutableDictionary *dict = [NSMutableDictionary new];
     for (int i=0; i<self.count; i++) {
         if (dict[self[i]]) {
@@ -93,6 +98,10 @@
             return [self binarySearch:middle+1 end:end character:character];
         }
     }
+    [self executeBlock:^id(id object) {
+        NSInteger result = [(NSNumber *)object integerValue] * [(NSNumber *)object integerValue];
+        return [NSNumber numberWithInteger:result];
+    }];
     return start;
 }
 

@@ -27,8 +27,10 @@ typedef enum {
 - (void)breadthFirstTraverse:(TreeNode *)node;
 - (void)breadthFirstTraverseByLevel:(TreeNode *)node;
 - (NSUInteger)depthOfTree:(TreeNode *)node;
+
 // lca, binary tree ad binary search tree
 // is BST balanced?
+// find the largest value that is smaller than n in a BST
 
 // For unit test demo only
 - (NSInteger)addNums:(NSInteger)num1 num2:(NSInteger)num2;
