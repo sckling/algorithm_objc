@@ -19,7 +19,7 @@ int main(int argc, const char * argv[]) {
         Tree *binarySearchTree = [[Tree alloc] init];
         [binarySearchTree setup];
         
-        //
+        // Testing
         // Extract most and least significant digit of a number: 1234
         // Implement lmu - least memory use
         // Fibonacci number - recursive, iterative, dynamic programming
