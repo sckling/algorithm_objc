@@ -30,6 +30,7 @@ typedef enum {
 
 // lca, binary tree ad binary search tree
 // is BST balanced?
+// find all the paths of a binary tree
 // find the largest value that is smaller than n in a BST
 
 // For unit test demo only
