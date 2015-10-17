@@ -24,7 +24,7 @@
     __weak typeof(self) weakSelf = self;
     [self enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (weakSelf) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
+            //__strong typeof(weakSelf) strongSelf = weakSelf;
         }
         sum += [(NSNumber *)obj integerValue];
         if (sum > maxSoFar) {
@@ -38,7 +38,6 @@
 }
 
 - (void)findPairsOfElementsEqualToSum:(NSUInteger)sum {
-    NSMutableArray *array = [NSMutableArray new];
     NSMutableDictionary *dict = [NSMutableDictionary new];
     for (int i=0; i<self.count; i++) {
         if (dict[self[i]]) {
