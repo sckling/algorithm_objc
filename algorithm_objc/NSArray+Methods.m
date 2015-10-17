@@ -64,22 +64,24 @@
     }
 }
 
-- (NSUInteger)binarySearch:(NSUInteger)start end:(NSUInteger)end number:(NSUInteger)number {
+- (NSInteger)binarySearch:(NSUInteger)start end:(NSUInteger)end number:(NSUInteger)number {
+    if (start > end) {
+        // key not found
+        return -1;
+    }
+    
     NSUInteger middle = (start+end) / 2;
     NSUInteger currentNumber = [self[middle] integerValue];
     
-    if (start < end) {
-        if (currentNumber == number) {
-            return middle;
-        }
-        else if (currentNumber > number) {
-            return [self binarySearch:start end:middle-1 number:number];
-        }
-        else if (currentNumber < number) {
-            return [self binarySearch:middle+1 end:end number:number];
-        }
+    if (currentNumber == number) {
+        return middle;
     }
-    return start;
+    if (currentNumber > number) {
+        return [self binarySearch:start end:middle-1 number:number];
+    }
+    else {
+        return [self binarySearch:middle+1 end:end number:number];
+    }
 }
 
 - (NSUInteger)binarySearch:(NSUInteger)start end:(NSUInteger)end character:(NSString *)character {

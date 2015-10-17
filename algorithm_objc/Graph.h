@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class EdgeNode;
+
 @interface Graph : NSObject
+
+@property (nonatomic, strong) NSMutableArray *edgeNodes;
+@property (nonatomic, strong) NSMutableArray *vertexDegree;
+@property (assign) NSUInteger vertices;
+@property (assign) NSUInteger edges;
+@property (assign, getter=isDirected) BOOL directed;
 
 @end

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E41BD1F772004F31AF /* EdgeNode.m */; settings = {ASSET_TAGS = (); }; };
+		19F696E81BD1F84D004F31AF /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E71BD1F84D004F31AF /* Graph.m */; settings = {ASSET_TAGS = (); }; };
 		E42659D71BCA39D3001B49C4 /* NSArray+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */; settings = {ASSET_TAGS = (); }; };
 		E42659DA1BCB1C67001B49C4 /* Array.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659D91BCB1C67001B49C4 /* Array.m */; settings = {ASSET_TAGS = (); }; };
 		E42659DD1BCB389D001B49C4 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659DC1BCB389D001B49C4 /* Tree.m */; settings = {ASSET_TAGS = (); }; };
@@ -30,6 +32,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		19F696E31BD1F772004F31AF /* EdgeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgeNode.h; sourceTree = "<group>"; };
+		19F696E41BD1F772004F31AF /* EdgeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeNode.m; sourceTree = "<group>"; };
+		19F696E61BD1F84D004F31AF /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
+		19F696E71BD1F84D004F31AF /* Graph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph.m; sourceTree = "<group>"; };
 		E42659D51BCA39D3001B49C4 /* NSArray+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Methods.h"; sourceTree = "<group>"; };
 		E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Methods.m"; sourceTree = "<group>"; };
 		E42659D81BCB1C67001B49C4 /* Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Array.h; sourceTree = "<group>"; };
@@ -64,6 +70,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		19F696E91BD1F856004F31AF /* Trees */ = {
+			isa = PBXGroup;
+			children = (
+				E42659DB1BCB389D001B49C4 /* Tree.h */,
+				E42659DC1BCB389D001B49C4 /* Tree.m */,
+				E4A908B61BCA1CD500FA77B6 /* TreeNode.h */,
+				E4A908B71BCA1CD500FA77B6 /* TreeNode.m */,
+			);
+			name = Trees;
+			sourceTree = "<group>";
+		};
+		19F696EA1BD1F862004F31AF /* Arrays */ = {
+			isa = PBXGroup;
+			children = (
+				E42659D81BCB1C67001B49C4 /* Array.h */,
+				E42659D91BCB1C67001B49C4 /* Array.m */,
+				E42659D51BCA39D3001B49C4 /* NSArray+Methods.h */,
+				E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */,
+			);
+			name = Arrays;
+			sourceTree = "<group>";
+		};
+		19F696EB1BD1F86E004F31AF /* Graphs */ = {
+			isa = PBXGroup;
+			children = (
+				19F696E31BD1F772004F31AF /* EdgeNode.h */,
+				19F696E41BD1F772004F31AF /* EdgeNode.m */,
+				19F696E61BD1F84D004F31AF /* Graph.h */,
+				19F696E71BD1F84D004F31AF /* Graph.m */,
+			);
+			name = Graphs;
+			sourceTree = "<group>";
+		};
 		E4A908971BCA1B3A00FA77B6 = {
 			isa = PBXGroup;
 			children = (
@@ -86,14 +125,9 @@
 			isa = PBXGroup;
 			children = (
 				E4A908A31BCA1B3A00FA77B6 /* main.m */,
-				E42659D81BCB1C67001B49C4 /* Array.h */,
-				E42659D91BCB1C67001B49C4 /* Array.m */,
-				E42659D51BCA39D3001B49C4 /* NSArray+Methods.h */,
-				E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */,
-				E42659DB1BCB389D001B49C4 /* Tree.h */,
-				E42659DC1BCB389D001B49C4 /* Tree.m */,
-				E4A908B61BCA1CD500FA77B6 /* TreeNode.h */,
-				E4A908B71BCA1CD500FA77B6 /* TreeNode.m */,
+				19F696EA1BD1F862004F31AF /* Arrays */,
+				19F696EB1BD1F86E004F31AF /* Graphs */,
+				19F696E91BD1F856004F31AF /* Trees */,
 			);
 			path = algorithm_objc;
 			sourceTree = "<group>";
@@ -199,6 +233,8 @@
 				E4A908A41BCA1B3A00FA77B6 /* main.m in Sources */,
 				E42659DA1BCB1C67001B49C4 /* Array.m in Sources */,
 				E4A908B81BCA1CD500FA77B6 /* TreeNode.m in Sources */,
+				19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */,
+				19F696E81BD1F84D004F31AF /* Graph.m in Sources */,
 				E42659D71BCA39D3001B49C4 /* NSArray+Methods.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

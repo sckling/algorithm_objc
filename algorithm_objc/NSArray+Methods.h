@@ -14,7 +14,7 @@
 
 - (NSUInteger)maximumSubArraySum;
 - (void)findPairsOfElementsEqualToSum:(NSUInteger)sum;
-- (NSUInteger)binarySearch:(NSUInteger)start end:(NSUInteger)end number:(NSUInteger)number;
+- (NSInteger)binarySearch:(NSUInteger)start end:(NSUInteger)end number:(NSUInteger)number;
 - (NSUInteger)binarySearch:(NSUInteger)start end:(NSUInteger)end character:(NSString *)character;
 - (NSDictionary *)executeBlock:(id (^)(id object))myBlock;
 

@@ -10,4 +10,8 @@
 
 @interface EdgeNode : NSObject
 
+@property (assign) NSUInteger dest;
+@property (assign) NSInteger weight;
+@property (nonatomic, strong) EdgeNode *next;
+
 @end

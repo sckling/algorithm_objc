@@ -10,4 +10,15 @@
 
 @implementation Graph
 
+- (id)init {
+    self = [super init];
+    if (self != nil) {
+        _vertices = 0;
+        _edges = 0;
+        _directed = NO;
+        _edgeNodes = [NSMutableArray new];
+    }
+    return self;
+}
+
 @end
