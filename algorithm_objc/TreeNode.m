@@ -72,15 +72,15 @@
 - (void)depthFirstTraverse:(TreeNode *)node order:(Order)order {
     if (node) {
         if (order == PreOrder) {
-            NSLog(@"Pre-order: %@ ", node.value);
+            NSLog(@"Pre-order: %@", node.value);
         }
         [self depthFirstTraverse:node.left order:order];
         if (order == InOrder) {
-            NSLog(@"In-order: %@ ", node.value);
+            NSLog(@"In-order: %@", node.value);
         }
         [self depthFirstTraverse:node.right order:order];
         if (order == PostOrder) {
-            NSLog(@"Post-order: %@ ", node.value);
+            NSLog(@"Post-order: %@", node.value);
         }
     }
 }

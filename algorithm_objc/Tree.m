@@ -12,6 +12,14 @@
 @implementation Tree
 
 - (void)setup {
+    TreeNode *node = [[TreeNode alloc] initWithValue:@2];
+    TreeNode *left = [[TreeNode alloc] initWithValue:@1];
+    TreeNode *right = [[TreeNode alloc] initWithValue:@3];
+    node.left = left;
+    node.right = right;
+    //deep copy of object using NSCopying
+    node = [left copy];
+
     //   3
     //  2 6
     // Pre-order: 3, 2, 6. Finish left side first then right side
@@ -30,26 +38,17 @@
     //NSArray *array = @[@"j", @"f", @"a", @"d", @"h", @"k", @"z"];
     //NSArray *array = @[@"c", @"b", @"f"];
     NSArray *array = @[@20, @8, @4, @12, @10, @14, @22, @99];
-    TreeNode *node = [[TreeNode alloc] initWithValue:@2];
-    TreeNode *left = [[TreeNode alloc] initWithValue:@1];
-    TreeNode *right = [[TreeNode alloc] initWithValue:@3];
-    node.left = left;
-    node.right = right;
-    
     TreeNode *root = [self createBinarySearchTree:array];
-//    deep copy of object using NSCopying
-//    root = [node copy];
-    
-//    NSLog(@"Depth of tree: %ld", [root depthOfTree:root]);
+    NSLog(@"Depth of tree: %ld", [root depthOfTree:root]);
 //    [root breadthFirstTraverse:root];
     [root breadthFirstTraverseByLevel:root];
 //    [root depthFirstTraverse:root order:PreOrder];
-    [root depthFirstTraverse:root order:InOrder];
+//    [root depthFirstTraverse:root order:InOrder];
 //    [root depthFirstTraverse:root order:PostOrder];
 }
 
 - (TreeNode *)createBinarySearchTree:(NSArray *)nodes {
-    TreeNode *root;
+    TreeNode *root = nil;
     for (id value in nodes) {
         if (root == nil) {
             root = [[TreeNode alloc] initWithValue:value];

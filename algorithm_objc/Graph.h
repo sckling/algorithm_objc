@@ -8,14 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
-@class EdgeNode;
+#define maxVertices 100
 
 @interface Graph : NSObject
 
 @property (nonatomic, strong) NSMutableArray *edgeNodes;
 @property (nonatomic, strong) NSMutableArray *vertexDegree;
+@property (nonatomic, strong) NSMutableArray *discovered;
+@property (nonatomic, strong) NSMutableArray *processed;
+@property (nonatomic, strong) NSMutableArray *parent;
 @property (assign) NSUInteger vertices;
 @property (assign) NSUInteger edges;
 @property (assign, getter=isDirected) BOOL directed;
+
+- (id)initWithSize:(NSUInteger)size;
+- (void)printGraph;
+- (void)insertEdgeNode:(NSUInteger)source dest:(NSUInteger)dest directed:(BOOL)directed;
+- (void)breathFirstSearch:(NSUInteger)startVertex;
+- (void)findPath:(NSUInteger)start end:(NSUInteger)end;
 
 @end

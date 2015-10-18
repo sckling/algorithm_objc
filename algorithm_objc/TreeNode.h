@@ -10,9 +10,9 @@
 
 @interface TreeNode : NSObject <NSCopying>
 
-@property (nonatomic) TreeNode *left;
-@property (nonatomic) TreeNode *right;
-@property (nonatomic) id value;
+@property (nonatomic, strong) TreeNode *left;
+@property (nonatomic, strong) TreeNode *right;
+@property (nonatomic, strong) id value;
 
 typedef enum {
     PreOrder = 1,
@@ -27,11 +27,6 @@ typedef enum {
 - (void)breadthFirstTraverse:(TreeNode *)node;
 - (void)breadthFirstTraverseByLevel:(TreeNode *)node;
 - (NSUInteger)depthOfTree:(TreeNode *)node;
-
-// lca, binary tree ad binary search tree
-// is BST balanced?
-// find all the paths of a binary tree
-// find the largest value that is smaller than n in a BST
 
 // For unit test demo only
 - (NSInteger)addNums:(NSInteger)num1 num2:(NSInteger)num2;
