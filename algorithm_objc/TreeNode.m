@@ -145,6 +145,31 @@
     return right+1;
 }
 
+//        20
+//      /    \
+//     8     22
+//   /  \      \
+//  4    12    99
+//       / \
+//      10 14
+
+- (void)allPathsOfTree:(TreeNode *)node path:(NSArray *)path {
+    NSLog(@"node: %@", node.value);
+    if (node == nil) {
+        //NSLog(@"Path: %@", path);
+        return;
+    }
+    NSMutableArray *newPath = [NSMutableArray arrayWithArray:path];
+    [newPath addObject:node.value];
+    if ((node.left == nil) && (node.right == nil)) {
+        NSLog(@"Path: %@", newPath);
+    }
+    else {
+        [self allPathsOfTree:node.left path:newPath];
+        [self allPathsOfTree:node.right path:newPath];
+    }
+}
+
 // For unit test demo only
 - (NSInteger)addNums:(NSInteger)num1 num2:(NSInteger)num2 {
     return num1 + num2;

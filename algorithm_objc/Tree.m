@@ -42,6 +42,8 @@
     NSLog(@"Depth of tree: %ld", [root depthOfTree:root]);
 //    [root breadthFirstTraverse:root];
     [root breadthFirstTraverseByLevel:root];
+    NSMutableArray *path = [NSMutableArray arrayWithCapacity:array.count];
+    [root allPathsOfTree:root path:path];
 //    [root depthFirstTraverse:root order:PreOrder];
 //    [root depthFirstTraverse:root order:InOrder];
 //    [root depthFirstTraverse:root order:PostOrder];

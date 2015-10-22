@@ -17,32 +17,11 @@ int main(int argc, const char * argv[]) {
         //Array *array = [[Array alloc] init];
         //[array setup];
         
-        //Tree *binarySearchTree = [[Tree alloc] init];
-        //[binarySearchTree setup];
+        Tree *binarySearchTree = [[Tree alloc] init];
+        [binarySearchTree setup];
         
-//        Graph *graph = [[Graph alloc] initWithSize:5];
-//        [graph insertEdgeNode:0 dest:1 directed:NO];
-//        [graph insertEdgeNode:0 dest:4 directed:NO];
-//        [graph insertEdgeNode:1 dest:2 directed:NO];
-//        [graph insertEdgeNode:1 dest:3 directed:NO];
-//        [graph insertEdgeNode:1 dest:4 directed:NO];
-//        [graph insertEdgeNode:2 dest:3 directed:NO];
-//        [graph insertEdgeNode:3 dest:4 directed:NO];
-//        [graph printGraph];
-        
-        Graph *graph = [[Graph alloc] initWithSize:4];
-        [graph insertEdgeNode:0 dest:1 directed:YES];
-        [graph insertEdgeNode:0 dest:2 directed:YES];
-        [graph insertEdgeNode:1 dest:2 directed:YES];
-        [graph insertEdgeNode:2 dest:0 directed:YES];
-        [graph insertEdgeNode:2 dest:3 directed:YES];
-        [graph insertEdgeNode:3 dest:3 directed:YES];
-        graph.directed = YES;
-        [graph printGraph];
-        [graph breathFirstSearch:2];
-        [graph findPath:1 end:3];
-        [graph findPath:2 end:1];
-        
+        //Graph *graph = [[Graph alloc] initWithSize:9];
+        //[graph setup];
         
         // lca, binary tree ad binary search tree
         // is BST balanced?

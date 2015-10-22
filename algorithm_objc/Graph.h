@@ -17,13 +17,15 @@
 @property (nonatomic, strong) NSMutableArray *discovered;
 @property (nonatomic, strong) NSMutableArray *processed;
 @property (nonatomic, strong) NSMutableArray *parent;
+@property (nonatomic, strong) NSMutableArray *entryTime;
 @property (assign) NSUInteger vertices;
 @property (assign) NSUInteger edges;
 @property (assign, getter=isDirected) BOOL directed;
 
 - (id)initWithSize:(NSUInteger)size;
+- (void)setup;
 - (void)printGraph;
-- (void)insertEdgeNode:(NSUInteger)source dest:(NSUInteger)dest directed:(BOOL)directed;
+- (void)insertEdgeNode:(NSUInteger)source dest:(NSUInteger)dest weight:(NSInteger)weight directed:(BOOL)directed;
 - (void)breathFirstSearch:(NSUInteger)startVertex;
 - (void)findPath:(NSUInteger)start end:(NSUInteger)end;
 
