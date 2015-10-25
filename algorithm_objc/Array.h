@@ -11,7 +11,7 @@
 @interface Array : NSObject
 
 - (void)setup;
-- (void)executeBlock:(NSString * (^)(int, float))myBlock;
+- (void)executeBlock:(NSString * (^)(int a, float b))myBlock;
 @property (copy) NSString * (^myBlock)(int, float);
 
 @end

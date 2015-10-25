@@ -14,26 +14,31 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        //Array *array = [[Array alloc] init];
-        //[array setup];
+        Array *array = [[Array alloc] init];
+        [array executeBlock:^NSString *(int a, float b) {
+            float c = a + b;
+            return [NSString stringWithFormat:@"%lf", c];
+        }];
+        [array setup];
         
         Tree *binarySearchTree = [[Tree alloc] init];
-        [binarySearchTree setup];
+        //[binarySearchTree setup];
         
         //Graph *graph = [[Graph alloc] initWithSize:9];
         //[graph setup];
         
-        // lca, binary tree ad binary search tree
+        // done: lca, binary tree ad binary search tree
         // is BST balanced?
-        // find all the paths of a binary tree
-        // find the largest value that is smaller than n in a BST
-        // Print all the paths in a BST
+        // done: find all the paths of a binary tree
+        // done: find the largest value that is smaller than n in a BST
+        // done: reverse linked list
+
         // Determine if a number is a happy number
         // Extract most and least significant digit of a number: 1234
-        // Implement lmu - least memory use
+        // Implement LRU - Least Recently Used Memory
         // Fibonacci number - recursive, iterative, dynamic programming
         // string permutation
-        // reverse linked list
+
         // circular linked list
         // XOR X^X=0, 0^X=X, X^Y^X = Y, X^X^X=0
         // X&(X-1) clear least significant bit
