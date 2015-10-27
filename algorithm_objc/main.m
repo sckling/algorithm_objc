@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
         }];
         [array setup];
         
-        Tree *binarySearchTree = [[Tree alloc] init];
+        //Tree *binarySearchTree = [[Tree alloc] init];
         //[binarySearchTree setup];
         
         //Graph *graph = [[Graph alloc] initWithSize:9];

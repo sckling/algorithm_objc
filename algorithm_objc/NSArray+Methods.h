@@ -17,5 +17,6 @@
 - (NSInteger)binarySearch:(NSUInteger)start end:(NSUInteger)end number:(NSUInteger)number;
 - (NSUInteger)binarySearch:(NSUInteger)start end:(NSUInteger)end character:(NSString *)character;
 - (NSDictionary *)executeBlock:(id (^)(id object))myBlock;
+- (void)sortArrayZeros:(NSMutableArray *)array;
 
 @end

@@ -44,6 +44,9 @@
     
     NSArray *array4 = @[@"b", @"d", @"g", @"k"];
     NSLog(@"Binary search %@ found: %lu", @"b", (unsigned long)[array4 binarySearch:0 end:array4.count-1 character:@"z"]);
+    
+    NSArray *array5 = @[@3, @0, @-1, @4, @5, @0, @2, @0];
+    [array5 sortArrayZeros:[array5 mutableCopy]];
 }
 
 - (void)passArrayByReference:(NSArray **)array {

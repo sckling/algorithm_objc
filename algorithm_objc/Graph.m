@@ -136,6 +136,7 @@
     [self shortestPath:distance start:0 end:8];
 }
 
+// Print the shortest path from start to finish from the distance array in dijkstra
 - (void)shortestPath:(NSArray *)distance start:(NSUInteger)start end:(NSUInteger)end {
     [distance enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLog(@"Vertex: %ld Parent:%@ Distance: %@", idx, self.parent[idx], obj);

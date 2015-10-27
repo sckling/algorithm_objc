@@ -106,6 +106,23 @@
     return start;
 }
 
+- (void)sortArrayZeros:(NSMutableArray *)array {
+    // NSArray *array5 = @[@3, @0, @-1, @4, @5, @0, @2, @0];
+
+    __block NSUInteger end = array.count;
+    [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx >= end) {
+            *stop = YES;
+        }
+        if ([(NSNumber *)obj isEqualToNumber:@0]) {
+            [array removeObjectAtIndex:idx];
+            [array addObject:@0];
+            end--;
+        }
+    }];
+    NSLog(@"New array: %@", array);
+}
+
 - (NSDictionary *)executeBlock:(id (^)(id))myBlock {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:self.count];
     
