@@ -170,6 +170,34 @@
     }
 }
 
+- (void)deSerialize:(TreeNode **)node array:(NSMutableArray *)array {
+    if (array.count > 0) {
+        NSNumber *value = [array firstObject];
+        if ([value isEqualTo:@-1]) {
+            return;
+        }
+        *node = [[TreeNode alloc] initWithValue:value];
+//        *(node.left) = node;
+//        [self deSerialize:*(node.left) array:array];
+    }
+}
+
+- (TreeNode *)deSerialize1:(TreeNode *)node array:(NSMutableArray *)array {
+    //NSLog(@"node: %@ array: %@", node.value, array);
+    if (array.count > 0) {
+        NSNumber *value = [array firstObject];
+        [array removeObjectAtIndex:0];
+        if ([value isEqualTo:@-1]) {
+            return nil;
+        }
+        node = [[TreeNode alloc] initWithValue:value];
+        node.left = [self deSerialize1:node.left array:array];
+        node.right = [self deSerialize1:node.right array:array];
+        return node;
+    }
+    return nil;
+}
+
 // For unit test demo only
 - (NSInteger)addNums:(NSInteger)num1 num2:(NSInteger)num2 {
     return num1 + num2;

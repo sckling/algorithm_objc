@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Array : NSObject
+@interface Array : NSEnumerator
 
 - (void)setup;
 - (void)executeBlock:(NSString * (^)(int a, float b))myBlock;

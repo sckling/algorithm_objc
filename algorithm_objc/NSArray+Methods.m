@@ -56,6 +56,12 @@
     for (NSNumber *key in [dict allKeys]) {
         NSInteger pairValue = sum - [key integerValue];
         NSNumber *counterValue = [NSNumber numberWithInteger:pairValue];
+        
+        if ([counterValue compare:key] == NSOrderedAscending || NSOrderedSame) {
+
+        }
+        
+        
         if (dict[counterValue]) {
             NSLog(@"Found pairs: %@, Position: %@, Counter values: %@, Position: %@", key, dict[key], counterValue, dict[counterValue]);
             [dict removeObjectForKey:key];

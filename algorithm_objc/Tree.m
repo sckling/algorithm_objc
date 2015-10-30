@@ -22,9 +22,9 @@
 
     //   3
     //  2 6
-    // Pre-order: 3, 2, 6. Finish left side first then right side
-    // In-order: 2, 3, 6. Will sort all the node values from small to large
-    // Post-order: 2, 6, 3
+    // Pre-order: 3, 2, 6. Parent->Left->Right
+    // In-order: 2, 3, 6.  Left->Parent->Right. Sort all the node from small to large
+    // Post-order: 2, 6, 3 Left->Right->Parent
     //
     //        20
     //      /    \
@@ -47,6 +47,12 @@
 //    [root depthFirstTraverse:root order:PreOrder];
 //    [root depthFirstTraverse:root order:InOrder];
 //    [root depthFirstTraverse:root order:PostOrder];
+    
+    NSArray *serialized = @[@20, @8 ,@4 ,@-1 ,@-1 ,@12 ,@10 ,@-1 ,@-1 ,@14 ,@-1 ,@-1 ,@-1];
+    root = [[TreeNode alloc] init];
+    
+    TreeNode *binaryTree = [root deSerialize1:root array:[serialized mutableCopy]];
+    [binaryTree depthFirstTraverse:binaryTree order:InOrder];
 }
 
 - (TreeNode *)createBinarySearchTree:(NSArray *)nodes {

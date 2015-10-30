@@ -21,8 +21,12 @@ int main(int argc, const char * argv[]) {
         }];
         [array setup];
         
-        //Tree *binarySearchTree = [[Tree alloc] init];
-        //[binarySearchTree setup];
+        for (int i=0; i<10; i++) {
+            NSLog(@"Next: %@", [array nextObject]);
+        }
+        
+//        Tree *binarySearchTree = [[Tree alloc] init];
+//        [binarySearchTree setup];
         
         //Graph *graph = [[Graph alloc] initWithSize:9];
         //[graph setup];

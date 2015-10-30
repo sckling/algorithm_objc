@@ -9,7 +9,35 @@
 #import "Array.h"
 #import "NSArray+Methods.h"
 
+@interface Array()
+@property (assign) NSUInteger enumeratorIdx;
+@property (nonatomic, strong) NSMutableArray *enumeratorArray;
+@end
+
+
 @implementation Array
+
+// NSEnumerator
+- (id)nextObject {
+    if (self.enumeratorIdx < self.enumeratorArray.count) {
+        id obj = self.enumeratorArray[self.enumeratorIdx];
+        if ([obj isKindOfClass:[NSString class]]) {
+            self.enumeratorIdx++;
+            return obj;
+        }
+        return [self popFirstElement:obj];
+    }
+    return nil;
+}
+
+- (id)popFirstElement:(NSArray *)array {
+    id obj = array[0];
+    if ([obj isKindOfClass:[NSString class]]) {
+        self.enumeratorIdx++;
+        return obj;
+    }
+    return [self popFirstElement:obj];
+}
 
 - (void)executeBlock:(NSString *(^)(int, float))myBlock {
     int a = 10;
@@ -26,6 +54,17 @@
     // execute new block
     result = newBlock(a, b);
     NSLog(@"Result: %@", result);
+    
+    NSURL *url = [NSURL URLWithString:@"http://www.google.com"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLResponse *response = [NSURLResponse new];
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    NSLog(@"data: %@\nresponse: %@", data, response);
+    //NSLog(@"Data: %@, Response: %@, Error: %@", data1,  response, error);
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        NSLog(@"Response: %@, Data: %@, Error: %@", response, data, connectionError);
+    }];
 }
 
 - (void)setup {
@@ -47,6 +86,10 @@
     
     NSArray *array5 = @[@3, @0, @-1, @4, @5, @0, @2, @0];
     [array5 sortArrayZeros:[array5 mutableCopy]];
+    
+    self.enumeratorIdx = 0;
+    NSArray *array6 = @[@"a", @"b", @[@"c", @[@"d"]], @"e"];
+    self.enumeratorArray = [array6 mutableCopy];
 }
 
 - (void)passArrayByReference:(NSArray **)array {
