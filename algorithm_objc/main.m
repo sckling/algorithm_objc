@@ -15,12 +15,12 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         Array *array = [[Array alloc] init];
-        [array executeBlock:^NSString *(int a, float b) {
-            float c = a + b;
-            return [NSString stringWithFormat:@"%lf", c];
-        }];
+//        [array executeBlock:^NSString *(int a, float b) {
+//            float c = a + b;
+//            return [NSString stringWithFormat:@"%lf", c];
+//        }];
         [array setup];
-        
+
         for (int i=0; i<10; i++) {
             NSLog(@"Next: %@", [array nextObject]);
         }
