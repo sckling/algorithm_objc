@@ -6,6 +6,23 @@
 //  Copyright © 2015 sling. All rights reserved.
 //
 
+/*
+#import <Foundation/Foundation.h>
+
+int main (int argc, const char * argv[]) {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    int i, n;
+    scanf("%d", &n);
+    for (i=0; i<n; i++) {
+        // NOTE: Do not use NSLog. Use printf() instead.
+        printf("hello world\n");
+    }
+    [pool drain];
+    return 0;
+}
+*/
+
+
 #import <Foundation/Foundation.h>
 #import "Array.h"
 #import "Graph.h"
@@ -19,14 +36,17 @@ int main(int argc, const char * argv[]) {
 //            float c = a + b;
 //            return [NSString stringWithFormat:@"%lf", c];
 //        }];
-        [array setup];
+//        [array setup];
 
-        for (int i=0; i<10; i++) {
-            NSLog(@"Next: %@", [array nextObject]);
-        }
+//        for (int i=0; i<10; i++) {
+//            NSLog(@"Next: %@", [array nextObject]);
+//        }
         
-//        Tree *binarySearchTree = [[Tree alloc] init];
-//        [binarySearchTree setup];
+        Tree *binarySearchTree = [[Tree alloc] init];
+        [binarySearchTree setup];
+        
+        Graph *socialGraph = [[Graph alloc] initWithMember];
+        [socialGraph setupSocialGraph];
         
         //Graph *graph = [[Graph alloc] initWithSize:9];
         //[graph setup];

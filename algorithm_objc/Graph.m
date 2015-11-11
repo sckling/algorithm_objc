@@ -8,6 +8,7 @@
 
 #import "Graph.h"
 #import "EdgeNode.h"
+#import "Member.h"
 
 @implementation Graph
 
@@ -37,6 +38,74 @@
         }
     }
     return self;
+}
+
+- (id)initWithMember {
+    self = [super init];
+    if (self != nil) {
+        _discovered = [NSMutableArray arrayWithCapacity:6];
+    }
+    return self;
+}
+
+- (void) setupSocialGraph {
+    Member *member1 = [[Member alloc] init];
+    member1.name = @"1";
+    member1.memberId = 1;
+    Member *member2 = [[Member alloc] init];
+    member2.name = @"2";
+    member2.memberId = 2;
+    Member *member3 = [[Member alloc] init];
+    member3.name = @"3";
+    Member *member4 = [[Member alloc] init];
+    member4.name = @"4";
+    Member *member5 = [[Member alloc] init];
+    member5.name = @"5";
+    
+    member1.friends = @[member2, member5];
+    member2.friends = @[member1, member3, member5];
+    member3.friends = @[member2, member4];
+    member4.friends = @[member2, member3, member5];
+    member5.friends = @[member1, member2, member4];
+    
+    for (int i=0; i<=5; i++) {
+        _discovered[i] = @NO;
+        _processed[i] = @NO;
+    }
+    
+    [self printSocialGraph:member1];
+}
+
+- (void)printSocialGraph:(Member *)member {
+    NSMutableArray *queue = [NSMutableArray new];
+    [queue addObject:member];
+    self.discovered[member.memberId] = @YES;
+
+    while (queue.count > 0) {
+        Member *currentMemeber = [queue objectAtIndex:0];
+        [queue removeObjectAtIndex:0];
+        // Process vertex
+        NSLog(@"Process name %@", currentMemeber.name);
+        self.processed[currentMemeber.memberId] = @YES;
+
+        for (NSUInteger i = 0; i<currentMemeber.friends.count; i++) {
+            Member *tempMember = currentMemeber.friends[i];
+            NSLog(@"Temp Member: %@", tempMember.name);
+            
+//            if ([self.processed[tempMember.memberId] isEqualTo:@NO]) {
+//                self.processed[tempMember.memberId] = @YES;
+//                NSLog(@"friend: %@", tempMember.name);
+//            }
+
+            if ([self.discovered[tempMember.memberId] isEqualTo:@NO]) {
+                NSLog(@"Add to queue: %@", tempMember.name);
+                [queue addObject:tempMember];
+                self.discovered[tempMember.memberId] = @YES;
+            }
+        }
+        //NSLog(@"Friend: %@", currentMemeber.name);
+    }
+    NSMutableDictionary *dict = [NSMutableDictionary new];
 }
 
 - (void)setup {

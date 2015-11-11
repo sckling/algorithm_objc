@@ -117,7 +117,7 @@
     [currentQueue addObject:node];
     while (currentQueue.count > 0) {
         TreeNode *tempNode = [currentQueue firstObject];
-        NSLog(@"%@", tempNode.value);
+        //NSLog(@"%@", tempNode.value);
         if (tempNode.left) {
             [nextQueue addObject:tempNode.left];
         }
@@ -128,9 +128,16 @@
         if (currentQueue.count == 0) {
             currentQueue = [nextQueue mutableCopy];
             [nextQueue removeAllObjects];
-            NSLog(@"Next");
+            NSLog(@"Current level");
+            for (TreeNode *node in currentQueue) {
+                NSLog(@"%@", node.value);
+            }
         }
     }
+    NSInteger i = 1;
+    NSNumber *b = @1;
+    
+    
 }
 
 - (NSUInteger)depthOfTree:(TreeNode *)node {

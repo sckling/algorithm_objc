@@ -23,7 +23,9 @@
 @property (assign, getter=isDirected) BOOL directed;
 
 - (id)initWithSize:(NSUInteger)size;
+- (id)initWithMember;
 - (void)setup;
+- (void)setupSocialGraph;
 - (void)printGraph;
 - (void)insertEdgeNode:(NSUInteger)source dest:(NSUInteger)dest weight:(NSInteger)weight directed:(BOOL)directed;
 - (void)breathFirstSearch:(NSUInteger)startVertex;
