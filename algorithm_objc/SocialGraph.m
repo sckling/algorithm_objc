@@ -45,6 +45,8 @@
     NSMutableArray *currentQueue = [NSMutableArray new];
     NSMutableArray *nextQueue = [NSMutableArray new];
     NSMutableDictionary *coursesDict = [NSMutableDictionary new];
+    // Did not consider user's attended courses are ignored
+    NSSet *userAttendedCourses = [self excludeAttendedCoursesFromUser:user];
     NSUInteger friendLevel = 0;
     [currentQueue addObject:user];
     
@@ -54,7 +56,7 @@
         [currentQueue removeObjectAtIndex:0];
         
         // Process the attended courses from current user and update the dictionary
-        coursesDict = [self processAttendedCoursesFromUser:currentUser dictionary:coursesDict];
+        coursesDict = [self processAttendedCourses:currentUser dictionary:coursesDict attendedCourses:userAttendedCourses];
         
         // Loop through all the direct friends and put them in nexyQueue. This is used to keep track of friendLevel.
         NSArray *directFriends = [self getDirectFriendsForUser:currentUser];
@@ -77,24 +79,39 @@
     
     // Social graph traversal completed. Sort the courses by popularity (higher number of attendees = more popular)
     // At the end, the array orderedKey will contain keys (attended course names)sorted from high to low based on value (number of attendees)
+    NSLog(@"courses dict: %@", coursesDict);
     NSArray *orderedKey = [coursesDict keysSortedByValueUsingComparator: ^NSComparisonResult(id obj1, id obj2) {
         return [obj2 compare:obj1];
     }];
+    NSLog(@"courses array sorted: %@", orderedKey);
     return orderedKey;
 }
 
-- (NSMutableDictionary *)processAttendedCoursesFromUser:(NSString *)user dictionary:(NSMutableDictionary *)coursesDict {
+- (NSSet *)excludeAttendedCoursesFromUser:(NSString *)user {
+    NSMutableSet *coursesSet = [NSMutableSet new];
+    NSArray *courses = [self getAttendedCoursesForUser:user];
+    for (NSString *course in courses) {
+        [coursesSet addObject:course];
+    }
+    return [coursesSet copy];
+}
+
+- (NSMutableDictionary *)processAttendedCourses:(NSString *)user dictionary:(NSMutableDictionary *)coursesDict attendedCourses:(NSSet *)userAttendedCourses {
     NSArray *attendedCourses = [self getAttendedCoursesForUser:user];
     for (NSString *course in attendedCourses) {
-        NSNumber *value = [coursesDict objectForKey:course];
-        // If value exists for the key, increment the value by 1
-        if (value) {
-            NSUInteger newValue = [value integerValue] + 1;
-            [coursesDict setObject:@(newValue) forKey:course];
-        }
-        // If value doesn't exist, add it to the key
-        else {
-            [coursesDict setObject:@1 forKey:course];
+        
+        // Check if user has attended this course. If not, add to the dictionary for ranking
+        if (![userAttendedCourses containsObject:course]) {
+            NSNumber *value = [coursesDict objectForKey:course];
+            // If value exists for the key, increment the value by 1
+            if (value) {
+                NSUInteger newValue = [value integerValue] + 1;
+                [coursesDict setObject:@(newValue) forKey:course];
+            }
+            // If value doesn't exist, add it to the key
+            else {
+                [coursesDict setObject:@1 forKey:course];
+            }
         }
     }
     return coursesDict;
@@ -104,12 +121,48 @@
     if ([user isEqualToString:@"Joe"]) {
         return @[@"Sue", @"Amy"];
     }
+    if ([user isEqualToString:@"Sue"]) {
+        return @[@"Eric", @"Tom", @"Sam"];
+    }
+    if ([user isEqualToString:@"Amy"]) {
+        return @[@"John", @"Mary"];
+    }
+    if ([user isEqualToString:@"Mary"]) {
+        return @[@"Adam", @"Kim"];
+    }
     return nil;
 }
 
 - (NSArray *)getAttendedCoursesForUser:(NSString *)user {
+    if ([user isEqualToString:@"Joe"]) {
+        return @[@"CS101", @"ME102"];
+    }
+    if ([user isEqualToString:@"Sue"]) {
+        return @[@"CS101", @"EC102"];
+    }
     if ([user isEqualToString:@"Amy"]) {
         return @[@"CS101", @"EE102"];
+    }
+    if ([user isEqualToString:@"Eric"]) {
+        return @[@"AA101", @"CS101"];
+    }
+    if ([user isEqualToString:@"Tom"]) {
+        return @[@"CS101", @"ME102"];
+    }
+    if ([user isEqualToString:@"John"]) {
+        return @[@"CS101", @"ME102"];
+    }
+    if ([user isEqualToString:@"Mary"]) {
+        return @[@"CS101", @"EE102"];
+    }
+    if ([user isEqualToString:@"Adam"]) {
+        return @[@"CS101", @"EE102"];
+    }
+    if ([user isEqualToString:@"Kim"]) {
+        return @[@"CS101", @"EE102"];
+    }
+    if ([user isEqualToString:@"Sam"]) {
+        return @[@"ME102"];
     }
     return nil;
 }

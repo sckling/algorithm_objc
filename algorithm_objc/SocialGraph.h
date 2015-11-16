@@ -10,4 +10,6 @@
 
 @interface SocialGraph : NSObject
 
+- (NSArray *)getRankedCourses:(NSString *)user;
+
 @end

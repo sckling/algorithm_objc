@@ -26,12 +26,13 @@ int main (int argc, const char * argv[]) {
 #import <Foundation/Foundation.h>
 #import "Array.h"
 #import "Graph.h"
+#import "SocialGraph.h"
 #import "Tree.h"
 #import "NSArray+Methods.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        Array *array = [[Array alloc] init];
+//        Array *array = [[Array alloc] init];
 //        [array executeBlock:^NSString *(int a, float b) {
 //            float c = a + b;
 //            return [NSString stringWithFormat:@"%lf", c];
@@ -42,11 +43,14 @@ int main(int argc, const char * argv[]) {
 //            NSLog(@"Next: %@", [array nextObject]);
 //        }
         
-        Tree *binarySearchTree = [[Tree alloc] init];
-        [binarySearchTree setup];
+//        Tree *binarySearchTree = [[Tree alloc] init];
+//        [binarySearchTree setup];
         
-        Graph *socialGraph = [[Graph alloc] initWithMember];
-        [socialGraph setupSocialGraph];
+//        Graph *graph = [[Graph alloc] initWithMember];
+//        [graph setupSocialGraph];
+        
+        SocialGraph *socialGraph = [[SocialGraph alloc] init];
+        [socialGraph getRankedCourses:@"Joe"];
         
         //Graph *graph = [[Graph alloc] initWithSize:9];
         //[graph setup];
