@@ -45,7 +45,10 @@
     NSMutableArray *currentQueue = [NSMutableArray new];
     NSMutableArray *nextQueue = [NSMutableArray new];
     NSMutableDictionary *coursesDict = [NSMutableDictionary new];
-    // Did not consider user's attended courses are ignored
+    
+    // Original solution did not add the code to ignore courses that the user has attended
+    // The solution is to add the courses attended by the user into an NSSet and compare every course to it
+    // to determine whether to add it to the recommendation list or not
     NSSet *userAttendedCourses = [self excludeAttendedCoursesFromUser:user];
     NSUInteger friendLevel = 0;
     [currentQueue addObject:user];

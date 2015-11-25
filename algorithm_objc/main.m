@@ -32,16 +32,20 @@ int main (int argc, const char * argv[]) {
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-//        Array *array = [[Array alloc] init];
-//        [array executeBlock:^NSString *(int a, float b) {
-//            float c = a + b;
-//            return [NSString stringWithFormat:@"%lf", c];
-//        }];
-//        [array setup];
+        Array *array = [[Array alloc] init];
+        [array setup];
+        //[array blockExecution];
 
-//        for (int i=0; i<10; i++) {
-//            NSLog(@"Next: %@", [array nextObject]);
-//        }
+        BOOL stop = NO;
+        while (stop == NO) {
+            id obj = [array nextObject];
+            if (obj) {
+                NSLog(@"%@", obj);
+            }
+            else {
+                stop = YES;
+            }
+        }
         
 //        Tree *binarySearchTree = [[Tree alloc] init];
 //        [binarySearchTree setup];
@@ -49,8 +53,8 @@ int main(int argc, const char * argv[]) {
 //        Graph *graph = [[Graph alloc] initWithMember];
 //        [graph setupSocialGraph];
         
-        SocialGraph *socialGraph = [[SocialGraph alloc] init];
-        [socialGraph getRankedCourses:@"Joe"];
+//        SocialGraph *socialGraph = [[SocialGraph alloc] init];
+//        [socialGraph getRankedCourses:@"Joe"];
         
         //Graph *graph = [[Graph alloc] initWithSize:9];
         //[graph setup];
@@ -73,6 +77,18 @@ int main(int argc, const char * argv[]) {
         // 5&(5-1) = 101 & 100 = 100
         // X&!(X-1) extract lowest set of bit
         // 5&!(5-1) = 101 & 011 = 001
+        
+        // Completion block execustion
+//        NSURL *url = [NSURL URLWithString:@"http://www.google.com"];
+//        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//        NSURLResponse *response = [NSURLResponse new];
+//        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+//        NSLog(@"data: %@\nresponse: %@", data, response);
+//        //NSLog(@"Data: %@, Response: %@, Error: %@", data1,  response, error);
+//        
+//        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+//            NSLog(@"Response: %@, Data: %@, Error: %@", response, data, connectionError);
+//        }];
     }
     return 0;
 }
