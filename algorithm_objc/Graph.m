@@ -48,7 +48,7 @@
     return self;
 }
 
-- (void) setupSocialGraph {
+- (void)setupSocialGraph {
     Member *member1 = [[Member alloc] init];
     member1.name = @"1";
     member1.memberId = 1;
@@ -105,7 +105,6 @@
         }
         //NSLog(@"Friend: %@", currentMemeber.name);
     }
-    NSMutableDictionary *dict = [NSMutableDictionary new];
 }
 
 - (void)setup {
