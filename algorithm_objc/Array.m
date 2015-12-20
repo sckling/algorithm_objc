@@ -73,32 +73,6 @@
     return nil;
 }
 
-//- (id)nextObject {
-//    if (self.enumeratorIdx < self.enumeratorArray.count) {
-//        id obj = self.enumeratorArray[self.enumeratorIdx];
-//        if ([obj isKindOfClass:[NSString class]]) {
-//            self.enumeratorIdx++;
-//            return obj;
-//        }
-//        else if ([obj isKindOfClass:[NSArray class]]) {
-//            if ([obj count] > 0) {
-//                
-//            }
-//        }
-//        return [self popFirstElement:obj];
-//    }
-//    return nil;
-//}
-//
-//- (id)popFirstElement:(NSArray *)array {
-//    id obj = array[0];
-//    if ([obj isKindOfClass:[NSString class]]) {
-//        //self.enumeratorIdx++;
-//        return obj;
-//    }
-//    return [self popFirstElement:obj];
-//}
-
 - (void)passArrayByReference:(NSArray **)array {
     NSLog(@"Original array: %@", *array);
     NSArray *newArray = @[@1, @2, @3];
@@ -119,6 +93,7 @@
     NSLog(@"Second run of block");
     self.propertyBlock = ^NSString *(int a, float b){return @"property block";};
     [self executeBlock:self.propertyBlock];
+    [self executeBlock:^NSString *(int a, float b){return @"inline defined block";}];
     [self executeDispatchBlock:^void{NSLog(@"Inside a dispatch block");}];
 }
 

@@ -34,7 +34,7 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         Array *array = [[Array alloc] init];
         [array setup];
-        //[array blockExecution];
+        [array blockExecution];
 
         BOOL stop = NO;
         while (stop == NO) {
@@ -59,7 +59,7 @@ int main(int argc, const char * argv[]) {
         //Graph *graph = [[Graph alloc] initWithSize:9];
         //[graph setup];
         
-        // done: lca, binary tree ad binary search tree
+        // done: lca, binary tree and binary search tree
         // is BST balanced?
         // done: find all the paths of a binary tree
         // done: find the largest value that is smaller than n in a BST
