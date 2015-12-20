@@ -18,5 +18,6 @@
 - (NSUInteger)binarySearch:(NSUInteger)start end:(NSUInteger)end character:(NSString *)character;
 - (NSDictionary *)executeBlock:(id (^)(id object))myBlock;
 - (void)sortArrayZeros:(NSMutableArray *)array;
+- (NSUInteger)stickerCount;
 
 @end

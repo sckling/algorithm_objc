@@ -11,6 +11,8 @@
 		19B738AE1BF2F5E5005D29A2 /* SocialGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B738AD1BF2F5E5005D29A2 /* SocialGraph.m */; };
 		19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E41BD1F772004F31AF /* EdgeNode.m */; };
 		19F696E81BD1F84D004F31AF /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E71BD1F84D004F31AF /* Graph.m */; };
+		E41E2B1B1C2618A9008DD8B3 /* ArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E41E2B1A1C2618A9008DD8B3 /* ArrayTests.m */; };
+		E41E2B1C1C261BAA008DD8B3 /* NSArray+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */; };
 		E42659D71BCA39D3001B49C4 /* NSArray+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */; };
 		E42659DA1BCB1C67001B49C4 /* Array.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659D91BCB1C67001B49C4 /* Array.m */; };
 		E42659DD1BCB389D001B49C4 /* Tree.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659DC1BCB389D001B49C4 /* Tree.m */; };
@@ -42,6 +44,7 @@
 		19F696E41BD1F772004F31AF /* EdgeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeNode.m; sourceTree = "<group>"; };
 		19F696E61BD1F84D004F31AF /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
 		19F696E71BD1F84D004F31AF /* Graph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph.m; sourceTree = "<group>"; };
+		E41E2B1A1C2618A9008DD8B3 /* ArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrayTests.m; sourceTree = "<group>"; };
 		E42659D51BCA39D3001B49C4 /* NSArray+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Methods.h"; sourceTree = "<group>"; };
 		E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Methods.m"; sourceTree = "<group>"; };
 		E42659D81BCB1C67001B49C4 /* Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Array.h; sourceTree = "<group>"; };
@@ -146,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				E4A908B01BCA1BDE00FA77B6 /* Tests.m */,
+				E41E2B1A1C2618A9008DD8B3 /* ArrayTests.m */,
 				E4A908B91BCA1D4400FA77B6 /* TreeNodeTests.m */,
 				E4A908B21BCA1BDE00FA77B6 /* Info.plist */,
 			);
@@ -256,8 +260,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4A908B11BCA1BDE00FA77B6 /* Tests.m in Sources */,
+				E41E2B1B1C2618A9008DD8B3 /* ArrayTests.m in Sources */,
 				E4A908BA1BCA1D4400FA77B6 /* TreeNodeTests.m in Sources */,
 				E4A908BC1BCA1E1100FA77B6 /* TreeNode.m in Sources */,
+				E41E2B1C1C261BAA008DD8B3 /* NSArray+Methods.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

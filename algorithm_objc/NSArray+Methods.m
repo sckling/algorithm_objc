@@ -147,4 +147,33 @@
     return dict;
 }
 
+// Apple Interview - Andrew Leeper, PD Code Labs Manager, 12/18/15
+// Given an input array of words that only contain letters a, p, l, e,
+// count how many Apple stickers a user needs to buy.
+// For example, input = ["ape", "peel", "pale"]
+// sticker count = 4 since there are 4 e's that can make 4 Apple stickers.
+//
+// Unit test ArrayTests.m contains all test cases
+
+- (NSUInteger)stickerCount {
+    NSUInteger maxSoFar = 0;
+    NSCountedSet *set = [[NSCountedSet alloc] initWithCapacity:4];
+    
+    // Assume objects inside the input array are all NSString
+    for (NSString *word in self) {
+        for (NSUInteger i=0; i<word.length; i++) {
+            NSString *character = [[NSString stringWithFormat:@"%c", [word characterAtIndex:i]] lowercaseString];
+            [set addObject:character];
+            NSUInteger count = [set countForObject:character];
+            if ([character isEqualToString:@"p"]) {
+                count = (count/2)+count%2;
+            }
+            if (count > maxSoFar) {
+                maxSoFar = count;
+            }
+        }
+    }
+    return maxSoFar;
+}
+
 @end

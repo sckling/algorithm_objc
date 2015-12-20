@@ -39,6 +39,10 @@
     self.enumeratorIdx = 0;
     self.enumeratorArray = [NSMutableArray arrayWithArray:@[@"a", @"b", @[@"c", @[@"d"]], @[ @[@"e", @[@"f"]], @"g" ] ]];
     self.enumeratorArray = [self.enumeratorArray mutableCopy];
+    
+    NSArray *words = @[@"ape", @"peel", @"pale"];
+    // ape+pl = apple, e+pal= ap?le, ????e, ????e
+    NSLog(@"Sticker count: %lu", (unsigned long)[words stickerCount]);
 }
 
 // NSEnumerator
