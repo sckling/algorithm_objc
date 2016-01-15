@@ -29,23 +29,27 @@ int main (int argc, const char * argv[]) {
 #import "SocialGraph.h"
 #import "Tree.h"
 #import "NSArray+Methods.h"
+#import "Dictionary.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        Array *array = [[Array alloc] init];
-        [array setup];
-        [array blockExecution];
-
-        BOOL stop = NO;
-        while (stop == NO) {
-            id obj = [array nextObject];
-            if (obj) {
-                NSLog(@"%@", obj);
-            }
-            else {
-                stop = YES;
-            }
-        }
+        Dictionary *dict = [Dictionary new];
+        [dict setup];
+        
+//        Array *array = [[Array alloc] init];
+//        [array setup];
+//        [array blockExecution];
+//
+//        BOOL stop = NO;
+//        while (stop == NO) {
+//            id obj = [array nextObject];
+//            if (obj) {
+//                NSLog(@"%@", obj);
+//            }
+//            else {
+//                stop = YES;
+//            }
+//        }
         
 //        Tree *binarySearchTree = [[Tree alloc] init];
 //        [binarySearchTree setup];

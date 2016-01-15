@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		193A42811C4851AF004AF854 /* NSDictionary+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 193A42801C4851AF004AF854 /* NSDictionary+Methods.m */; };
+		193A42861C485335004AF854 /* Dictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 193A42851C485335004AF854 /* Dictionary.m */; };
 		19601AC21BF154E00096DA27 /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 19601AC11BF154E00096DA27 /* Member.m */; };
 		196466F91C17C7B100FA9E4D /* UndirectedGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 196466F81C17C7B100FA9E4D /* UndirectedGraph.m */; };
 		19B738AE1BF2F5E5005D29A2 /* SocialGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B738AD1BF2F5E5005D29A2 /* SocialGraph.m */; };
@@ -37,6 +39,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		193A427F1C4851AF004AF854 /* NSDictionary+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Methods.h"; sourceTree = "<group>"; };
+		193A42801C4851AF004AF854 /* NSDictionary+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Methods.m"; sourceTree = "<group>"; };
+		193A42841C485335004AF854 /* Dictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dictionary.h; sourceTree = "<group>"; };
+		193A42851C485335004AF854 /* Dictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dictionary.m; sourceTree = "<group>"; };
 		19601AC01BF154E00096DA27 /* Member.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Member.h; sourceTree = "<group>"; };
 		19601AC11BF154E00096DA27 /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Member.m; sourceTree = "<group>"; };
 		196466F71C17C7B100FA9E4D /* UndirectedGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UndirectedGraph.h; sourceTree = "<group>"; };
@@ -82,6 +88,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		193A42821C4851CF004AF854 /* Dictionary */ = {
+			isa = PBXGroup;
+			children = (
+				193A42841C485335004AF854 /* Dictionary.h */,
+				193A42851C485335004AF854 /* Dictionary.m */,
+				193A427F1C4851AF004AF854 /* NSDictionary+Methods.h */,
+				193A42801C4851AF004AF854 /* NSDictionary+Methods.m */,
+			);
+			name = Dictionary;
+			sourceTree = "<group>";
+		};
 		19F696E91BD1F856004F31AF /* Trees */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +161,7 @@
 			children = (
 				E4A908A31BCA1B3A00FA77B6 /* main.m */,
 				19F696EA1BD1F862004F31AF /* Arrays */,
+				193A42821C4851CF004AF854 /* Dictionary */,
 				19F696EB1BD1F86E004F31AF /* Graphs */,
 				19F696E91BD1F856004F31AF /* Trees */,
 			);
@@ -251,11 +269,13 @@
 				19B738AE1BF2F5E5005D29A2 /* SocialGraph.m in Sources */,
 				196466F91C17C7B100FA9E4D /* UndirectedGraph.m in Sources */,
 				E42659DD1BCB389D001B49C4 /* Tree.m in Sources */,
+				193A42811C4851AF004AF854 /* NSDictionary+Methods.m in Sources */,
 				E4A908A41BCA1B3A00FA77B6 /* main.m in Sources */,
 				E42659DA1BCB1C67001B49C4 /* Array.m in Sources */,
 				19601AC21BF154E00096DA27 /* Member.m in Sources */,
 				E4A908B81BCA1CD500FA77B6 /* TreeNode.m in Sources */,
 				19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */,
+				193A42861C485335004AF854 /* Dictionary.m in Sources */,
 				19F696E81BD1F84D004F31AF /* Graph.m in Sources */,
 				E42659D71BCA39D3001B49C4 /* NSArray+Methods.m in Sources */,
 			);
