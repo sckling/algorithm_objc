@@ -40,7 +40,7 @@
     self.enumeratorArray = [NSMutableArray arrayWithArray:@[@"a", @"b", @[@"c", @[@"d"]], @[ @[@"e", @[@"f"]], @"g" ] ]];
     self.enumeratorArray = [self.enumeratorArray mutableCopy];
     
-    NSArray *words = @[@"ape", @"peel", @"pale"];
+    NSArray *words = @[@"ape", @"peel", @"pale", @"apple", @"appple"];
     // ape+pl = apple, e+pal= ap?le, ????e, ????e
     NSLog(@"Sticker count: %lu", (unsigned long)[words stickerCount]);
 }
@@ -129,6 +129,38 @@
     self.aTypeDefBlock = anotherBlock;
     NSLog(@"Execute a typedef block: %@", self.aTypeDefBlock(1, @2));
     
+}
+
+- (void)twoDimenionalArray {
+    int num1=3, num2=4;
+    NSLog(@"i=3, j=4");
+    //scanf("%d %d", &num1, &num2);
+    
+    NSMutableArray *arr = [NSMutableArray arrayWithCapacity:(num1*num2)];
+    // initialize it with 0s
+    for(int i=0; i < (num1*num2); i++) [arr addObject:@0];
+    
+    // replace 0s with something more interesting
+    for(int i=0; i < num1; i++) {
+        for(int j=0; j < num2; j++) {
+            arr[i*num2+j] = @(i+j*2);
+        }
+    }
+    
+    // access a value: i*num2+j, where i,j are the indexes for the bidimensional array
+    // sam as arr[1][3]
+    //    j0 j1 j2 j3
+    // i0
+    // i1
+    // i2
+    NSLog(@"arr[1][3]: %@", arr[1*num2+3]);
+    NSLog(@"arr[2][1]: %@", arr[2*num2+1]);
+    for(int i=0; i < num1; i++) {
+        for(int j=0; j < num2; j++) {
+           printf("%i ", [arr[i*num2+j] intValue]);
+        }
+        printf("\n");
+    }
 }
 
 @end

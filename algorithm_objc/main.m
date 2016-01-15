@@ -33,23 +33,21 @@ int main (int argc, const char * argv[]) {
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        Dictionary *dict = [Dictionary new];
-        [dict setup];
-        
-//        Array *array = [[Array alloc] init];
+        Array *array = [[Array alloc] init];
 //        [array setup];
+        [array twoDimenionalArray];
 //        [array blockExecution];
-//
-//        BOOL stop = NO;
-//        while (stop == NO) {
-//            id obj = [array nextObject];
-//            if (obj) {
-//                NSLog(@"%@", obj);
-//            }
-//            else {
-//                stop = YES;
-//            }
-//        }
+
+        BOOL stop = NO;
+        while (stop == NO) {
+            id obj = [array nextObject];
+            if (obj) {
+                NSLog(@"%@", obj);
+            }
+            else {
+                stop = YES;
+            }
+        }
         
 //        Tree *binarySearchTree = [[Tree alloc] init];
 //        [binarySearchTree setup];
