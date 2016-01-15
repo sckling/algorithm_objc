@@ -34,7 +34,7 @@
     count = [words stickerCount];
     XCTAssertEqual(count, 4);
 
-    // Case 2: Count = : appl+e, pp
+    // Case 2: Count = 2: appl+e, pp
     NSArray *words2 = @[@"appl", @"pp", @"e"];
     count = [words2 stickerCount];
     XCTAssertEqual(count, 2);

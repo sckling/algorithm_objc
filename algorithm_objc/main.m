@@ -33,8 +33,9 @@ int main (int argc, const char * argv[]) {
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         Array *array = [[Array alloc] init];
-        [array setup];
-        [array blockExecution];
+//        [array setup];
+        [array twoDimenionalArray];
+//        [array blockExecution];
 
         BOOL stop = NO;
         while (stop == NO) {
