@@ -6,23 +6,6 @@
 //  Copyright © 2015 sling. All rights reserved.
 //
 
-/*
-#import <Foundation/Foundation.h>
-
-int main (int argc, const char * argv[]) {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    int i, n;
-    scanf("%d", &n);
-    for (i=0; i<n; i++) {
-        // NOTE: Do not use NSLog. Use printf() instead.
-        printf("hello world\n");
-    }
-    [pool drain];
-    return 0;
-}
-*/
-
-
 #import <Foundation/Foundation.h>
 #import "Array.h"
 #import "Graph.h"
@@ -33,21 +16,24 @@ int main (int argc, const char * argv[]) {
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        Array *array = [[Array alloc] init];
+        Dictionary *dict = [[Dictionary alloc] init];
+        [dict setup];
+
+//        Array *array = [[Array alloc] init];
 //        [array setup];
-        [array twoDimenionalArray];
+//        [array twoDimenionalArray];
 //        [array blockExecution];
 
-        BOOL stop = NO;
-        while (stop == NO) {
-            id obj = [array nextObject];
-            if (obj) {
-                NSLog(@"%@", obj);
-            }
-            else {
-                stop = YES;
-            }
-        }
+//        BOOL stop = NO;
+//        while (stop == NO) {
+//            id obj = [array nextObject];
+//            if (obj) {
+//                NSLog(@"%@", obj);
+//            }
+//            else {
+//                stop = YES;
+//            }
+//        }
         
 //        Tree *binarySearchTree = [[Tree alloc] init];
 //        [binarySearchTree setup];

@@ -11,20 +11,27 @@
 @implementation NSDictionary (Methods)
 
 - (NSDictionary *)mergeDictionary:(NSDictionary *)dict {
-//    NSArray *keys = [dict allKeys];
     for (NSString *key in dict) {
-        id value = [dict objectForKey:key];
-        [self mergeData:key value:value];
-        NSLog(@"Key: %@, Value: %@", key, value);
+        if ([self objectForKey:key]) {
+            // Found matched key
+            // Case 1: dict1 and dict2 values are both dictionary. Need to 
+            id value = [dict objectForKey:key];
+            [self mergeData:key value:value];
+            NSLog(@"Key: %@, Value: %@", key, value);
+        }
     }
     return nil;
 }
 
 - (void)mergeData:(NSString *)key value:(id)value {
-    if ([value isKindOfClass:[NSNumber class]]) {
+    if ([value isKindOfClass:[NSDictionary class]]) {
         if ([self objectForKey:key]) {
             
         }
+    }
+    // Reach the bottom of the dictionary
+    else {
+        
     }
 }
 

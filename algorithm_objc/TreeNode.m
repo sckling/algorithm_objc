@@ -134,10 +134,6 @@
             }
         }
     }
-    NSInteger i = 1;
-    NSNumber *b = @1;
-    
-    
 }
 
 - (NSUInteger)depthOfTree:(TreeNode *)node {
