@@ -43,6 +43,11 @@
     NSArray *words = @[@"ape", @"peel", @"pale", @"apple", @"appple"];
     // ape+pl = apple, e+pal= ap?le, ????e, ????e
     NSLog(@"Sticker count: %lu", (unsigned long)[words stickerCount]);
+    
+    NSArray *array = @[@3, @7, @1, @4, @5, @2];
+    for (NSNumber *num in array) {
+        NSLog(@"Rolling median: %f", [self rollingMedian:num]);
+    }
 }
 
 // NSEnumerator
@@ -161,6 +166,35 @@
         }
         printf("\n");
     }
+}
+
+/*
+    calculate an efficient streaming median of numbers.
+    eg: set of numbers are- 3, 7, 1, 4, 5, median will be 4
+    3, 7, 1, 4 = (3+4)/2 = 3.5
+    1,3,4,7 = (3+4)/2 = 3.5
+    1,3,4,5,7 = 4
+    1,3,4,5,7, next: 2 -> 1,2,3,4,5,7 = (3+4)/2 = 3.5
+ */
+- (double)rollingMedian:(NSNumber *)number {
+    static NSMutableArray *array = nil;
+    if (array == nil) {
+        array = [NSMutableArray new];
+    }
+    [array addObject:number];
+    [array sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        return [obj1 compare:obj2];
+    }];
+    //NSLog(@"Sorted array: %@", array);
+
+    // If array size is odd number, return the middle item
+    if (array.count%2 == 1) {
+        return [array[array.count/2] doubleValue];
+    }
+    // If array size is even number, return the average of the numbers of the middle two items
+    double median1 = [array[array.count/2] doubleValue];
+    double median2 = [array[array.count/2-1] doubleValue];
+    return (median1+median2)/2;
 }
 
 @end

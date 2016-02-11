@@ -20,5 +20,6 @@ typedef NSNumber *(^newTypeDefBlock)(int, NSNumber *);
 - (void)executeDispatchBlock:(dispatch_block_t)block;
 - (void)executeBlock:(NSString * (^)(int a, float b))myBlock;
 - (void)twoDimenionalArray;
+- (double)rollingMedian:(NSNumber *)number;
 
 @end

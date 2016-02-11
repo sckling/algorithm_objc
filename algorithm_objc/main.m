@@ -19,8 +19,8 @@ int main(int argc, const char * argv[]) {
         Dictionary *dict = [[Dictionary alloc] init];
         [dict setup];
 
-//        Array *array = [[Array alloc] init];
-//        [array setup];
+        Array *array = [[Array alloc] init];
+        [array setup];
 //        [array twoDimenionalArray];
 //        [array blockExecution];
 
