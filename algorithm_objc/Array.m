@@ -27,6 +27,12 @@
 //    NSArray *array2 = @[@2, @7, @2, @-2, @5, @-7];
 //    [array2 findPairsOfElementsEqualToSum:7];
     
+    // Case1: (()) stack count 0, YES
+    // Case2: ))(( NO
+    // Case3: ()(  NO
+    // Case4: ))(())
+    NSString *string = @"(()";
+    NSLog(@"bracket count: %d", [self isBracketsCountCorrect:string]);
     
     NSLog(@"int max: %d", INT_MAX);
     NSLog(@"int max: %d", INT_MIN);
@@ -204,6 +210,39 @@
     double median1 = [array[array.count/2] doubleValue];
     double median2 = [array[array.count/2-1] doubleValue];
     return (median1+median2)/2;
+}
+     
+// Given a string of brackets “((()))()()”, find if it is correct.
+// It is correct if for every opening bracket there is a closing bracket and the opening bracket comes before the closing one.
+//
+// Input format is NSString - does it contain other characters other than ()?
+// Particular size of the string?
+// Return boolean YES/NO?
+//
+// Case1: (()) stack count 0, YES
+// Case2: ))(( NO
+// Case3: ()(  NO
+// Case4: ))(())
+
+- (Boolean)isBracketsCountCorrect:(NSString *)string {
+    NSMutableArray *stack = [NSMutableArray new];
+
+    for (NSUInteger idx=0; idx<string.length; idx++) {
+        NSString *character = [NSString stringWithFormat:@"%c", [string characterAtIndex:idx]];
+        if ([character isEqualToString:@"("]) {
+            [stack addObject:character];
+        }
+        else {
+            if (stack.count == 0) {
+                return NO;
+            }
+            if (stack.count > 0) {
+                [stack removeObjectAtIndex:0];
+            }
+        }
+    }
+    if (stack.count == 0) return YES;
+    return NO;
 }
 
 @end
