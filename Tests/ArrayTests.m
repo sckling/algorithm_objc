@@ -26,6 +26,11 @@
     [super tearDown];
 }
 
+- (void)testBinarySearchIterative {
+    NSArray *array = @[@2, @4, @7, @10];
+    XCTAssertEqual([array binarySearchIterative:@10], 3);
+}
+
 - (void)testStickerCount {
     NSUInteger count = 0;
 

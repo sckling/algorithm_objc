@@ -26,10 +26,19 @@
 //    
 //    NSArray *array2 = @[@2, @7, @2, @-2, @5, @-7];
 //    [array2 findPairsOfElementsEqualToSum:7];
-//    NSArray *array3 = @[@2, @4, @7, @10];
-//    NSInteger number = 10;
-//    NSLog(@"Binary search of %ld found: %ld", (long)number, (long)[array3 binarySearch:0 end:array3.count-1 number:number]);
-//    
+    
+    
+    NSLog(@"int max: %d", INT_MAX);
+    NSLog(@"int max: %d", INT_MIN);
+    NSArray *array3 = @[@2, @4, @10, @7, @10];
+    if ([array3 indexOfObject:@10] != NSNotFound) {
+        NSLog(@"Index of object: %lu", (unsigned long)[array3 indexOfObject:@10]);
+    }
+
+    NSInteger number = 10;
+    NSLog(@"Binary search of %ld found: %ld", (long)number, (long)[array3 binarySearch:0 end:array3.count-1 number:number]);
+    NSLog(@"Binary search iterative: %ld", [array3 binarySearchIterative:@10]);
+
 //    NSArray *array4 = @[@"b", @"d", @"g", @"k"];
 //    NSLog(@"Binary search %@ found: %lu", @"b", (unsigned long)[array4 binarySearch:0 end:array4.count-1 character:@"z"]);
 //    

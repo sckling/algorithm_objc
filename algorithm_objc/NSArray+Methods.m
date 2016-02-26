@@ -112,6 +112,29 @@
     return start;
 }
 
+// Test case 1: Array with 0 element. This method will run infinitely
+- (NSInteger)binarySearchIterative:(id)key {
+    NSUInteger low = 0;
+    NSUInteger high = self.count-1;
+
+    while (low <= high) {
+//        NSUInteger middle = low + ((high-low)/2);
+        NSUInteger middle = (unsigned long)low + ((unsigned long)high>>1);
+        NSNumber *midValue = self[middle];
+        if ([midValue isEqualTo:key]) {
+            return middle;
+        }
+        if ([midValue isLessThan:key]) {
+            low = middle+1;
+        }
+        else {
+            high = middle-1;
+        }
+    }
+//    return -(low+1);
+    return -1;
+}
+
 - (void)sortArrayZeros:(NSMutableArray *)array {
     // NSArray *array5 = @[@3, @0, @-1, @4, @5, @0, @2, @0];
 
