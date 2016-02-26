@@ -13,11 +13,15 @@
 #import "Tree.h"
 #import "NSArray+Methods.h"
 #import "Dictionary.h"
+#import "Matrix.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         Dictionary *dict = [[Dictionary alloc] init];
         [dict setup];
+        
+        Matrix *matrix = [[Matrix alloc] init];
+        [matrix setup];
 
         Array *array = [[Array alloc] init];
         [array setup];
