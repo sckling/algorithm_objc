@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Array.h"
+#import "String.h"
 #import "Graph.h"
 #import "SocialGraph.h"
 #import "Tree.h"
@@ -17,14 +18,18 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        Dictionary *dict = [[Dictionary alloc] init];
-        [dict setup];
+//        Dictionary *dict = [[Dictionary alloc] init];
+//        [dict setup];
         
         Matrix *matrix = [[Matrix alloc] init];
         [matrix setup];
 
-        Array *array = [[Array alloc] init];
-        [array setup];
+//        Array *array = [[Array alloc] init];
+//        [array setup];
+        
+//        String *string = [[String alloc] init];
+//        [string setup];
+        
 //        [array twoDimenionalArray];
 //        [array blockExecution];
 
