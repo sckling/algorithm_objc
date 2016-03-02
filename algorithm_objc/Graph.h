@@ -26,6 +26,7 @@
 - (id)initWithMember;
 - (void)setup;
 - (void)setupSocialGraph;
+- (void)setupSocialGraphWithLevel;
 - (void)printGraph;
 - (void)insertEdgeNode:(NSUInteger)source dest:(NSUInteger)dest weight:(NSInteger)weight directed:(BOOL)directed;
 - (void)breathFirstSearch:(NSUInteger)startVertex;

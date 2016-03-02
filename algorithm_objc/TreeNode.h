@@ -26,6 +26,7 @@ typedef enum {
 - (void)depthFirstTraverse:(TreeNode *)node order:(Order)order;
 - (void)breadthFirstTraverse:(TreeNode *)node;
 - (void)breadthFirstTraverseByLevel:(TreeNode *)node;
+- (void)breadthFirstTraverseByLevelSingleQueue:(TreeNode *)node;
 - (NSUInteger)depthOfTree:(TreeNode *)node;
 - (void)allPathsOfTree:(TreeNode *)node path:(NSMutableArray *)path;
 - (void)deSerialize:(TreeNode **)node array:(NSMutableArray *)array;

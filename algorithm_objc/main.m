@@ -21,8 +21,8 @@ int main(int argc, const char * argv[]) {
 //        Dictionary *dict = [[Dictionary alloc] init];
 //        [dict setup];
         
-        Matrix *matrix = [[Matrix alloc] init];
-        [matrix setup];
+//        Matrix *matrix = [[Matrix alloc] init];
+//        [matrix setup];
 
 //        Array *array = [[Array alloc] init];
 //        [array setup];
@@ -47,7 +47,8 @@ int main(int argc, const char * argv[]) {
 //        Tree *binarySearchTree = [[Tree alloc] init];
 //        [binarySearchTree setup];
         
-//        Graph *graph = [[Graph alloc] initWithMember];
+        Graph *graph = [[Graph alloc] initWithMember];
+        [graph setupSocialGraphWithLevel];
 //        [graph setupSocialGraph];
         
 //        SocialGraph *socialGraph = [[SocialGraph alloc] init];

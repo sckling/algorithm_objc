@@ -136,6 +136,33 @@
     }
 }
 
+- (void)breadthFirstTraverseByLevelSingleQueue:(TreeNode *)node {
+    NSUInteger levelNodes = 0;
+    NSMutableArray *queue = [NSMutableArray new];
+    [queue addObject:node];
+
+    while (queue.count > 0) {
+        // All nodes queued up for the level
+        levelNodes = queue.count;
+        
+        // Within the same level, add all the child nodes from parent nodes
+        while (levelNodes > 0) {
+            TreeNode *tempNode = [queue firstObject];
+            [queue removeObjectAtIndex:0];
+            printf("%ld ", (long)[tempNode.value integerValue]);
+            if (tempNode.left) {
+                [queue addObject:tempNode.left];
+            }
+            if (tempNode.right) {
+                [queue addObject:tempNode.right];
+            }
+            levelNodes--;
+        }
+        // Level processing conmpleted. Start next level
+        printf("\n");
+    }
+}
+
 - (NSUInteger)depthOfTree:(TreeNode *)node {
     if (node == nil) {
         return 0;

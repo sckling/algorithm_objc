@@ -41,7 +41,8 @@
     TreeNode *root = [self createBinarySearchTree:array];
     NSLog(@"Depth of tree: %ld", [root depthOfTree:root]);
 //    [root breadthFirstTraverse:root];
-    [root breadthFirstTraverseByLevel:root];
+//    [root breadthFirstTraverseByLevel:root];
+    [root breadthFirstTraverseByLevelSingleQueue:root];
 //    NSMutableArray *path = [NSMutableArray arrayWithCapacity:array.count];
 //    [root allPathsOfTree:root path:path];
 //    [root depthFirstTraverse:root order:PreOrder];

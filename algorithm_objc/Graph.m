@@ -72,7 +72,6 @@
         _discovered[i] = @NO;
         _processed[i] = @NO;
     }
-    
     [self printSocialGraph:member1];
 }
 
@@ -104,6 +103,81 @@
             }
         }
         //NSLog(@"Friend: %@", currentMemeber.name);
+    }
+}
+
+- (void)setupSocialGraphWithLevel {
+/*
+    Joe--Sue(1)
+     \   /   \
+     Amy(1)   \
+     /  \  Mary(2)
+ (2)Paul \ /   \
+          |     \
+       Bill(2)--John(3)
+     
+        J S A P M B J
+     J| 0 1 1 0 0 0 0
+     S| 1 0 1 0 1 0 0
+     A| 1 1 0 1 0 1 0
+     P| 0 0 1 0 0 0 0
+     M| 0 1 0 0 0 1 1
+     B| 0 0 1 0 1 0 1
+     J| 0 0 0 0 1 1 0
+     
+     Level 1: Amy, Sue
+     Level 2: Bill, Mary, Paul
+     Level 3: John
+     
+     */
+    NSArray *graph = @[@0, @1, @1, @0, @0, @0, @0,
+                       @1, @0, @1, @0, @1, @0, @0,
+                       @1, @1, @0, @1, @0, @1, @0,
+                       @0, @0, @1, @0, @0, @0, @0,
+                       @0, @1, @0, @0, @0, @1, @1,
+                       @0, @0, @1, @0, @1, @0, @1,
+                       @0, @0, @0, @0, @1, @1, @0,];
+    NSArray *names = @[@"Joe", @"Sue", @"Amy", @"Paul", @"Mary", @"Bill", @"John"];
+    [self printSocialGraph:graph names:names startVertex:0 depth:3];
+}
+
+- (void)printSocialGraph:(NSArray *)graph names:(NSArray *)names startVertex:(NSUInteger)startVertex depth:(NSUInteger)depth {
+    double size = sqrt(graph.count);
+    if (fmod(size, 1.0) != 0 || names.count != (int)size) {
+        NSLog(@"Invalid graph");
+        return;
+    }
+    NSMutableArray *visit = [NSMutableArray arrayWithCapacity:size];
+    for (NSUInteger idx=0; idx<size; idx++) {
+        visit[idx] = @NO;
+    }
+    NSMutableArray *queue = [NSMutableArray new];
+    [queue addObject:@(startVertex)];
+    visit[startVertex] = @YES;
+    NSUInteger currentLevel = 0;
+    int level = 0;
+
+    while ((queue.count>0)&&(level<=depth)) {
+        // Keep track of the size of nodes for each level
+        currentLevel = queue.count;
+        printf("Level %d: ", level);
+
+        // Loop through only nodes in each level
+        while (currentLevel > 0) {
+            NSUInteger vertex = [[queue firstObject] integerValue];
+            [queue removeObjectAtIndex:0];
+            printf("%s ", [names[vertex] UTF8String]);
+            for (int i=0; i<names.count; i++) {
+                if ([graph[vertex+i*names.count] isEqualToNumber:@1] && [visit[i] isEqualToNumber:@NO]) {
+                    [queue addObject:@(i)];
+                    visit[i] = @YES;
+                }
+            }
+            currentLevel--;
+        }
+        // When the loop is done, all the nodes in the current level are processed. Increment level by 1
+        level++;
+        printf("\n");
     }
 }
 
