@@ -10,6 +10,8 @@
 #import "NSArray+Methods.h"
 
 @interface Array()
+@property (nonatomic, strong) NSMutableArray *s1;
+@property (nonatomic, copy) NSMutableArray *s2;
 @property (assign) NSUInteger enumeratorIdx;
 @property (nonatomic, strong) NSMutableArray *enumeratorArray;
 @end
@@ -26,9 +28,22 @@
 //    
 //    NSArray *array2 = @[@2, @7, @2, @-2, @5, @-7];
 //    [array2 findPairsOfElementsEqualToSum:7];
-
+    
+    NSMutableArray *a = [NSMutableArray arrayWithArray:@[@1,@2]];
+    self.s1 = a;
+    self.s2 = a;
+    [a addObject:@3];
+    NSLog(@"s1: %@, s2:%@", self.s1, self.s2);
+    self.s2 = self.s1;
+    NSLog(@"s1: %@, s2:%@", self.s1, self.s2);
+    [self.s1 addObject:@4];
+    NSLog(@"s1: %@, s2:%@", self.s1, self.s2);
+    
     NSLog(@"int max: %d", INT_MAX);
     NSLog(@"int max: %d", INT_MIN);
+    [self mergeTwoSortedArrayNoExtraSpace];
+    
+    
     NSArray *array3 = @[@2, @4, @10, @7, @10];
     if ([array3 indexOfObject:@10] != NSNotFound) {
         NSLog(@"Index of object: %lu", (unsigned long)[array3 indexOfObject:@10]);
@@ -204,5 +219,88 @@
     double median2 = [array[array.count/2-1] doubleValue];
     return (median1+median2)/2;
 }
+
+/*
+ Binary Heap:
+ For kth element in an array
+ Left child index = 2*k
+ Right child index = 2*k+1
+ Parent index = k/2
+ 
+ Start at index=1 for easier calculation: array[1]=min
+ Insertion (min heap, root node is the smallest element):
+ 1. Add object to the end of the array.
+ 2. Check if input is smaller than it's parent at (size-)/2
+ 3. If yes, swap parent and current value, repeat 2.
+ 
+ Deletion
+ 1. Replace the min value with the last object of the array
+ 2. Compare to it's children, if it's bigger than children (left or right), swap and move down index*2
+ */
+
+
+
+/*
+ Merge two arrays into two sorted arrays
+ Input:
+ array1 = 1,5,9,10,15,20->1,2,9,10,15,20->1,2,3,10,15,20
+ array2 = 2,3,8,13,     ->3,5,8,13      ->9,5,8,13
+ 
+ 
+ Output:
+ array1 = 1,2,3,5,8,9
+ array2 = 10,13,15,20
+ */
+
+- (void)mergeTwoSortedArrayNoExtraSpace {
+    NSMutableArray *array1 = [NSMutableArray arrayWithArray:@[@1,@5,@9,@10,@15,@20]];
+    NSMutableArray *array2 = [NSMutableArray arrayWithArray:@[@2,@3,@8,@13]];
+    
+    for (NSUInteger idx1=0; idx1<array1.count; idx1++) {
+        // If array1 > array2, swap array1 array2, sort array2
+        // If array1 < array2, increment array1
+        if ([array1[idx1] isGreaterThan:array2[0]]) {
+            NSNumber *temp = array1[idx1];
+            array1[idx1] = array2[0];
+            array2[0] = temp;
+
+            // Use insertion sort to sort the swapped element array[0] in array2
+            for (NSUInteger i=1; i<array2.count; i++) {
+                if ([temp isGreaterThan:array2[i]]) {
+                    array2[i-1] = array2[i];
+                    array2[i] = temp;
+                }
+            }
+        }
+    }
+    NSLog(@"array1: %@", array1);
+    NSLog(@"array2: %@", array2);
+}
+
+//- (void)mergeTwoSortedArray:(NSMutableArray *)array1 array:(NSMutableArray *)array2 {
+- (void)mergeTwoSortedArray {
+    NSMutableArray *array1 = [NSMutableArray arrayWithArray:@[@1,@5,@9,@10,@15,@20]];
+    NSMutableArray *array2 = [NSMutableArray arrayWithArray:@[@2,@3,@8,@13]];
+    NSMutableArray *array3 = [NSMutableArray new];
+    NSUInteger idx2 = 0;
+    for (NSUInteger idx1=0; idx1<array1.count; idx1++) {
+        if (idx2>=array2.count) {
+            [array3 addObject:array1[idx1]];
+        }
+        else if ([array1[idx1] isGreaterThan:array2[idx2]]) {
+            [array3 addObject:array2[idx2]];
+            [array3 addObject:array1[idx1]];
+        }
+        else {
+            [array3 addObject:array1[idx1]];
+            [array3 addObject:array2[idx2]];
+        }
+        idx2++;
+    }
+    NSLog(@"array1: %@", array3);
+    NSLog(@"array2: %@", array2);
+}
+
+
 
 @end

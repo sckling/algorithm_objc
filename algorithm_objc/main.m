@@ -24,8 +24,8 @@ int main(int argc, const char * argv[]) {
 //        Matrix *matrix = [[Matrix alloc] init];
 //        [matrix setup];
 
-//        Array *array = [[Array alloc] init];
-//        [array setup];
+        Array *array = [[Array alloc] init];
+        [array setup];
         
 //        String *string = [[String alloc] init];
 //        [string setup];
@@ -47,8 +47,8 @@ int main(int argc, const char * argv[]) {
 //        Tree *binarySearchTree = [[Tree alloc] init];
 //        [binarySearchTree setup];
         
-        Graph *graph = [[Graph alloc] initWithMember];
-        [graph setupSocialGraphWithLevel];
+//        Graph *graph = [[Graph alloc] initWithMember];
+//        [graph setupSocialGraphWithLevel];
 //        [graph setupSocialGraph];
         
 //        SocialGraph *socialGraph = [[SocialGraph alloc] init];

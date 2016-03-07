@@ -15,6 +15,7 @@
 		195E7DE31C7D54190085121E /* Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 195E7DE11C7D54190085121E /* Matrix.m */; };
 		19601AC21BF154E00096DA27 /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 19601AC11BF154E00096DA27 /* Member.m */; };
 		196466F91C17C7B100FA9E4D /* UndirectedGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 196466F81C17C7B100FA9E4D /* UndirectedGraph.m */; };
+		199D61D91C89607000D0A795 /* Graph1.m in Sources */ = {isa = PBXBuildFile; fileRef = 199D61D81C89607000D0A795 /* Graph1.m */; };
 		19B738AE1BF2F5E5005D29A2 /* SocialGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B738AD1BF2F5E5005D29A2 /* SocialGraph.m */; };
 		19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E41BD1F772004F31AF /* EdgeNode.m */; };
 		19F696E81BD1F84D004F31AF /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E71BD1F84D004F31AF /* Graph.m */; };
@@ -55,6 +56,8 @@
 		19601AC11BF154E00096DA27 /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Member.m; sourceTree = "<group>"; };
 		196466F71C17C7B100FA9E4D /* UndirectedGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UndirectedGraph.h; sourceTree = "<group>"; };
 		196466F81C17C7B100FA9E4D /* UndirectedGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UndirectedGraph.m; sourceTree = "<group>"; };
+		199D61D71C89607000D0A795 /* Graph1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph1.h; sourceTree = "<group>"; };
+		199D61D81C89607000D0A795 /* Graph1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph1.m; sourceTree = "<group>"; };
 		19B738AC1BF2F5E5005D29A2 /* SocialGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialGraph.h; sourceTree = "<group>"; };
 		19B738AD1BF2F5E5005D29A2 /* SocialGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialGraph.m; sourceTree = "<group>"; };
 		19F696E31BD1F772004F31AF /* EdgeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgeNode.h; sourceTree = "<group>"; };
@@ -156,6 +159,8 @@
 				19601AC11BF154E00096DA27 /* Member.m */,
 				19F696E61BD1F84D004F31AF /* Graph.h */,
 				19F696E71BD1F84D004F31AF /* Graph.m */,
+				199D61D71C89607000D0A795 /* Graph1.h */,
+				199D61D81C89607000D0A795 /* Graph1.m */,
 				19B738AC1BF2F5E5005D29A2 /* SocialGraph.h */,
 				19B738AD1BF2F5E5005D29A2 /* SocialGraph.m */,
 				196466F71C17C7B100FA9E4D /* UndirectedGraph.h */,
@@ -306,6 +311,7 @@
 				E4A908B81BCA1CD500FA77B6 /* TreeNode.m in Sources */,
 				19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */,
 				193A42861C485335004AF854 /* Dictionary.m in Sources */,
+				199D61D91C89607000D0A795 /* Graph1.m in Sources */,
 				19F696E81BD1F84D004F31AF /* Graph.m in Sources */,
 				E42659D71BCA39D3001B49C4 /* NSArray+Methods.m in Sources */,
 			);
