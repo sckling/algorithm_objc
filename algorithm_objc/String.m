@@ -11,8 +11,11 @@
 @implementation String
 
 - (void)setup {
+    NSMutableArray *array = [NSMutableArray new];
+    [self bracketPermutation:2 array:array];
+    
 //    [self isBracketsCountCorrectSetUp];
-    [self smallestCharInArraySetup];
+//    [self smallestCharInArraySetup];
 }
 
 - (void)smallestCharInArraySetup {
@@ -159,5 +162,59 @@
     }
     return openBracket == 0? YES: NO;
 }
+
+// 1: [()]
+// 2: ["(())", "()()"]
+// 3: [((())), (())(), ()(()), (()()), ...]
+// Input: positive integer
+// Output: NSArray: each element contains a string of () permutations
+// Needs to be valid open/close brackets (), invalid: )()(
+
+
+- (NSArray *)bracketPermutation:(NSUInteger)number array:(NSMutableArray *)array {
+    if (number == 0) {
+        return array;
+    }
+    NSString *brackets = nil;
+    NSUInteger temp = number;
+    while (number > 0) {
+        NSString *string = nil;
+        if (number == 1) {
+            string = [NSString stringWithFormat:@"%lu", (long int)number];
+            //string = [self buildPermutatString];
+        }
+        else {
+            string = [NSString stringWithFormat:@"%lu, ", (long int)number];
+            //string = [NSString stringwithFormat:@"%@, ", [self buildPermutatString]];
+        }
+        //brackets = [brackets stringByAppendingString:string];
+        brackets = [NSString stringWithFormat:@"%@", string];
+        number--;
+    }
+    NSLog(@"brackets: %@", brackets);
+    [array addObject:brackets];
+    return [self bracketPermutation:temp-1 array:array];
+}
+
+/* original solution
+- (NSArray *)bracketPermutation:(NSUInteger)number array:(NSMutableArray *)array {
+    if (number == 0) {
+        return array;
+    }
+    NSString *brackets = nil;
+    while (number > 0) {
+        NSString *string = nil;
+        if (number == 1) {
+            string = [self buildPermutatString];
+        }
+        else {
+            string = [NSString stringwithFormat:@"%@, ", [self buildPermutatString]];
+        }
+        brackets = [brackets stringByAppendingString:string];
+    }
+    [array addObject:brackets];
+    return [self bracketPermutation:number-1 array:array]
+}
+*/
 
 @end

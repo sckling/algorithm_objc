@@ -15,6 +15,7 @@
 #import "NSArray+Methods.h"
 #import "Dictionary.h"
 #import "Matrix.h"
+#import "Numbers.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -23,12 +24,15 @@ int main(int argc, const char * argv[]) {
         
 //        Matrix *matrix = [[Matrix alloc] init];
 //        [matrix setup];
-
-        Array *array = [[Array alloc] init];
-        [array setup];
         
-//        String *string = [[String alloc] init];
-//        [string setup];
+//        Numbers *numbers = [[Numbers alloc] init];
+//        [numbers setup];
+
+//        Array *array = [[Array alloc] init];
+//        [array setup];
+        
+        String *string = [[String alloc] init];
+        [string setup];
         
 //        [array twoDimenionalArray];
 //        [array blockExecution];

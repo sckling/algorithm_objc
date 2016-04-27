@@ -41,6 +41,7 @@
     
     NSLog(@"int max: %d", INT_MAX);
     NSLog(@"int max: %d", INT_MIN);
+    [self mergeTwoSortedArray1];
     [self mergeTwoSortedArrayNoExtraSpace];
     
     
@@ -252,9 +253,39 @@
  array2 = 10,13,15,20
  */
 
+- (void)mergeTwoSortedArray1 {
+    NSMutableArray *array2 = [NSMutableArray arrayWithArray:@[@1,@5,@9,@10,@15,@20]];
+    NSMutableArray *array1 = [NSMutableArray arrayWithArray:@[@6,@6,@8,@13]];
+    NSMutableArray *array3 = [NSMutableArray arrayWithCapacity:array1.count+array2.count];
+
+    NSUInteger idx1 = 0;
+    NSUInteger idx2 = 0;
+    for (NSUInteger i=0; i<array1.count+array2.count; i++) {
+        
+        // if traversal of array2 is complete, continue to add object from array1
+        if (idx2 >= array2.count) {
+            [array3 addObject:array1[idx1++]];
+        }
+        // if traversal of array1 is complete, continue to add object from array2
+        else if (idx1 >= array1.count) {
+            [array3 addObject:array2[idx2++]];
+        }
+        // if array1 element is greater than array2 element, add array2 element
+        else if ([array1[idx1] isGreaterThanOrEqualTo:array2[idx2]]) {
+            [array3 addObject:array2[idx2++]];
+        }
+        // if array2 element is greater than array1 element, add array1 element
+        else {
+            [array3 addObject:array1[idx1++]];
+        }
+    }
+    NSLog(@"array: %@", array3);
+    
+}
+
 - (void)mergeTwoSortedArrayNoExtraSpace {
     NSMutableArray *array1 = [NSMutableArray arrayWithArray:@[@1,@5,@9,@10,@15,@20]];
-    NSMutableArray *array2 = [NSMutableArray arrayWithArray:@[@2,@3,@8,@13]];
+    NSMutableArray *array2 = [NSMutableArray arrayWithArray:@[@6,@7,@8,@13]];
     
     for (NSUInteger idx1=0; idx1<array1.count; idx1++) {
         // If array1 > array2, swap array1 array2, sort array2
@@ -278,9 +309,10 @@
 }
 
 //- (void)mergeTwoSortedArray:(NSMutableArray *)array1 array:(NSMutableArray *)array2 {
+// This method contains bugs!!!
 - (void)mergeTwoSortedArray {
     NSMutableArray *array1 = [NSMutableArray arrayWithArray:@[@1,@5,@9,@10,@15,@20]];
-    NSMutableArray *array2 = [NSMutableArray arrayWithArray:@[@2,@3,@8,@13]];
+    NSMutableArray *array2 = [NSMutableArray arrayWithArray:@[@6,@7,@8,@13]];
     NSMutableArray *array3 = [NSMutableArray new];
     NSUInteger idx2 = 0;
     for (NSUInteger idx1=0; idx1<array1.count; idx1++) {

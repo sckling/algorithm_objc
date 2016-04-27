@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1901CC131CC06B2F00BECDE3 /* Recursion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901CC121CC06B2F00BECDE3 /* Recursion.m */; };
 		193A42811C4851AF004AF854 /* NSDictionary+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 193A42801C4851AF004AF854 /* NSDictionary+Methods.m */; };
 		193A42861C485335004AF854 /* Dictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 193A42851C485335004AF854 /* Dictionary.m */; };
 		19463C451C824A3A0076ED00 /* String.m in Sources */ = {isa = PBXBuildFile; fileRef = 19463C441C824A3A0076ED00 /* String.m */; };
@@ -16,6 +17,8 @@
 		19601AC21BF154E00096DA27 /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 19601AC11BF154E00096DA27 /* Member.m */; };
 		196466F91C17C7B100FA9E4D /* UndirectedGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 196466F81C17C7B100FA9E4D /* UndirectedGraph.m */; };
 		199D61D91C89607000D0A795 /* Graph1.m in Sources */ = {isa = PBXBuildFile; fileRef = 199D61D81C89607000D0A795 /* Graph1.m */; };
+		19ACC4421CC59E9F00E2736E /* Numbers.m in Sources */ = {isa = PBXBuildFile; fileRef = 19ACC4411CC59E9F00E2736E /* Numbers.m */; };
+		19ACC4431CC59E9F00E2736E /* Numbers.m in Sources */ = {isa = PBXBuildFile; fileRef = 19ACC4411CC59E9F00E2736E /* Numbers.m */; };
 		19B738AE1BF2F5E5005D29A2 /* SocialGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B738AD1BF2F5E5005D29A2 /* SocialGraph.m */; };
 		19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E41BD1F772004F31AF /* EdgeNode.m */; };
 		19F696E81BD1F84D004F31AF /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E71BD1F84D004F31AF /* Graph.m */; };
@@ -44,6 +47,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1901CC111CC06B2F00BECDE3 /* Recursion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recursion.h; sourceTree = "<group>"; };
+		1901CC121CC06B2F00BECDE3 /* Recursion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recursion.m; sourceTree = "<group>"; };
 		193A427F1C4851AF004AF854 /* NSDictionary+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Methods.h"; sourceTree = "<group>"; };
 		193A42801C4851AF004AF854 /* NSDictionary+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Methods.m"; sourceTree = "<group>"; };
 		193A42841C485335004AF854 /* Dictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dictionary.h; sourceTree = "<group>"; };
@@ -58,6 +63,8 @@
 		196466F81C17C7B100FA9E4D /* UndirectedGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UndirectedGraph.m; sourceTree = "<group>"; };
 		199D61D71C89607000D0A795 /* Graph1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph1.h; sourceTree = "<group>"; };
 		199D61D81C89607000D0A795 /* Graph1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph1.m; sourceTree = "<group>"; };
+		19ACC4401CC59E9F00E2736E /* Numbers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Numbers.h; sourceTree = "<group>"; };
+		19ACC4411CC59E9F00E2736E /* Numbers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Numbers.m; sourceTree = "<group>"; };
 		19B738AC1BF2F5E5005D29A2 /* SocialGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialGraph.h; sourceTree = "<group>"; };
 		19B738AD1BF2F5E5005D29A2 /* SocialGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialGraph.m; sourceTree = "<group>"; };
 		19F696E31BD1F772004F31AF /* EdgeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgeNode.h; sourceTree = "<group>"; };
@@ -110,22 +117,26 @@
 			name = Dictionary;
 			sourceTree = "<group>";
 		};
-		19463C421C824A0A0076ED00 /* Strings */ = {
+		19463C421C824A0A0076ED00 /* Strings and Numbers */ = {
 			isa = PBXGroup;
 			children = (
 				19463C431C824A3A0076ED00 /* String.h */,
 				19463C441C824A3A0076ED00 /* String.m */,
+				19ACC4401CC59E9F00E2736E /* Numbers.h */,
+				19ACC4411CC59E9F00E2736E /* Numbers.m */,
 			);
-			name = Strings;
+			name = "Strings and Numbers";
 			sourceTree = "<group>";
 		};
-		195E7DDF1C7D53B90085121E /* DynamicProgramming */ = {
+		195E7DDF1C7D53B90085121E /* DP and Recursion */ = {
 			isa = PBXGroup;
 			children = (
 				195E7DE01C7D54190085121E /* Matrix.h */,
 				195E7DE11C7D54190085121E /* Matrix.m */,
+				1901CC111CC06B2F00BECDE3 /* Recursion.h */,
+				1901CC121CC06B2F00BECDE3 /* Recursion.m */,
 			);
-			name = DynamicProgramming;
+			name = "DP and Recursion";
 			sourceTree = "<group>";
 		};
 		19F696E91BD1F856004F31AF /* Trees */ = {
@@ -192,11 +203,11 @@
 			children = (
 				E4A908A31BCA1B3A00FA77B6 /* main.m */,
 				19F696EA1BD1F862004F31AF /* Arrays */,
-				19463C421C824A0A0076ED00 /* Strings */,
+				19463C421C824A0A0076ED00 /* Strings and Numbers */,
 				193A42821C4851CF004AF854 /* Dictionary */,
 				19F696EB1BD1F86E004F31AF /* Graphs */,
 				19F696E91BD1F856004F31AF /* Trees */,
-				195E7DDF1C7D53B90085121E /* DynamicProgramming */,
+				195E7DDF1C7D53B90085121E /* DP and Recursion */,
 			);
 			path = algorithm_objc;
 			sourceTree = "<group>";
@@ -299,6 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1901CC131CC06B2F00BECDE3 /* Recursion.m in Sources */,
 				19B738AE1BF2F5E5005D29A2 /* SocialGraph.m in Sources */,
 				196466F91C17C7B100FA9E4D /* UndirectedGraph.m in Sources */,
 				195E7DE21C7D54190085121E /* Matrix.m in Sources */,
@@ -308,6 +320,7 @@
 				19463C451C824A3A0076ED00 /* String.m in Sources */,
 				E42659DA1BCB1C67001B49C4 /* Array.m in Sources */,
 				19601AC21BF154E00096DA27 /* Member.m in Sources */,
+				19ACC4421CC59E9F00E2736E /* Numbers.m in Sources */,
 				E4A908B81BCA1CD500FA77B6 /* TreeNode.m in Sources */,
 				19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */,
 				193A42861C485335004AF854 /* Dictionary.m in Sources */,
@@ -321,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19ACC4431CC59E9F00E2736E /* Numbers.m in Sources */,
 				E4A908B11BCA1BDE00FA77B6 /* Tests.m in Sources */,
 				E41E2B1B1C2618A9008DD8B3 /* ArrayTests.m in Sources */,
 				195E7DE31C7D54190085121E /* Matrix.m in Sources */,
@@ -342,6 +356,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -349,6 +364,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -370,7 +386,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -385,6 +401,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -392,6 +409,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -407,7 +425,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
