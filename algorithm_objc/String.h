@@ -12,4 +12,6 @@
 
 - (void)setup;
 
+- (void)smallestCharInArraySetup;
+
 @end

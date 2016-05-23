@@ -269,4 +269,26 @@ typedef NS_ENUM(NSInteger, Dir) {
 9     7
  */
 
+- (void)numberOfPathsInMatrix:(NSUInteger)matrixSize {
+    NSMutableArray *matrix = [NSMutableArray arrayWithCapacity:matrixSize*matrixSize];
+    for (NSUInteger i=0; i<matrixSize; i++) {
+        for (NSUInteger j=0; j<matrixSize; j++) {
+            matrix[i] = @0;
+            matrix[i+j*matrixSize] = @0;
+        }
+    }
+    NSLog(@"Total path: %lu", (long int)[self pathCount:[matrix copy] x:0 y:0]);
+}
+
+- (NSUInteger)pathCount:(NSArray *)matrix x:(NSUInteger)x y:(NSUInteger)y {
+    // Base case: reach the right or bottom of the matrix
+    NSUInteger size = (NSUInteger)sqrt(matrix.count);
+    if ((x==size)||(y==size)) {
+        return 0;
+    }
+    NSUInteger count = [self pathCount:matrix x:x+1 y:y];
+    count += [self pathCount:matrix x:x y:y+1];
+    return count;
+}
+
 @end

@@ -11,8 +11,20 @@
 @implementation String
 
 - (void)setup {
-    NSMutableArray *array = [NSMutableArray new];
-    [self bracketPermutation:2 array:array];
+    NSString *string = @"abc";
+    NSLog(@"%lu", string.length);
+    NSLog(@"%c", [string characterAtIndex:2]);
+    
+    const char *c = [string UTF8String];
+    const char *c1 = [string cStringUsingEncoding:NSUTF16StringEncoding];
+    NSLog(@"char array %c", c[0]);
+    NSLog(@"char array %c", c[1]);
+    NSLog(@"char array %c%c,%c", c1[2], c1[3], c1[4]);
+    
+    [self bracketPermutation:5];
+    [self bracketPermutation:6];
+    //NSLog(@"String permutation: %@", [self stringPermutation:@"abc"]);
+    //[self bracketPermutation:2 array:array];
     
 //    [self isBracketsCountCorrectSetUp];
 //    [self smallestCharInArraySetup];
@@ -170,32 +182,6 @@
 // Output: NSArray: each element contains a string of () permutations
 // Needs to be valid open/close brackets (), invalid: )()(
 
-
-- (NSArray *)bracketPermutation:(NSUInteger)number array:(NSMutableArray *)array {
-    if (number == 0) {
-        return array;
-    }
-    NSString *brackets = nil;
-    NSUInteger temp = number;
-    while (number > 0) {
-        NSString *string = nil;
-        if (number == 1) {
-            string = [NSString stringWithFormat:@"%lu", (long int)number];
-            //string = [self buildPermutatString];
-        }
-        else {
-            string = [NSString stringWithFormat:@"%lu, ", (long int)number];
-            //string = [NSString stringwithFormat:@"%@, ", [self buildPermutatString]];
-        }
-        //brackets = [brackets stringByAppendingString:string];
-        brackets = [NSString stringWithFormat:@"%@", string];
-        number--;
-    }
-    NSLog(@"brackets: %@", brackets);
-    [array addObject:brackets];
-    return [self bracketPermutation:temp-1 array:array];
-}
-
 /* original solution
 - (NSArray *)bracketPermutation:(NSUInteger)number array:(NSMutableArray *)array {
     if (number == 0) {
@@ -216,5 +202,79 @@
     return [self bracketPermutation:number-1 array:array]
 }
 */
+
+/*
+ ()()->(())
+ ()()()->(),()()->( () )()->() () ()->()( () )
+ ->(),(())->( () ())->(( () ))->(() () )
+ 
+ Use NSSet instead of NSArray to remove duplicate entries
+ Test case 1: odd number brackets
+ Test case 2: non-bracket character
+ */
+- (void)bracketPermutation:(NSUInteger)number {
+    if (![self isEvenNumber:number]) {
+        return;
+    }
+    NSMutableString *brackets = [NSMutableString stringWithCapacity:number+1];
+    for (NSUInteger i=0; i<number; i++) {
+        if ([self isEvenNumber:i]) {
+            [brackets insertString:@"(" atIndex:i];
+        }
+        else {
+            [brackets insertString:@")" atIndex:i];
+        }
+    }
+    NSLog(@"Brackets: %@", [self permutateBrackets:brackets]);
+}
+
+- (NSSet *)permutateBrackets:(NSString *)brackets {
+    if (brackets.length<=2) {
+        return [NSSet setWithObject:brackets];
+    }
+    NSString *firstBrackets = [brackets substringWithRange:NSMakeRange(0, 2)];
+    NSString *remainingBrackets = [brackets substringWithRange:NSMakeRange(2, brackets.length-2)];
+    NSSet *previousBrackets = [self permutateBrackets:remainingBrackets];
+    NSMutableSet *newBrackets = [NSMutableSet new];
+    for (NSString *bracketSet in previousBrackets) {
+        for (NSUInteger i=0; i<bracketSet.length; i++) {
+            NSMutableString *newBracket = [NSMutableString stringWithString:bracketSet];
+            [newBracket insertString:firstBrackets atIndex:i];
+            [newBrackets addObject:newBracket];
+        }
+    }
+    return newBrackets;
+}
+
+- (BOOL)isEvenNumber:(NSUInteger)number {
+    return number%2==0? YES : NO;
+}
+
+/*
+ abc->a,bc->b,c->bc,cd->abc,bac,bca;acd,cad,cda
+ 
+ Test case 1: empty string
+ Test case 2: string with 1 element
+ Test case 3: stirng with spaces
+ Test case 4: string size exceed array size
+ 
+ */
+- (NSArray *)stringPermutation:(NSString *)string {
+    if (string.length <= 1) {
+        return [NSArray arrayWithObject:string];
+    }
+    NSString *firstChar = [string substringWithRange:NSMakeRange(0, 1)];
+    NSString *remainingString = [string substringWithRange:NSMakeRange(1, string.length-1)];
+    NSArray *previousStrings = [self stringPermutation:remainingString];
+    NSMutableArray *newStrings = [NSMutableArray new];
+    for (NSString *pString in previousStrings) {
+        for (NSUInteger i=0; i<=pString.length; i++) {
+            NSMutableString *newString = [NSMutableString stringWithString:pString];
+            [newString insertString:firstChar atIndex:i];
+            [newStrings addObject:newString];
+        }
+    }
+    return newStrings;
+}
 
 @end

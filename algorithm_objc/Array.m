@@ -28,6 +28,16 @@
 //    
 //    NSArray *array2 = @[@2, @7, @2, @-2, @5, @-7];
 //    [array2 findPairsOfElementsEqualToSum:7];
+
+//    NSArray *array1 = @[@3, @1, @2, @5, @6, @4];
+//    NSLog(@"Product array: %@", [self getProductsOfAllIntsExceptAtIndex:array1]);
+//    NSLog(@"Product array: %@", [self buildAtIndex:array1]);
+    
+    NSArray *array2 = @[@3, @1, @2, @4, @5];
+    NSLog(@"Highest product of 3 numbers in array: %ld", (long)[self maxProductOfThreeNumbers:array2]);
+    
+        array2 = @[@1, @10, @-5, @1, @-100];
+    NSLog(@"Highest product of 3 numbers in array: %ld", (long)[self maxProductOfThreeNumbers:array2]);
     
     NSMutableArray *a = [NSMutableArray arrayWithArray:@[@1,@2]];
     self.s1 = a;
@@ -260,7 +270,7 @@
 
     NSUInteger idx1 = 0;
     NSUInteger idx2 = 0;
-    for (NSUInteger i=0; i<array1.count+array2.count; i++) {
+    for (NSUInteger i=0; i<array3.count; i++) {
         
         // if traversal of array2 is complete, continue to add object from array1
         if (idx2 >= array2.count) {
@@ -333,6 +343,130 @@
     NSLog(@"array2: %@", array2);
 }
 
+/*
+ Test case 1: array is empty
+ Test case 2: array has 1 element
+ Test case 3: array contains 0 element(s)
+ Assume we can't use division.
+ If we can use division, we can divide the total product by the at index value. However, needs to take care of 0 value element
+ */
+- (NSArray *)getProductsOfAllIntsExceptAtIndex:(NSArray *)array {
+//    [1, 7, 3, 4] -> [7*3*4, 1*3*4, 1*7*4, 1*7*3] -> [84, 12, 28, 21]
+    /*
+     1: 7*3
+     7: 3*4
+     3: 4
+     4: 1
+     */
+    NSArray *beforeIndex = [self buildBeforeIndex:array];
+    NSArray *afterIndex = [self buildAfterIndex:array];
+    NSLog(@"Before: %@", beforeIndex);
+    NSLog(@"After: %@", afterIndex);
+    NSMutableArray *productArray = [NSMutableArray arrayWithCapacity:array.count];
+    for (NSUInteger i=0; i<array.count; i++) {
+        NSUInteger product = [beforeIndex[i] integerValue] * [afterIndex[i] integerValue];
+        productArray[i] = @(product);
+    }
+    return productArray;
+}
+
+- (NSArray *)buildAtIndex:(NSArray *)array {
+    if (array.count <= 1) {
+        return array;
+    }
+    NSMutableArray *before = [NSMutableArray arrayWithCapacity:array.count];
+    NSUInteger maxSoFar = 1;
+    for (NSUInteger i=0; i<array.count; i++) {
+        before[i] = @(maxSoFar);
+        maxSoFar *= [array[i] integerValue];
+    }
+    NSMutableArray *atIndex = [NSMutableArray arrayWithCapacity:array.count];
+    for (NSUInteger i=0; i<array.count; i++) {
+        atIndex[i] = @0;
+    }
+    maxSoFar = 1;
+    for (NSInteger i=array.count-1; i>=0; i--) {
+        NSUInteger atIndexValue = maxSoFar * [before[i] integerValue];
+        atIndex[i] = @(atIndexValue);
+        maxSoFar *= [array[i] integerValue];
+    }
+    return [atIndex copy];
+}
+
+- (NSArray *)buildBeforeIndex:(NSArray *)array {
+    NSMutableArray *before = [NSMutableArray arrayWithCapacity:array.count];
+    for (NSUInteger i=0; i<array.count; i++) {
+        if (i==0) {
+            before[i] = @1;
+        }
+        else {
+            NSInteger cache = [before[i-1] integerValue] * [array[i-1] integerValue];
+            before[i] = @(cache);
+        }
+    }
+    return [before copy];
+}
+
+- (NSArray *)buildAfterIndex:(NSArray *)array {
+    NSMutableArray *after = [NSMutableArray arrayWithCapacity:array.count];
+    for (NSUInteger i=0; i<array.count; i++) {
+        after[i] = @0;
+    }
+    NSUInteger productSoFar = 1;
+    for (NSInteger i=array.count-1; i>=0; i--) {
+        after[i] = @(productSoFar);
+        productSoFar *= [array[i] integerValue];
+    }
+    return [after copy];
+}
+
+- (int)maxProductOfThreeNumbers:(NSArray *)array {
+    int a[] = {1, 10, -5, 1, -100};
+    int maxSoFar = INT_MIN;
+    int minSoFar = INT_MAX;
+    for (int i=0; i<5; i++) {
+        if (a[i] > maxSoFar) {
+            maxSoFar = a[i];
+        }
+    }
+    return maxSoFar;
+}
+
+//- (int)maxNumberInArray:(NSArray *)array max:(NSInteger)max {
+//    NSInteger maxSoFar = INT_MIN;
+//    for (int i=0; i<array.count; i++) {
+//        if (a[i] > max) {
+//            maxSoFar = a[i];
+//        }
+//    }
+//}
+
+
+//- (NSInteger)maxProductOfThreeNumbers:(NSArray *)array {
+//    NSMutableArray *maxSoFar = [NSMutableArray arrayWithArray:@[@0, @0, @0]];
+//    NSMutableArray *index = [NSMutableArray arrayWithArray:@[@-1, @-1, @-1]];
+//    for (NSUInteger i=0; i<array.count; i++) {
+//        if ([array[i] integerValue] > [maxSoFar[0] integerValue]) {
+//            maxSoFar[0] = array[i];
+//            index[0] = @(i);
+//        }
+//    }
+//    NSLog(@"maxSoFar: %@, %@", maxSoFar[0], index[0]);
+//    for (NSUInteger j=0; j<2; j++) {
+//        for (NSUInteger i=0; i<array.count; i++) {
+//            if ((i != [index[0] integerValue]) && i != [index[1] integerValue] && i != [index[2] integerValue]) {
+//                NSInteger product = [array[i] integerValue] * [maxSoFar[j] integerValue];
+//                NSLog(@"Product1 %ld, nax: %@", product, maxSoFar[j+1]);
+//                if (product > [maxSoFar[j+1] integerValue]) {
+//                    maxSoFar[j+1] = @(product);
+//                    index[j+1] = @(i);
+//                }
+//            }
+//        }
+//        NSLog(@"maxSoFar: %@, %@", maxSoFar[j+1], index[j+1]);
+//    }
+//    return [maxSoFar[2] integerValue];
+//}
 
 
 @end
