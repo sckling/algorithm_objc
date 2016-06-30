@@ -233,4 +233,46 @@
     return num1 + num2;
 }
 
+// Doesn't work on BST that the largest right node has left node(s)
+- (NSInteger)secondLargestInteger:(TreeNode *)node {
+    static NSInteger second;
+    static NSInteger maxSoFar;
+    if (node == nil) {
+        return 0;
+    }
+    // Go all the way to the leftmost
+    [self secondLargestInteger:node.left];
+    
+    NSInteger value = [(NSNumber *)node.value integerValue];
+    if (value > maxSoFar) {
+        maxSoFar = value;
+    }
+    NSLog(@"value: %lu", value);
+    NSLog(@"max value: %lu", maxSoFar);
+    [self secondLargestInteger:node.right];
+    if ((value>second)&&(value < maxSoFar)) {
+        second = value;
+    }
+    //NSLog(@"2nd value: %lu", second);
+    return second;
+}
+
+- (NSInteger)largestValueSmallerThanK:(TreeNode *)node value:(NSInteger)value {
+    static NSInteger prev;
+    static NSInteger maxSoFar;
+    if (node == nil) {
+        return 0;
+    }
+    [self largestValueSmallerThanK:node.left value:value];
+    if ([node.value integerValue] < prev) {
+        prev = [node.value integerValue];
+    }
+    
+    [self largestValueSmallerThanK:node.right value:value];
+    
+}
+
+
+
+
 @end

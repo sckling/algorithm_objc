@@ -14,4 +14,6 @@
 
 - (void)smallestCharInArraySetup;
 
+- (void)filterWordSetup;
+
 @end

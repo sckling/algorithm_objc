@@ -25,21 +25,26 @@
     // Pre-order: 3, 2, 6. Parent->Left->Right
     // In-order: 2, 3, 6.  Left->Parent->Right. Sort all the node from small to large
     // Post-order: 2, 6, 3 Left->Right->Parent
-    //
-    //        20
-    //      /    \
-    //     8     22
-    //   /  \      \
-    //  4    12    99
-    //       / \
-    //      10 14
+    // Input: 85, Largest value smaller than input: 80
+    // Input: 11, Largest value smaller than input: 10
+    //         20
+    //       /   \
+    //      /     \
+    //     8      22
+    //   /  \       \
+    //  4    12     99
+    //       / \    /
+    //      10 14  90
+    //             / \
+    //            80 70
     
     //NSArray *array = @[@3, @2, @6];
     //NSArray *array = @[@"j", @"f", @"a", @"d", @"h", @"k", @"z"];
     //NSArray *array = @[@"c", @"b", @"f"];
-    NSArray *array = @[@20, @8, @4, @12, @10, @14, @22, @99];
+    NSArray *array = @[@20, @8, @4, @12, @10, @14, @22, @99, @90, @80, @70];
     TreeNode *root = [self createBinarySearchTree:array];
-    NSLog(@"Depth of tree: %ld", [root depthOfTree:root]);
+//    NSLog(@"Depth of tree: %ld", [root depthOfTree:root]);
+    NSLog(@"Largest number: %lu", [root secondLargestInteger:root]);
 //    [root breadthFirstTraverse:root];
 //    [root breadthFirstTraverseByLevel:root];
     [root breadthFirstTraverseByLevelSingleQueue:root];

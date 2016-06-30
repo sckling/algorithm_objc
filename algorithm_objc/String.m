@@ -277,4 +277,101 @@
     return newStrings;
 }
 
+// apple, banana, orange
+// Test case 1: empty string
+// Test case 2: single word
+// Test case 3: no matching word
+// Test case 4: words with punctuation before or after
+// Test case 5: upper and lower cases
+
+- (void)filterWordSetup {
+    NSMutableSet *set = [[NSMutableSet alloc] initWithArray:@[@"apple", @"banana", @"oranage"]];
+    [self filterWords:@"#banana this is an Apple!" set:set];
+    [self filterWords:@"apple" set:set];
+    [self filterWords:@"hello world" set:set];
+}
+
+- (void)filterWords:(NSString *)string set:(NSSet *)set {
+    NSMutableString *stringBuffer = [NSMutableString new];
+    for (NSUInteger idx=0; idx<string.length; idx++) {
+        unichar character = [string characterAtIndex:idx];
+        if ([self isAlphabet:character]) {
+            [stringBuffer appendString:[NSString stringWithFormat:@"%c", character]];
+        }
+        else {
+            [self printWord:stringBuffer set:set];
+            printf("%c", character);
+            stringBuffer = [NSMutableString new];
+        }
+    }
+    if (stringBuffer.length > 0) {
+        [self printWord:stringBuffer set:set];
+    }
+    printf("\n");
+}
+
+- (BOOL)isAlphabet:(unichar)character {
+    if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z')) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)printWord:(NSString *)string set:(NSSet *)set {
+    NSString *lowercaseString = [string lowercaseString];
+    if ([set containsObject:lowercaseString]) {
+        for (NSUInteger idx=0; idx<string.length; idx++) {
+            printf("*");
+        }
+    }
+    else {
+        printf("%s", [string UTF8String]);
+    }
+}
+
+// anagram: today is the best day; yad
+
+
+//In our app, we have a special reward for users who are active a lot. We give this reward to any users who have used the app on three different days in the past five days.
+
+// Call this method everything time the app launche from fresh or from background
+// Audible, 6/28/16
+- (void)checkUserReward {
+    // Current time stamp
+    // day[0] = 070116
+    // day[1] = 070216
+    
+    NSMutableArray *usage = [NSUserDefaults default[@"usage"]];
+    NSDate *date = [NSDate today];
+    [usage addObject:date];
+    [NSUserDefaults save[@"usage": usage]];
+    
+    // Count=5, check element=4
+    NSDate *date1 = [usage popLastElement];
+    NSDate *date2 = [usage popLastElement];
+    NSDate *date3 = [usage popLastElement];
+    // date1 is today so date1 and date can only be less or equal to 3 days apart
+    
+    NSUInteger firstTwoDatesCount = [date1 dayCountFromDate:date2];
+    if (firstTwoDatesCount <= 3) {
+        // if 3 days apart, date2-date3 has to be 1
+        // if 2 days apart, date2-date3 has to be <=2
+        // if 1 days apart, date2-date3 has to be <=3
+        if (firstTwoDatesCount == 1) {
+            if ([date2 dayCountFromDate:date3] <= 3) }
+            [self rewardUser];
+        }
+    }
+}
+
+- (NSUInteger)dayCountFromDate:(NSDate *)date1 {
+    // Assume format is ddMMyyyy
+    // Convert date to absolute second value and convert it back to number of day
+}
+
+// Method that rewards user
+- (void)rewardUser {
+    
+}
+
 @end

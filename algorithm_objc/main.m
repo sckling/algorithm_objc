@@ -28,11 +28,11 @@ int main(int argc, const char * argv[]) {
 //        Numbers *numbers = [[Numbers alloc] init];
 //        [numbers setup];
 
-        Array *array = [[Array alloc] init];
-        [array setup];
+//        Array *array = [[Array alloc] init];
+//        [array setup];
         
 //        String *string = [[String alloc] init];
-//        [string setup];
+//        [string filterWordSetup];
         
 //        [array twoDimenionalArray];
 //        [array blockExecution];
@@ -48,8 +48,8 @@ int main(int argc, const char * argv[]) {
 //            }
 //        }
         
-//        Tree *binarySearchTree = [[Tree alloc] init];
-//        [binarySearchTree setup];
+        Tree *binarySearchTree = [[Tree alloc] init];
+        [binarySearchTree setup];
         
 //        Graph *graph = [[Graph alloc] initWithMember];
 //        [graph setupSocialGraphWithLevel];
