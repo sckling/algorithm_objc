@@ -121,6 +121,7 @@
     NSLog(@"))(()): %d", [self isBracketsCountCorrectNoStack:brackets]);
 }
 
+// Nest Lab
 // Given a string of brackets “((()))()()”, find if it is correct.
 // It is correct if for every opening bracket there is a closing bracket and the opening bracket comes before the closing one.
 //
@@ -175,6 +176,7 @@
     return openBracket == 0? YES: NO;
 }
 
+// Hulu
 // 1: [()]
 // 2: ["(())", "()()"]
 // 3: [((())), (())(), ()(()), (()()), ...]
@@ -331,7 +333,6 @@
 
 // anagram: today is the best day; yad
 
-
 /* Amazon 11/16/12
  http://collabedit.com/x7jj5
  
@@ -343,33 +344,64 @@
  A fox jumped a red fox.
  => a, fox, jumped
  
- NSArray commonWord(NSString *)string1: (NSString *)string2
- {
- NSArray *words1 = [string1 componentsSeparatedByString:@" "];
- NSArray *words2 = [string1 componentsSeparatedByString:@" "];
- NSMutableDictionery *wordStacks = [NSMutableDictionery dictionery];
- NSMutableArray *finalOutput = [NSMutableArray array];
+- (NSArray *)commonWord(NSString *)string1: (NSString *)string2
+{
+    NSArray *words1 = [string1 componentsSeparatedByString:@" "];
+    NSArray *words2 = [string1 componentsSeparatedByString:@" "];
+    NSMutableDictionery *wordStacks = [NSMutableDictionery dictionery];
+    NSMutableArray *finalOutput = [NSMutableArray array];
+
+    while (NSString *string in words1) {
+        [wordStacks setObject:1 forKey:string];
+    }
+
+    while (NSString *string in words2) {
+        if ([wordStacks objectForKey:string]) {
+            [finalOutput addObject:string];
+        }
+    }
+    return (NSArray *)finalOutput;
+}
+
+ A hash table has O(1) performance in the best case. The majority of the work in implementing a hash table is ensuring that this best case is also the average case by choosing a good hash function that minimizes collisions. However, it is more informative to say that the average expected performance of a hash table is somewhere between O(1) and O(log N) with a good hash function, and there is a strong bias toward O(1).
  
- 
- while (NSString *string in words1)
- {
- [wordStacks setObject:1 forKey:string];
- }
- 
- while (NSString *string in words2)
- {
- if ([wordStacks objectForKey:string])
- {
- [finalOutput addObject:string];
- }
- }
- 
- return (NSArray *)finalOutput;
- 
- }
- 
+ The worst case for a hash table is O(N), and there is no way to avoid the worst case using a basic hash table. If guaranteed good performance is required then a more suitable structure should be used, such as a deterministic skip list or balanced binary search tree.
+
  */
 
+- (NSString *)commonWords:(NSString *)firstString string:(NSString *)secondString
+{
+    NSLog(@"\nString1: %@\nString2: %@", firstString, secondString);
+    
+    NSArray *words1 = [firstString componentsSeparatedByString:@" "];
+    NSArray *words2 = [secondString componentsSeparatedByString:@" "];
+    NSMutableDictionary *wordStacks = [NSMutableDictionary dictionary];
+    NSString *finalString = [NSString string];
+    
+    NSString *tempString = nil;
+    for (tempString in words1)
+    {
+        NSLog(@"%@, ", tempString);
+        if ([wordStacks objectForKey:tempString]==nil) {
+            [wordStacks setObject:@"1" forKey:tempString];
+        }
+    }
+    
+    for (tempString in words2)
+    {
+        if ([wordStacks objectForKey:tempString])
+        {
+            NSLog(@"Matched: %@", tempString);
+            finalString = [finalString stringByAppendingFormat:@"%@ ", tempString];
+            [wordStacks removeObjectForKey:tempString];
+            if ([wordStacks count]==0) {
+                break;
+            }
+        }
+    }
+    NSLog(@"Final1: %@", finalString);
+    return (NSString *)finalString;
+}
 
 //In our app, we have a special reward for users who are active a lot. We give this reward to any users who have used the app on three different days in the past five days.
 
@@ -413,6 +445,44 @@
 // Method that rewards user
 - (void)rewardUser {
     
+}
+
+//[self formRansomNote:@"a ransom note a" magazineContent:@"a note seems to be a ransom thing"];
+
+- (void)formRansomNote:(NSString *)noteString magazineContent:(NSString *)magazineString
+{
+    NSMutableDictionary *noteDict = [NSMutableDictionary dictionary];
+    NSArray *noteArray = [noteString componentsSeparatedByString:@" "];
+    for (NSString *tempString in noteArray) {
+        if (![noteDict objectForKey:tempString]) {
+            //[noteDict setObject:@"1" forKey:tempString];
+            [noteDict setObject:[NSNumber numberWithInt:1] forKey:tempString];
+        }
+        else {
+            NSNumber *count = [noteDict objectForKey:tempString];
+            NSLog(@"K: %@ V:%@", tempString, count);
+            [noteDict setObject:[NSNumber numberWithInt:[count integerValue]+1] forKey:tempString];
+        }
+    }
+    
+    NSArray *magazineArray = [magazineString componentsSeparatedByString:@" "];
+    for (NSString *tempString in magazineArray) {
+        if ([noteDict objectForKey:tempString]) {
+            NSNumber *count = [NSNumber numberWithInt:[[noteDict objectForKey:tempString] integerValue]-1];
+            if ([count integerValue]==0) {
+                [noteDict removeObjectForKey:tempString];
+            }
+            else {
+                [noteDict setObject:count forKey:tempString];
+            }
+        }
+    }
+    if ([noteDict count]==0) {
+        NSLog(@"100 percent matched: %@", noteDict);
+    }
+    else {
+        NSLog(@"Missing: %@", noteDict);
+    }
 }
 
 @end

@@ -223,6 +223,7 @@ typedef NS_ENUM(NSInteger, Dir) {
         NSUInteger vertex = [(NSNumber *)[queue firstObject] integerValue];
         [queue removeObjectAtIndex:0];
         for (NSUInteger i=0; i<count; i++) {
+            // matrix[current_vertex][traverse other vertex]
             if ([matrix[vertex*count+i] isEqualToNumber:@1] && [visited[i] isEqualToNumber:@NO]) {
                 visited[i] = @YES;
                 [queue addObject:@(i)];
