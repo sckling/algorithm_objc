@@ -268,8 +268,7 @@
         prev = [node.value integerValue];
     }
     
-    [self largestValueSmallerThanK:node.right value:value];
-    
+    return [self largestValueSmallerThanK:node.right value:value];
 }
 
 

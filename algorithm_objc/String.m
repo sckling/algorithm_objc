@@ -332,6 +332,45 @@
 // anagram: today is the best day; yad
 
 
+/* Amazon 11/16/12
+ http://collabedit.com/x7jj5
+ 
+ 1. Add first string (assume words are unsorted) into a binary search tree O(n)
+ 2. Compare each word in the second string to the binary search tree O(n log(n))
+ 
+ Given two strings, return a single list of words common to both strings.
+ A fox jumped a blue fox.
+ A fox jumped a red fox.
+ => a, fox, jumped
+ 
+ NSArray commonWord(NSString *)string1: (NSString *)string2
+ {
+ NSArray *words1 = [string1 componentsSeparatedByString:@" "];
+ NSArray *words2 = [string1 componentsSeparatedByString:@" "];
+ NSMutableDictionery *wordStacks = [NSMutableDictionery dictionery];
+ NSMutableArray *finalOutput = [NSMutableArray array];
+ 
+ 
+ while (NSString *string in words1)
+ {
+ [wordStacks setObject:1 forKey:string];
+ }
+ 
+ while (NSString *string in words2)
+ {
+ if ([wordStacks objectForKey:string])
+ {
+ [finalOutput addObject:string];
+ }
+ }
+ 
+ return (NSArray *)finalOutput;
+ 
+ }
+ 
+ */
+
+
 //In our app, we have a special reward for users who are active a lot. We give this reward to any users who have used the app on three different days in the past five days.
 
 // Call this method everything time the app launche from fresh or from background
@@ -340,7 +379,7 @@
     // Current time stamp
     // day[0] = 070116
     // day[1] = 070216
-    
+    /*
     NSMutableArray *usage = [NSUserDefaults default[@"usage"]];
     NSDate *date = [NSDate today];
     [usage addObject:date];
@@ -362,11 +401,13 @@
             [self rewardUser];
         }
     }
+     */
 }
 
 - (NSUInteger)dayCountFromDate:(NSDate *)date1 {
     // Assume format is ddMMyyyy
     // Convert date to absolute second value and convert it back to number of day
+    return 0;
 }
 
 // Method that rewards user

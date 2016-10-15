@@ -33,6 +33,23 @@
 //    NSLog(@"Product array: %@", [self getProductsOfAllIntsExceptAtIndex:array1]);
 //    NSLog(@"Product array: %@", [self buildAtIndex:array1]);
     
+    
+    int a1[5] = {1,3,5,7,9};
+    int a2[5] = {9,7,5,3,1};
+    int a3[5] = {1,5,3,2,1};
+    int a4[5] = {9,10,5,9,10};
+    int a5[2] = {4,2};
+    
+    NSLog(@"Monotonic: %d", [self isMonotonic:a1 size:5]);
+    NSLog(@"Monotonic: %d", [self isMonotonic:a2 size:5]);
+    NSLog(@"Monotonic: %d", [self isMonotonic:a3 size:5]);
+    NSLog(@"Monotonic: %d", [self isMonotonic:a4 size:5]);
+    NSLog(@"Monotonic: %d", [self isMonotonic:a5 size:2]);
+    
+    
+    
+    [self sudokuValidationSetup];
+    
     NSArray *array2 = @[@3, @1, @2, @4, @5];
     NSLog(@"Highest product of 3 numbers in array: %ld", (long)[self maxProductOfThreeNumbers:array2]);
     
@@ -200,6 +217,75 @@
         }
         printf("\n");
     }
+}
+
+- (void)sudokuValidationSetup {
+    int grid[][9] = {
+        {5,3,4,6,7,8,9,1,2},
+        {6,7,2,1,9,5,3,4,8},
+        {1,9,8,3,4,2,5,6,7},
+        {8,5,9,7,6,1,4,2,3},
+        {4,2,6,8,5,3,7,9,1},
+        {7,1,3,9,2,4,8,5,6},
+        {9,6,1,5,3,7,2,8,4},
+        {2,8,7,4,1,9,6,3,5},
+        {3,4,5,2,8,6,1,7,9}
+    };
+    /*       col0 col1 ...
+       row0
+       row1
+     */
+    NSLog(@"Sudoku: %d", [self isSudokuValid:grid]);
+}
+
+// C arrays are passed by reference. Changes in method will modify the original array
+- (BOOL)isSudokuValid:(int[][9])grid {
+    for (int i=0; i<9; i++) {
+        int row[9] = {0};
+        int col[9] = {0};
+        int square[9] = {0};
+        int num;
+        
+        for (int j=0; j<9; j++) {
+            num = grid[i][j];
+            if (num>=1 && num<=9) {
+                row[num-1] = num;
+            }
+            num = grid[j][i];
+            if (num>=1 && num<=9) {
+                col[num-1] = num;
+            }
+            num = grid[j/3+(i/3)*3][j%3+i%3*3];
+            if (num>=1 && num<=9) {
+                square[num-1] = num;
+            }
+        }
+//        for (int idx=0; idx<9; idx++) {
+//            printf("%d, ", row[idx]);
+//        }
+//        printf("\n");
+//        for (int idx=0; idx<9; idx++) {
+//            printf("%d, ", col[idx]);
+//        }
+//        printf("\n");
+//        for (int idx=0; idx<9; idx++) {
+//            printf("%d, ", square[idx]);
+//        }
+//        printf("\n");
+        if (![self isValidArray:row] || ![self isValidArray:col] || ![self isValidArray:square]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (BOOL)isValidArray:(int[])array {
+    for (int i=0; i<9; i++) {
+        if (array[i] != i+1) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 /*
@@ -467,6 +553,97 @@
 //    }
 //    return [maxSoFar[2] integerValue];
 //}
+
+- (void)maximumSumInArray {
+    NSArray *array = @[@-2, @1, @-3, @4, @-1, @2, @1, @-5, @4];
+    //    NSArray *array = @[@2, @1, @-3, @4, @1, @-2, @3, @-5, @-4];
+    // Kadane's algorithm
+    // max subarray = 4, -1, 2, 1 = 6
+    //
+    //    Given an array of numbers, find the maximum sum of a sub-array
+    //    Example: 2,1,-3,4,1,-2,3,-5,-4
+    //    Max: 4+1-2+3=6
+    
+    int maxSoFar = 0;
+    int currentSum = 0;
+    for (NSNumber *number in array) {
+        currentSum += [number integerValue];
+        if (currentSum>maxSoFar) {
+            maxSoFar = currentSum;
+        }
+        NSLog(@"Value: %@, curr: %d, max: %d", number, currentSum, maxSoFar);
+        if (currentSum<=0) {
+            currentSum = 0;
+        }
+        // -2, max=0
+        //  1, max=1
+        //  1-3=-2, max=1
+        //  4,      max=4
+        //  4-1=3,  max=3
+        //  3+2=5,  max=5
+        //  5+1=6,  max=6
+        //  6+5=-1, max=6
+        //  1+4=5,  max=6
+    }
+}
+
+- (void)zeroSumPairs {
+    NSArray *array = @[@2, @7, @2, @-2, @5, @-7];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    for (int i=0; i<array.count; i++) {
+        //        NSLog(@"%@", array[i]);
+        if (dict[array[i]]) {
+            NSMutableArray *values = dict[array[i]];
+            NSNumber *value = [NSNumber numberWithInt:i];
+            [values addObject:value];
+            dict[array[i]] = values;
+        }
+        else {
+            NSMutableArray *values = [NSMutableArray new];
+            NSNumber *value = [NSNumber numberWithInt:i];
+            [values addObject:value];
+            dict[array[i]] = values;
+        }
+    }
+    //    NSLog(@"%@", [dict allKeys]);
+    //    NSLog(@"%@", [dict allValues]);
+    for (NSNumber *key in [dict allKeys]) {
+        NSInteger temp = [key integerValue] * -1;
+        NSNumber *counterValue = [NSNumber numberWithInteger:temp];
+        if (dict[counterValue]) {
+            NSLog(@"Found pairs: %@, %@, %@, %@", key, dict[key], counterValue, dict[counterValue]);
+            [dict removeObjectForKey:key];
+            [dict removeObjectForKey:counterValue];
+        }
+    }
+    //  2: 0, 2 -> -2: 3
+    //  7: 1 -> -7: 5
+}
+
+- (BOOL)isMonotonic:(int[])array size:(int)size {
+    BOOL asec = YES;
+    int prev = 0;
+    if (size >= 2) {
+        prev = array[0];
+        if (prev >= array[1]) {
+            asec = NO;
+        }
+    }
+    else {
+        return NO;
+    }
+    for (int i=1; i<size; i++) {
+        if ((prev >= array[i]) && (asec == YES)) {
+            return NO;
+        }
+        if ((prev < array[i]) && (asec == NO)) {
+            return NO;
+        }
+        prev = array[i];
+    }
+    return YES;
+}
 
 
 @end
