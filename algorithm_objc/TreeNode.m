@@ -138,13 +138,14 @@
 
 - (void)breadthFirstTraverseByLevelSingleQueue:(TreeNode *)node {
     NSUInteger levelNodes = 0;
+    NSUInteger treeLevel = 0;
     NSMutableArray *queue = [NSMutableArray new];
     [queue addObject:node];
 
     while (queue.count > 0) {
         // All nodes queued up for the level
         levelNodes = queue.count;
-        
+        printf("Level %ld: ", treeLevel);
         // Within the same level, add all the child nodes from parent nodes
         while (levelNodes > 0) {
             TreeNode *tempNode = [queue firstObject];
@@ -159,16 +160,105 @@
             levelNodes--;
         }
         // Level processing conmpleted. Start next level
+        treeLevel++;
         printf("\n");
     }
 }
 
-- (NSUInteger)depthOfTree:(TreeNode *)node {
+- (int)diameterOfTree:(TreeNode *)root {
+    if (root == nil) {
+        return 0;
+    }
+    int left = [self depthOfTree:root.left];
+    int right = [self depthOfTree:root.right];
+    int ldiameter = [self diameterOfTree:root.left];
+    int rdiameter = [self diameterOfTree:root.left];
+    printf("LH: %d RH: %d LD: %d RD: %d\n", left, right, ldiameter, rdiameter);
+    int diameter = MAX(ldiameter, rdiameter);
+    int height = left+right+1;
+    return MAX(diameter, height);
+}
+
+- (Boolean)checkBST:(TreeNode *)node {
+    // In-order traverse with an array
+    NSArray *array = [self dfsTraverse:node array:@[]];
+    NSLog(@"tree nodes: %@", array);
+    
+    // In-order traverse without an array, just the previous node
+    NSLog(@"tree nodes: %d", [self dfsTraverse:node node:nil]);
+    return [self dfsTraverse:node node:nil];
+}
+
+- (TreeNode *)largestValue:(TreeNode *)node value:(NSInteger)value {
+    // Can pass previous node to avoid static variable
+    static TreeNode *previous = nil;
+    if (node == nil) {
+        return nil;
+    }
+    [self largestValue:node.left value:value];
+    if (previous) {
+        if ([node.value integerValue] > value) {
+            return previous;
+        }
+    }
+    previous = node;
+    [self largestValue:node.right value:value];
+    return previous;
+}
+
+// Doesn't work?
+- (TreeNode *)largestValue2:(TreeNode *)node value:(NSInteger)value {
+    static TreeNode *previous = nil;
+    if (node == nil) {
+        return nil;
+    }
+    if (previous != nil && [node.value integerValue] > value) {
+        return previous;
+    }
+    if ([node.value integerValue] < value) {
+        return [self largestValue:node.left value:value];
+    }
+    previous = node;
+    return [self largestValue:node.right value:value];
+}
+
+- (Boolean)dfsTraverse:(TreeNode *)node node:(TreeNode *)previous {
+    // An empty tree is consider as BST
+    if (node == nil) {
+        return YES;
+    }
+    // Once detected it's not BST, keeps return NO all the way back
+    if ([self dfsTraverse:node.left node:previous] == NO) {
+        return NO;
+    }
+    if (previous != nil) {
+        // Once detected it's not BST, keeps return NO all the way back
+        if ([node.value isLessThan:previous.value]) {
+            return NO;
+        }
+    }
+    // Updates previous node and traverse it to the right
+    previous = node;
+    return [self dfsTraverse:node.right node:previous];
+}
+
+- (NSArray *)dfsTraverse:(TreeNode *)node array:(NSArray *)array {
+    if (node == nil) {
+        return array;
+    }
+    array = [self dfsTraverse:node.left array:array];
+    NSMutableArray *temp = [NSMutableArray arrayWithArray:array];
+    [temp addObject:node.value];
+    array = [self dfsTraverse:node.right array:temp];
+    return array;
+}
+
+- (int)depthOfTree:(TreeNode *)node {
     if (node == nil) {
         return 0;
     }
-    NSUInteger left = [self depthOfTree:node.left];
-    NSUInteger right = [self depthOfTree:node.right];
+    int left = [self depthOfTree:node.left];
+    int right = [self depthOfTree:node.right];
     if (left>right) {
         return left+1;
     }
@@ -259,7 +349,7 @@
 
 - (NSInteger)largestValueSmallerThanK:(TreeNode *)node value:(NSInteger)value {
     static NSInteger prev;
-    static NSInteger maxSoFar;
+
     if (node == nil) {
         return 0;
     }

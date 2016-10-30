@@ -118,8 +118,8 @@
     NSUInteger high = self.count-1;
 
     while (low <= high) {
-//        NSUInteger middle = low + ((high-low)/2);
-        NSUInteger middle = (unsigned long)low + ((unsigned long)high>>1);
+        NSUInteger middle = low + ((high-low)/2);
+//        NSUInteger middle = (unsigned long)low + ((unsigned long)high>>1);
         NSNumber *midValue = self[middle];
         if ([midValue isEqualTo:key]) {
             return middle;
@@ -132,6 +132,7 @@
         }
     }
 //    return -(low+1);
+    // Need to define what to return when key not found
     return -1;
 }
 

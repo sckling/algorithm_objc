@@ -36,8 +36,9 @@ typedef NS_ENUM(NSInteger, Dir) {
  */
 
 - (void)setup {
-    [self squareCountSetup];
-    [self connectedComponentsSetup];
+    [self connectedCellinGridSetup];
+//    [self squareCountSetup];
+//    [self connectedComponentsSetup];
 }
 
 - (void)squareCountSetup {
@@ -290,6 +291,61 @@ typedef NS_ENUM(NSInteger, Dir) {
     NSUInteger count = [self pathCount:matrix x:x+1 y:y];
     count += [self pathCount:matrix x:x y:y+1];
     return count;
+}
+
+- (void)connectedCellinGridSetup {
+    //  0-1
+    //  | |
+    //  2-3
+    NSArray *matrix = @[@1, @1, @0, @0, @0,
+                        @0, @1, @1, @0, @1,
+                        @0, @0, @1, @0, @1,
+                        @1, @0, @0, @0, @1];
+    NSLog(@"Largest size of connected cell in grid: %d", [self connectedCellinGrid:matrix row:4 col:5]);
+}
+
+- (int)connectedCellinGrid:(NSArray *)matrix row:(int)row col:(int)col {
+    int maxSoFar = 0;
+    NSMutableArray *visit = [self initArray:row col:col];
+
+    for (int x=0; x<col; x++) {
+        for (int y=0; y<row; y++) {
+            if ([matrix[x+y*col] isEqualToNumber:@1] && [visit[x+y*col] isEqualToNumber:@NO]) {
+                int size = [self dfs:matrix visit:&visit row:y col:x sizeRow:row sizeCol:col];
+                printf("size: %d\n", size);
+                if (size > maxSoFar) {
+                    maxSoFar = size;
+                }
+            }
+        }
+    }
+    return maxSoFar;
+}
+
+- (int)dfs:(NSArray *)matrix visit:(NSMutableArray **)visit row:(int)row col:(int)col sizeRow:(int)r sizeCol:(int)c {
+    int count = 0;
+    if (row>=0 && row<r && col>=0 && col<c
+        && [[*visit objectAtIndex:col+row*c] isEqualToNumber:@NO]
+        && ([[matrix objectAtIndex:col+row*c] isEqualToNumber:@1])) {
+        [*visit setObject:@YES atIndexedSubscript:col+row*c];
+        count = 1+[self dfs:matrix visit:visit row:row+1 col:col sizeRow:r sizeCol:c]
+        +[self dfs:matrix visit:visit row:row-1 col:col sizeRow:r sizeCol:c]
+        +[self dfs:matrix visit:visit row:row col:col+1 sizeRow:r sizeCol:c]
+        +[self dfs:matrix visit:visit row:row col:col-1 sizeRow:r sizeCol:c]
+        +[self dfs:matrix visit:visit row:row+1 col:col+1 sizeRow:r sizeCol:c]
+        +[self dfs:matrix visit:visit row:row+1 col:col-1 sizeRow:r sizeCol:c]
+        +[self dfs:matrix visit:visit row:row-1 col:col+1 sizeRow:r sizeCol:c]
+        +[self dfs:matrix visit:visit row:row-1 col:col-1 sizeRow:r sizeCol:c];
+    }
+    return count;
+}
+
+- (NSMutableArray *)initArray:(NSUInteger)row col:(NSUInteger)col {
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:row*col];
+    for (int i=0; i<row*col; i++) {
+        array[i] = @NO;
+    }
+    return array;
 }
 
 @end

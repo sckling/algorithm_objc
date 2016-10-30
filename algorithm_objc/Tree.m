@@ -14,11 +14,23 @@
 - (void)setup {
     TreeNode *node = [[TreeNode alloc] initWithValue:@2];
     TreeNode *left = [[TreeNode alloc] initWithValue:@1];
-    TreeNode *right = [[TreeNode alloc] initWithValue:@3];
+    TreeNode *right = [[TreeNode alloc] initWithValue:@4];
     node.left = left;
     node.right = right;
+    right.left = [[TreeNode alloc] initWithValue:@3];
+    right.right = [[TreeNode alloc] initWithValue:@5];
+    /*
+        2
+       /\
+      1  4
+         /\
+        3  5
+     
+     */
+
     //deep copy of object using NSCopying
-    node = [left copy];
+    //node = [left copy];
+    [node checkBST:node];
 
     //   3
     //  2 6
@@ -36,17 +48,23 @@
     //       / \    /
     //      10 14  90
     //             / \
-    //            80 70
+    //            80 95
     
     //NSArray *array = @[@3, @2, @6];
     //NSArray *array = @[@"j", @"f", @"a", @"d", @"h", @"k", @"z"];
     //NSArray *array = @[@"c", @"b", @"f"];
-    NSArray *array = @[@20, @8, @4, @12, @10, @14, @22, @99, @90, @80, @70];
+    NSArray *array = @[@20, @8, @4, @12, @10, @14, @22, @99, @90, @80, @95];
     TreeNode *root = [self createBinarySearchTree:array];
 //    NSLog(@"Depth of tree: %ld", [root depthOfTree:root]);
-    NSLog(@"Largest number: %lu", [root secondLargestInteger:root]);
-//    [root breadthFirstTraverse:root];
-//    [root breadthFirstTraverseByLevel:root];
+//    NSLog(@"Largest number: %lu", [root secondLargestInteger:root]);
+//    [root checkBST:root];
+    NSLog(@"Diameter of tree: %d", [root diameterOfTree:root]);
+    
+//    NSUInteger value = 21;
+//    printf("Largest value smaller than %ld: %ld\n", value, [[root largestValue2:root value:value].value integerValue]);
+//    value = 92;
+//    printf("Largest value smaller than %ld: %ld\n", value, [[root largestValue2:root value:value].value integerValue]);
+    
     [root breadthFirstTraverseByLevelSingleQueue:root];
 //    NSMutableArray *path = [NSMutableArray arrayWithCapacity:array.count];
 //    [root allPathsOfTree:root path:path];

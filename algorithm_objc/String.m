@@ -12,22 +12,105 @@
 
 - (void)setup {
     NSString *string = @"abc";
-    NSLog(@"%lu", string.length);
-    NSLog(@"%c", [string characterAtIndex:2]);
+//    NSLog(@"%lu", string.length);
+//    NSLog(@"%c", [string characterAtIndex:2]);
+//    
+//    const char *c = [string UTF8String];
+//    const char *c1 = [string cStringUsingEncoding:NSUTF16StringEncoding];
+//    NSLog(@"char array %c", c[0]);
+//    NSLog(@"char array %c", c[1]);
+//    NSLog(@"char array %c%c,%c", c1[2], c1[3], c1[4]);
     
-    const char *c = [string UTF8String];
-    const char *c1 = [string cStringUsingEncoding:NSUTF16StringEncoding];
-    NSLog(@"char array %c", c[0]);
-    NSLog(@"char array %c", c[1]);
-    NSLog(@"char array %c%c,%c", c1[2], c1[3], c1[4]);
-    
-    [self bracketPermutation:5];
-    [self bracketPermutation:6];
-    //NSLog(@"String permutation: %@", [self stringPermutation:@"abc"]);
-    //[self bracketPermutation:2 array:array];
+//    [self bracketPermutation:5];
+//    [self bracketPermutation:6];
+//    NSLog(@"String permutation: %@", [self stringPermutation:@"abc"]);
+//    [self bracketPermutation:2 array:array];
     
 //    [self isBracketsCountCorrectSetUp];
 //    [self smallestCharInArraySetup];
+    
+    [self findCommonArraySetup];
+
+    string =  @"{ac[bb]}";
+    NSLog(@"Delimiter %@: %d", string, [self isDelimiterMatched:string stack:nil]);
+    string = @"[dklf(df(kl))d]{}";
+    NSLog(@"Delimiter %@: %d", string, [self isDelimiterMatched:string stack:nil]);
+    string = @"{[[[]]]}";
+    NSLog(@"Delimiter %@: %d", string, [self isDelimiterMatched:string stack:nil]);
+    string = @"{3234[fd";
+    NSLog(@"Delimiter %@: %d", string, [self isDelimiterMatched:string stack:nil]);
+    string = @"{df][d}";
+    NSLog(@"Delimiter %@: %d", string, [self isDelimiterMatched:string stack:nil]);
+    string = @"{}]";
+    NSLog(@"Delimiter %@: %d", string, [self isDelimiterMatched:string stack:nil]);
+}
+
+- (BOOL)isOpenDelimiter:(NSString *)string {
+    if ([string isEqualToString:@"{"] || [string isEqualToString:@"["] || [string isEqualToString:@"("]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)isCloseDelimiter:(NSString *)string {
+    if ([string isEqualToString:@"}"] || [string isEqualToString:@"]"] || [string isEqualToString:@")"]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)isMatchedDelimiter:(NSString *)openBracket close:(NSString *)closeBracket {
+    if ([openBracket isEqualToString:@"{"] && [closeBracket isEqualToString:@"}"]) {
+        return YES;
+    }
+    if ([openBracket isEqualToString:@"["] && [closeBracket isEqualToString:@"]"]) {
+        return YES;
+    }
+    if ([openBracket isEqualToString:@"("] && [closeBracket isEqualToString:@")"]) {
+        return YES;
+    }
+    return NO;
+}
+
+/*
+ Loop through the string:
+ - if the character is an open bracket, push it to stack
+ - if the character is a close bracket, pop the stack and check if they matched. Return No if they don't or if stack is empty
+ - Bypass non-bracket characters
+ - When finished, if stack is not empty, that means there are still open brackets not cleared up. Return No
+ 
+ Edge cases:
+ - Empty string
+ - A single bracket
+ - String with no brackets
+ */
+- (BOOL)isDelimiterMatched:(NSString *)string stack:(NSMutableArray *)stack {
+    if (stack == nil) {
+        stack = [NSMutableArray arrayWithCapacity:string.length];
+    }
+    for (NSUInteger idx=0; idx<string.length; idx++) {
+        NSString *character = [NSString stringWithFormat:@"%c", [string characterAtIndex:idx]];
+        if ([self isOpenDelimiter:character]) {
+            [stack addObject:character];
+        }
+        else if ([self isCloseDelimiter:character]) {
+            // BUG: Stack could be empty!!
+            if (stack.count==0) {
+                return NO;
+            }
+            NSString *openBracket = [stack lastObject];
+            if ([self isMatchedDelimiter:openBracket close:character]) {
+                [stack removeLastObject];
+            }
+            else {
+                return NO;
+            }
+        }
+    }
+    if (stack.count > 0) {
+        return NO;
+    }
+    return YES;
 }
 
 - (void)smallestCharInArraySetup {
@@ -132,7 +215,7 @@
 // Case1: (()) stack count 0, YES
 // Case2: ))(( NO
 // Case3: ()(  NO
-// Case4: ))(())
+// Case4: (()()) YES
 
 - (BOOL)isBracketsCountCorrect:(NSString *)string {
     NSMutableArray *stack = [NSMutableArray new];
@@ -151,8 +234,7 @@
             }
         }
     }
-    if (stack.count == 0) return YES;
-    return NO;
+    return stack.count == 0? YES : NO;
 }
 
 - (BOOL)isBracketsCountCorrectNoStack:(NSString *)string {
@@ -167,10 +249,10 @@
             openBracket++;
         }
         else {
-            openBracket--;
-            if (openBracket < 0) {
+            if (openBracket == 0) {
                 return NO;
             }
+            openBracket--;
         }
     }
     return openBracket == 0? YES: NO;
@@ -369,38 +451,30 @@
 
  */
 
-- (NSString *)commonWords:(NSString *)firstString string:(NSString *)secondString
-{
-    NSLog(@"\nString1: %@\nString2: %@", firstString, secondString);
-    
+- (NSString *)commonWords:(NSString *)firstString string:(NSString *)secondString {
+    // If either string is empty, there won't be common words
+    if (firstString.length == 0 || secondString.length == 0) {
+        return nil;
+    }
     NSArray *words1 = [firstString componentsSeparatedByString:@" "];
     NSArray *words2 = [secondString componentsSeparatedByString:@" "];
-    NSMutableDictionary *wordStacks = [NSMutableDictionary dictionary];
-    NSString *finalString = [NSString string];
+    NSMutableSet *wordSet = [NSMutableSet new];
+    NSString *finalString = [NSString new];
     
-    NSString *tempString = nil;
-    for (tempString in words1)
-    {
-        NSLog(@"%@, ", tempString);
-        if ([wordStacks objectForKey:tempString]==nil) {
-            [wordStacks setObject:@"1" forKey:tempString];
-        }
+    for (NSString *word in words1) {
+        [wordSet addObject:word];
     }
-    
-    for (tempString in words2)
-    {
-        if ([wordStacks objectForKey:tempString])
-        {
-            NSLog(@"Matched: %@", tempString);
-            finalString = [finalString stringByAppendingFormat:@"%@ ", tempString];
-            [wordStacks removeObjectForKey:tempString];
-            if ([wordStacks count]==0) {
+    for (NSString *word in words2) {
+        if ([wordSet containsObject:word]){
+            finalString = [finalString stringByAppendingFormat:@"%@ ", word];
+            // remove word in set to prevent duplicate count
+            [wordSet removeObject:word];
+            if (wordSet.count == 0) {
                 break;
             }
         }
     }
-    NSLog(@"Final1: %@", finalString);
-    return (NSString *)finalString;
+    return finalString;
 }
 
 //In our app, we have a special reward for users who are active a lot. We give this reward to any users who have used the app on three different days in the past five days.
@@ -436,6 +510,42 @@
      */
 }
 
+// Given two sorted arrays, find the common elements
+// 1,2,5,6,10
+// 2,5,10
+// return 2,5
+//
+// Edge cases:
+// Zero or one element
+// No common elements
+// Identical arrays
+
+- (void)findCommonArraySetup {
+    NSArray<NSNumber *> *a1 = @[@1, @5, @10, @20, @40, @80];
+    NSArray<NSNumber *> *a2 = @[@6, @7, @20, @80, @100];
+    NSLog(@"Common elements: %@", [self findCommonElements:a1 array:a2]);
+}
+
+- (NSArray<NSNumber *> *)findCommonElements:(NSArray<NSNumber *> *)a1 array:(NSArray<NSNumber *> *)a2 {
+    NSUInteger idx1 = 0;
+    NSUInteger idx2 = 0;
+    NSMutableArray<NSNumber *> *commons = [NSMutableArray new];
+    while (idx1<a1.count && idx2<a2.count) {
+        if ([a1[idx1] isEqualToNumber:a2[idx2]]) {
+            [commons addObject:a1[idx1]];
+            idx1++;
+            idx2++;
+        }
+        else if ([a1[idx1] isGreaterThan:a2[idx2]]) {
+            idx2++;
+        }
+        else {
+            idx1++;
+        }
+    }
+    return commons;
+}
+
 - (NSUInteger)dayCountFromDate:(NSDate *)date1 {
     // Assume format is ddMMyyyy
     // Convert date to absolute second value and convert it back to number of day
@@ -461,14 +571,14 @@
         else {
             NSNumber *count = [noteDict objectForKey:tempString];
             NSLog(@"K: %@ V:%@", tempString, count);
-            [noteDict setObject:[NSNumber numberWithInt:[count integerValue]+1] forKey:tempString];
+            [noteDict setObject:[NSNumber numberWithInt:[count intValue]+1] forKey:tempString];
         }
     }
     
     NSArray *magazineArray = [magazineString componentsSeparatedByString:@" "];
     for (NSString *tempString in magazineArray) {
         if ([noteDict objectForKey:tempString]) {
-            NSNumber *count = [NSNumber numberWithInt:[[noteDict objectForKey:tempString] integerValue]-1];
+            NSNumber *count = [NSNumber numberWithInt:[[noteDict objectForKey:tempString] intValue]-1];
             if ([count integerValue]==0) {
                 [noteDict removeObjectForKey:tempString];
             }

@@ -20,6 +20,7 @@
 		19ACC4421CC59E9F00E2736E /* Numbers.m in Sources */ = {isa = PBXBuildFile; fileRef = 19ACC4411CC59E9F00E2736E /* Numbers.m */; };
 		19ACC4431CC59E9F00E2736E /* Numbers.m in Sources */ = {isa = PBXBuildFile; fileRef = 19ACC4411CC59E9F00E2736E /* Numbers.m */; };
 		19B738AE1BF2F5E5005D29A2 /* SocialGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B738AD1BF2F5E5005D29A2 /* SocialGraph.m */; };
+		19D2E3321DC11F050056073E /* Vertex.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D2E3311DC11F050056073E /* Vertex.m */; };
 		19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E41BD1F772004F31AF /* EdgeNode.m */; };
 		19F696E81BD1F84D004F31AF /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E71BD1F84D004F31AF /* Graph.m */; };
 		E41E2B1B1C2618A9008DD8B3 /* ArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E41E2B1A1C2618A9008DD8B3 /* ArrayTests.m */; };
@@ -67,6 +68,8 @@
 		19ACC4411CC59E9F00E2736E /* Numbers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Numbers.m; sourceTree = "<group>"; };
 		19B738AC1BF2F5E5005D29A2 /* SocialGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialGraph.h; sourceTree = "<group>"; };
 		19B738AD1BF2F5E5005D29A2 /* SocialGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialGraph.m; sourceTree = "<group>"; };
+		19D2E3301DC11F050056073E /* Vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
+		19D2E3311DC11F050056073E /* Vertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vertex.m; sourceTree = "<group>"; };
 		19F696E31BD1F772004F31AF /* EdgeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgeNode.h; sourceTree = "<group>"; };
 		19F696E41BD1F772004F31AF /* EdgeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeNode.m; sourceTree = "<group>"; };
 		19F696E61BD1F84D004F31AF /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
@@ -168,6 +171,8 @@
 				19F696E41BD1F772004F31AF /* EdgeNode.m */,
 				19601AC01BF154E00096DA27 /* Member.h */,
 				19601AC11BF154E00096DA27 /* Member.m */,
+				19D2E3301DC11F050056073E /* Vertex.h */,
+				19D2E3311DC11F050056073E /* Vertex.m */,
 				19F696E61BD1F84D004F31AF /* Graph.h */,
 				19F696E71BD1F84D004F31AF /* Graph.m */,
 				199D61D71C89607000D0A795 /* Graph1.h */,
@@ -311,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1901CC131CC06B2F00BECDE3 /* Recursion.m in Sources */,
+				19D2E3321DC11F050056073E /* Vertex.m in Sources */,
 				19B738AE1BF2F5E5005D29A2 /* SocialGraph.m in Sources */,
 				196466F91C17C7B100FA9E4D /* UndirectedGraph.m in Sources */,
 				195E7DE21C7D54190085121E /* Matrix.m in Sources */,

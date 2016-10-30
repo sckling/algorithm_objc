@@ -32,12 +32,11 @@
     self.list[start] = connections;
 }
 
-- (void)breadthFirstSearch:(NSUInteger)start {
-    
+- (void)breadthFirstSearch:(Vertex *)vertex visited:(NSArray *)visited {
     
 }
 
-- (void)depthFirstSearch:(NSUInteger)start {
+- (void)depthFirstSearch:(Vertex *)vertex visited:(NSArray *)visited {
     
     
 }

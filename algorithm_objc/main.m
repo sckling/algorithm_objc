@@ -25,13 +25,14 @@ int main(int argc, const char * argv[]) {
 //        Matrix *matrix = [[Matrix alloc] init];
 //        [matrix setup];
         
-//        Numbers *numbers = [[Numbers alloc] init];
-//        [numbers setup];
+        Numbers *numbers = [[Numbers alloc] init];
+        [numbers setup];
 
-        Array *array = [[Array alloc] init];
-        [array setup];
+//        Array *array = [[Array alloc] init];
+//        [array setup];
         
 //        String *string = [[String alloc] init];
+//        [string setup];
 //        [string filterWordSetup];
         
 //        [array twoDimenionalArray];
@@ -48,8 +49,8 @@ int main(int argc, const char * argv[]) {
 //            }
 //        }
         
-        Tree *binarySearchTree = [[Tree alloc] init];
-        [binarySearchTree setup];
+//        Tree *binarySearchTree = [[Tree alloc] init];
+//        [binarySearchTree setup];
         
 //        Graph *graph = [[Graph alloc] initWithMember];
 //        [graph setupSocialGraphWithLevel];

@@ -27,11 +27,15 @@ typedef enum {
 - (void)breadthFirstTraverse:(TreeNode *)node;
 - (void)breadthFirstTraverseByLevel:(TreeNode *)node;
 - (void)breadthFirstTraverseByLevelSingleQueue:(TreeNode *)node;
-- (NSUInteger)depthOfTree:(TreeNode *)node;
+- (int)depthOfTree:(TreeNode *)node;
 - (void)allPathsOfTree:(TreeNode *)node path:(NSMutableArray *)path;
 - (void)deSerialize:(TreeNode **)node array:(NSMutableArray *)array;
 - (TreeNode *)deSerialize1:(TreeNode *)node array:(NSMutableArray *)array;
 - (NSInteger)secondLargestInteger:(TreeNode *)node;
+- (Boolean)checkBST:(TreeNode *)node;
+- (TreeNode *)largestValue:(TreeNode *)node value:(NSInteger)value;
+- (TreeNode *)largestValue2:(TreeNode *)node value:(NSInteger)value;
+- (int)diameterOfTree:(TreeNode *)root;
 
 // For unit test demo only
 - (NSInteger)addNums:(NSInteger)num1 num2:(NSInteger)num2;

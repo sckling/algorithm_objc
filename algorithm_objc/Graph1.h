@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Vertex.h"
 
 @interface Graph1 : NSObject
 
 - (instancetype)initWithSize:(NSUInteger)size;
 - (void)insertEdge:(NSUInteger)start end:(NSUInteger)end;
-- (void)breadthFirstSearch:(NSUInteger)start;
-- (void)depthFirstSearch:(NSUInteger)start;
+- (void)breadthFirstSearch:(Vertex *)vertex visited:(NSArray *)visited;
+- (void)depthFirstSearch:(Vertex *)vertex visited:(NSArray *)visited;
 
 @end
