@@ -46,8 +46,6 @@
     NSLog(@"Monotonic: %d", [self isMonotonic:a4 size:5]);
     NSLog(@"Monotonic: %d", [self isMonotonic:a5 size:2]);
     
-    
-    
     [self sudokuValidationSetup];
     
     NSArray *array2 = @[@3, @1, @2, @4, @5];
@@ -509,7 +507,7 @@
 - (int)maxProductOfThreeNumbers:(NSArray *)array {
     int a[] = {1, 10, -5, 1, -100};
     int maxSoFar = INT_MIN;
-    int minSoFar = INT_MAX;
+    //int minSoFar = INT_MAX;
     for (int i=0; i<5; i++) {
         if (a[i] > maxSoFar) {
             maxSoFar = a[i];

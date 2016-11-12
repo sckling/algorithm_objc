@@ -10,9 +10,12 @@
 
 @interface Member : NSObject
 
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *email;
-@property (assign) NSUInteger memberId;
-@property (nonatomic, strong) NSArray *friends;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *email;
+@property (nonatomic, copy) NSArray *friends;
+@property (nonatomic, assign) NSUInteger memberId;
+
+- (instancetype)initWithName:(NSString *)name memberId:(NSUInteger)memberId;
+- (instancetype)initWithName:(NSString *)name memberId:(NSUInteger)memberId friends:(NSArray *)friends;
 
 @end

@@ -294,9 +294,6 @@ typedef NS_ENUM(NSInteger, Dir) {
 }
 
 - (void)connectedCellinGridSetup {
-    //  0-1
-    //  | |
-    //  2-3
     NSArray *matrix = @[@1, @1, @0, @0, @0,
                         @0, @1, @1, @0, @1,
                         @0, @0, @1, @0, @1,

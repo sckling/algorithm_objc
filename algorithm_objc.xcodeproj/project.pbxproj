@@ -16,6 +16,7 @@
 		195E7DE31C7D54190085121E /* Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 195E7DE11C7D54190085121E /* Matrix.m */; };
 		19601AC21BF154E00096DA27 /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 19601AC11BF154E00096DA27 /* Member.m */; };
 		196466F91C17C7B100FA9E4D /* UndirectedGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 196466F81C17C7B100FA9E4D /* UndirectedGraph.m */; };
+		1978EAE01DCA9A3E00DCDD0F /* BinarySearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 1978EADF1DCA9A3E00DCDD0F /* BinarySearch.m */; };
 		199D61D91C89607000D0A795 /* Graph1.m in Sources */ = {isa = PBXBuildFile; fileRef = 199D61D81C89607000D0A795 /* Graph1.m */; };
 		19ACC4421CC59E9F00E2736E /* Numbers.m in Sources */ = {isa = PBXBuildFile; fileRef = 19ACC4411CC59E9F00E2736E /* Numbers.m */; };
 		19ACC4431CC59E9F00E2736E /* Numbers.m in Sources */ = {isa = PBXBuildFile; fileRef = 19ACC4411CC59E9F00E2736E /* Numbers.m */; };
@@ -62,6 +63,8 @@
 		19601AC11BF154E00096DA27 /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Member.m; sourceTree = "<group>"; };
 		196466F71C17C7B100FA9E4D /* UndirectedGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UndirectedGraph.h; sourceTree = "<group>"; };
 		196466F81C17C7B100FA9E4D /* UndirectedGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UndirectedGraph.m; sourceTree = "<group>"; };
+		1978EADE1DCA9A3E00DCDD0F /* BinarySearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinarySearch.h; sourceTree = "<group>"; };
+		1978EADF1DCA9A3E00DCDD0F /* BinarySearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BinarySearch.m; sourceTree = "<group>"; };
 		199D61D71C89607000D0A795 /* Graph1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph1.h; sourceTree = "<group>"; };
 		199D61D81C89607000D0A795 /* Graph1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph1.m; sourceTree = "<group>"; };
 		19ACC4401CC59E9F00E2736E /* Numbers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Numbers.h; sourceTree = "<group>"; };
@@ -158,6 +161,8 @@
 			children = (
 				E42659D81BCB1C67001B49C4 /* Array.h */,
 				E42659D91BCB1C67001B49C4 /* Array.m */,
+				1978EADE1DCA9A3E00DCDD0F /* BinarySearch.h */,
+				1978EADF1DCA9A3E00DCDD0F /* BinarySearch.m */,
 				E42659D51BCA39D3001B49C4 /* NSArray+Methods.h */,
 				E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */,
 			);
@@ -271,7 +276,7 @@
 		E4A908981BCA1B3A00FA77B6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = sling;
 				TargetAttributes = {
 					E4A9089F1BCA1B3A00FA77B6 = {
@@ -322,6 +327,7 @@
 				195E7DE21C7D54190085121E /* Matrix.m in Sources */,
 				E42659DD1BCB389D001B49C4 /* Tree.m in Sources */,
 				193A42811C4851AF004AF854 /* NSDictionary+Methods.m in Sources */,
+				1978EAE01DCA9A3E00DCDD0F /* BinarySearch.m in Sources */,
 				E4A908A41BCA1B3A00FA77B6 /* main.m in Sources */,
 				19463C451C824A3A0076ED00 /* String.m in Sources */,
 				E42659DA1BCB1C67001B49C4 /* Array.m in Sources */,
@@ -369,9 +375,11 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -414,9 +422,11 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;

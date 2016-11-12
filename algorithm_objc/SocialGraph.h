@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Member.h"
 
 @interface SocialGraph : NSObject
 
 - (NSArray *)getRankedCourses:(NSString *)user;
+- (void)printSocialGraphSetup;
+- (void)printSocialGraphByLevel:(Member *)member level:(NSUInteger)level;
 
 @end

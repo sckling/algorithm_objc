@@ -170,5 +170,107 @@
     return nil;
 }
 
+/*
+ Question #1:
+ Setup:
+ Assume a primitive social network. This social network has Members.
+ 
+ class Member {
+ String name;
+ String email;
+ List<Member> friends;
+ }
+ 
+ Question #2:
+ Code printSocialGraph(Member m). Direct friends of m are Level 1 friends. Friends of friends are level 2 friends.....and so on
+ Print level 1 friends first. Then print level 2 friends....and so on.  Please state any assumptions that you're making when solving this problem.
+ 
+ void printSocialGraph (Member m){
+ //Your code here
+ }
+ 
+ */
+
+- (void)printSocialGraphSetup {
+    Member *member1 = [[Member alloc] initWithName:@"Sam" memberId:1];
+    Member *member2 = [[Member alloc] initWithName:@"John" memberId:2];
+    Member *member3 = [[Member alloc] initWithName:@"Kelly" memberId:3];
+    Member *member4 = [[Member alloc] initWithName:@"Linda" memberId:4];
+    Member *member5 = [[Member alloc] initWithName:@"May" memberId:5];
+    Member *member6 = [[Member alloc] initWithName:@"Lone Wolf" memberId:6];
+    
+    member1.friends = @[member2, member5];
+    member2.friends = @[member1, member3, member5];
+    member3.friends = @[member2, member4];
+    member4.friends = @[member4];
+    member5.friends = @[member1, member2];
+    
+    [self printSocialGraphByLevel:member1 level:2];
+    [self printSocialGraphByLevel:member5 level:99];
+    [self printSocialGraphByLevel:member6 level:2];
+    [self printSocialGraphDfs:nil visited:nil];
+    
+    /*  _______
+       /       \
+     May-Sam--John
+      |         |
+    Linda     Kelly
+     
+     Sam's friends:
+     L0: Sam
+     L1: John, May
+     L2: Kelly
+     L3: Linda
+     */
+}
+
+- (void)printSocialGraphDfs:(Member *)member visited:(NSMutableSet *)visited {
+    if (member == nil) {
+        return;
+    }
+    if (visited == nil) {
+        visited = [NSMutableSet new];
+    }
+    [visited addObject:member];
+    printf("%s, ", [member.name UTF8String]);
+    for (int i=0; i<member.friends.count; i++) {
+        Member *friend = member.friends[i];
+        if ([visited containsObject:friend] == NO) {
+            [self printSocialGraphDfs:friend visited:visited];
+        }
+    }
+}
+
+- (void)printSocialGraphByLevel:(Member *)member level:(NSUInteger)level {
+    if (member == nil) {
+        return;
+    }
+    NSMutableArray *queue = [NSMutableArray new];
+    [queue addObject:member];
+    NSMutableSet *visited = [NSMutableSet new];
+    [visited addObject:member];
+    NSUInteger currentLevel = 0;
+
+    while (queue.count > 0 && currentLevel <= level) {
+        NSUInteger levelQueue = queue.count;
+        printf("level %ld count: %ld: ", currentLevel++, queue.count);
+
+        while (levelQueue > 0) {
+            Member *member = [queue firstObject];
+            [queue removeObjectAtIndex:0];
+            levelQueue--;
+            // This node already visited, now process it
+            printf("%s ", [member.name UTF8String]);
+            for (NSUInteger i=0; i<member.friends.count; i++) {
+                Member *friend = member.friends[i];
+                if ([visited containsObject:friend] == NO) {
+                    [visited addObject:friend];
+                    [queue addObject:friend];
+                }
+            }
+        }
+        printf("\n");
+    }
+}
 
 @end

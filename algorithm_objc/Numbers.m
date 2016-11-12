@@ -15,8 +15,13 @@
     // Case: n=umber = negative
     // Case: number overflow or divided by 0
 //    [self isHappyNumber:5 original:5];
-    int n=10;
-    printf("Fibonacci of %d = %d\n", n, [self fibonacci:n]);
+//    int n=10;
+//    printf("Fibonacci of %d = %d\n", n, [self fibonacci:n]);
+    
+//    [self printPhoneNumberWords];
+    [self isNumberSetup];
+//    [self convertStringToNumberSetup];
+//    [self parseIntToStringSetup];
 }
 
 - (BOOL)isHappyNumber:(NSUInteger)number original:(NSUInteger)original {
@@ -46,14 +51,24 @@
 }
 
 - (int)fibonacci:(int)n {
-    if (n==0) {
-        return 0;
+    int *fib1 = malloc(sizeof(int)*(n+1));
+
+    for (int i=0; i<=n; i++) {
+        fib1[i] = 0;
     }
-    if (n==1) {
-        return 1;
+    [self fibArray2:n array:fib1];
+
+    for (int i=0; i<=n; i++) {
+        printf("%d ", fib1[i]);
+    }
+    printf("\n");
+
+    /*
+    if (n <= 1) {
+        return n;
     }
     int *fib = malloc(sizeof(int)*(n+1));
-    for (int i=0; i<n; i++) {
+    for (int i=0; i<=n; i++) {
         fib[i] = -1;
     }
     fib[0] = 0;
@@ -65,6 +80,8 @@
     }
     printf("\n");
     return fib[n];
+     */
+    return fib1[n];
 }
 
 - (int)fibArray:(int)n array:(int *)fib {
@@ -75,6 +92,17 @@
         [self fibArray:n-1 array:fib];
     }
     fib[n] = fib[n-2]+fib[n-1];
+    return fib[n];
+}
+
+/* Better code */
+- (int)fibArray2:(int)n array:(int *)fib {
+    if (n <= 1) {
+        return n;
+    }
+    if (fib[n] == 0) {
+        fib[n] = [self fibArray2:n-1 array:fib] + [self fibArray2:n-2 array:fib];
+    }
     return fib[n];
 }
 
@@ -90,6 +118,306 @@
         }
     }
     return fib[n];
+}
+
+/*
+ Description of Question
+ 
+ Generate all possible 10 digit phone numbers and corresponding "words". Words are formed by using any of the letters corresponding to each digit of the phone number.
+ 
+ e.g. The number 2222222222 maps to the word AAAAAAAAAA. It also maps to the word BBBBBBBBBB, ABCAAAABBCA, etc.
+ 
+ Here's what the keypad looks like:
+ 
+ 1     2     3
+      ABC   DEF
+ 
+ 4     5     6
+GHI   JKL   MNO
+ 
+ 7     8     9
+PQRS  TUV   WXYZ
+ 
+       0
+ Expected output
+ 
+ Your program takes no input and prints a great number of lines. These output of your program would look something like the following (… implies some missing lines.)
+ 
+ 111 222 1234 AAA  ADG
+ 111 222 1234 AAA  AEG
+ 111 222 1234 AAA  AFG
+ ...
+ 234 555 7777 ADG JJL PPQS
+ 234 555 7777 BDG KJL PPQS
+ ...
+ 244 666 8888 CGG MMM TUVT
+ ...
+ 888 777 5234 ............
+ ....
+ ....
+ NOTES
+ 
+ Some digits on the keypad do not have letters associated with them. Skip all phone numbers containing such digits—they should not occur in your output.
+ You must print an exhaustive list. All printed lines must be unique (no duplicates.) However, the order in which the lines are printed does NOT matter.
+ You do not have to print the spaces between the digits or letters as shown in the sample output–I've grouped them into runs of 3 or 4 characters to make it easier for us to read. It's totally OK for if there is no whitespace in the lines you print (e.g. a line like 2345557777ADGJJLPPQS is perfectly acceptable.)
+ */
+
+- (void)printPhoneNumberWords {
+    NSArray *words = @[@"", @"", @"abc", @"def", @"ghi", @"jkl", @"mno", @"pqrs", @"tuv", @"wxyz"];
+    NSString *test = @"001";
+    [self depthFirstTraverse:test index:0 words:words result:@""];
+
+    // Generate all combinations of numbers. Can't handle more than 5 digits
+    NSArray *numbers = [self createNumbers:0 size:3 number:@"" numbers:[NSArray new]];
+    for (NSString *number in numbers) {
+        printf("%s\n", [number UTF8String]);
+        [self depthFirstTraverse:number index:0 words:words result:@""];
+    }
+}
+
+- (NSArray *)createNumbers:(NSUInteger)digit size:(NSUInteger)size number:(NSString *)number numbers:(NSArray *)numbers {
+    if (digit == size) {
+        NSMutableArray *array = [NSMutableArray arrayWithArray:numbers];
+        [array addObject:number];
+        //printf("%s\n", [number UTF8String]);
+        return array;
+    }
+    for (NSUInteger i=0; i<10; i++) {
+        NSString *newNumber = [NSString stringWithFormat:@"%@%ld", number, i];
+        numbers = [self createNumbers:digit+1 size:size number:newNumber numbers:numbers];
+    }
+    return numbers;
+}
+
+-(void)depthFirstTraverse:(NSString *)number index:(NSUInteger)index words:(NSArray *)words result:(NSString *)result {
+    if (index == number.length) {
+        if (result.length>0) {
+            printf("%s\n", [result UTF8String]);
+        }
+        return;
+    }
+    NSInteger n = [number characterAtIndex:index] - '0';
+    NSString *letters = [words objectAtIndex:n];
+    if (letters.length>0) {
+        for (NSUInteger i=0; i<letters.length-1; i++) {
+            NSString *newResult = [NSString stringWithFormat:@"%@%c", result, [letters characterAtIndex:i]];
+            [self depthFirstTraverse:number index:index+1 words:words result:newResult];
+        }
+    }
+    else {
+        [self depthFirstTraverse:number index:index+1 words:words result:result];
+    }
+    return;
+}
+
+- (void)convertStringToNumberSetup {
+    NSString *num = @"-290";
+    printf("String %s ->Int %ld\n", [num UTF8String], [self convertStringToNumber:num]);
+    num = @"+001";
+    printf("String %s ->Int %ld\n", [num UTF8String], [self convertStringToNumber:num]);
+    num = @"-0a01";
+    printf("String %s ->Int %ld\n", [num UTF8String], [self convertStringToNumber:num]);
+    num = @"0a01";
+    printf("String %s ->Int %ld\n", [num UTF8String], [self convertStringToNumber:num]);
+    num = @"";
+    printf("String %s ->Int %ld\n", [num UTF8String], [self convertStringToNumber:num]);
+}
+
+- (NSInteger)convertStringToNumber:(NSString *)string {
+    if (string == nil || string.length == 0) {
+        return 0;
+    }
+    unichar sign = [string characterAtIndex:0];
+    int start = 0;
+    if (sign == '+' || sign == '-') {
+        start = 1;
+    }
+    NSInteger number = 0;
+    for (int i=start; i<string.length; i++) {
+        unichar letter = [string characterAtIndex:i];
+        if (letter<'0' || letter>'9') {
+            return 0;
+        }
+        else {
+            NSInteger digit = letter - '0';
+            // 0*10+1=1
+            // 1*10+2=12
+            // 12*10+3=123
+            number = number * 10 + digit;
+        }
+    }
+    return sign == '-' ? -number : number;
+}
+
+- (void)isNumberSetup {
+    //Not numbers:
+    NSString *number = @"xxu911";
+//    printf("%s is number? %s\n", [number UTF8String], [self isNumber:number]? "YES" : "NO");
+//    number = @"3.484393.9384-332";
+//    printf("%s is number? %s\n", [number UTF8String], [self isNumber:number]? "YES" : "NO");
+//    //"33,88"
+//    number = @"3.14";
+//    printf("%s is number? %s\n", [number UTF8String], [self isNumber:number]? "YES" : "NO");
+//    number = @"+99993.14";
+//    printf("%s is number? %s\n", [number UTF8String], [self isNumber:number]? "YES" : "NO");
+//    number = @"+";
+//    printf("%s is number? %s\n", [number UTF8String], [self isNumber:number]? "YES" : "NO");
+    number = @"1,000,";
+    printf("%s is number? %s\n", [number UTF8String], [self isNumber:number]? "YES" : "NO");
+    number = @"100,00";
+    printf("%s is number? %s\n", [number UTF8String], [self isNumber:number]? "YES" : "NO");
+    number = @"1,000,000";
+    printf("%s is number? %s\n", [number UTF8String], [self isNumber:number]? "YES" : "NO");
+    number = @"10000,0";
+    printf("%s is number? %s\n", [number UTF8String], [self isNumber:number]? "YES" : "NO");
+    number = @"1,0";
+    printf("%s is number? %s\n", [number UTF8String], [self isNumber:number]? "YES" : "NO");
+
+//    3,14
+//    44.00
+//    44,00
+//Numbers:
+//    "383"
+//    "-3448"
+}
+
+- (BOOL)isNumber:(NSString *)string {
+    if (string == nil || string.length == 0) {
+        return NO;
+    }
+    unichar sign = [string characterAtIndex:0];
+    int start = 0;
+    if (sign == '+' || sign == '-') {
+        if (string.length==1) {
+            return NO;
+        }
+        start = 1;
+    }
+    BOOL decimal = NO;
+    BOOL comma = NO;
+    int offset = start;
+    // If string is only + or -, this will return YES!! So needs to take edge cases
+    for (int i=start; i<string.length; i++) {
+        unichar letter = [string characterAtIndex:i];
+        if (letter == '.') {
+            if (decimal == NO) {
+                decimal = YES;
+            }
+            else {
+                return NO;
+            }
+        }
+        else if (letter == ',') {
+            // first comma
+            if (comma == NO) {
+                if (i-start>3) {
+                    return NO;
+                }
+                else {
+                    comma = YES;
+                    offset = i+1;
+                }
+            }
+            else {
+                if (i-offset != 3) {
+                    return NO;
+                }
+                else {
+                    offset = i+1;
+                }
+            }
+        }
+        else if (letter<'0' || letter>'9') {
+            return NO;
+        }
+    }
+    // Need to take care of edge cases "100," "1,000,0" etc.
+    return YES;
+}
+
+- (void)parseIntToStringSetup {
+    float n = 12.2304;
+    int intpart = (int)n;
+    float dec = fmodf(n*100, 100.0) / 100;
+//    printf("int: %d, dec: %f\n", intpart, dec);
+//    int number = 103;
+//    printf("Int: %d -> %s\n", number, [[self parseIntToString:number] UTF8String]);
+//    number = -123;
+//    printf("Int: %d -> %s\n", number, [[self parseIntToString:number] UTF8String]);
+//    number = 0;
+//    printf("Int: %d -> %s\n", number, [[self parseIntToString:number] UTF8String]);
+    
+    float num = 12.304;
+    printf("Float: %f -> %s\n", num, [[self parseFloatToString:num] UTF8String]);
+    num = 0.023;
+    printf("Float: %f -> %s\n", num, [[self parseFloatToString:num] UTF8String]);
+    num = 0;
+    printf("Float: %f -> %s\n", num, [[self parseFloatToString:num] UTF8String]);
+    num = 99;
+    printf("Float: %f -> %s\n", num, [[self parseFloatToString:num] UTF8String]);
+}
+
+- (NSString *)parseNumber:(float)number {
+    NSString *num1 = [self parseIntToString:(int)number];
+    if (number>0) {
+        NSString *num2 = [self parseFloatToString:number];
+        num1 = [num1 stringByAppendingString:[NSString stringWithFormat:@".%@", num2]];
+    }
+    return num1;
+}
+
+- (NSString *)parseIntToString:(int)number {
+    NSString *string = [NSString new];
+    BOOL negative = number<0? YES : NO;
+
+    // 123 % 10 = 3, 123/10 = 12.3
+    // 12 % 10 = 2, 12/10 = 1.2
+    // 1%10 = 1, 1/10 = 0.1
+    // Edge case: 0 % 10 = 0, 0/10=0
+    //
+    // float
+    // 12.34-12=0.34
+    // 12 % 10 = 2 12/10 = 1.2
+    // 1 % 10 = 1 1/10 = 0.1
+    // .04*10=0.4, 0.4%10 = 0, 0.4-0 = .4
+    // .4*10=4, 4%10=4, 4-(int)(.4*10) = 0
+    do {
+        int digit = abs(number%10);
+        string = [NSString stringWithFormat:@"%d%@", digit, string];
+        number = number/10;
+    } while (number != 0);
+
+    if (negative) {
+        string = [NSString stringWithFormat:@"-%@", string];
+    }
+    return string;
+}
+
+- (NSString *)parseFloatToString:(float)number {
+    NSString *string = [NSString new];
+    int digit = 0;
+    int intpart = (int)number;
+    BOOL decimal = NO;
+    do {
+        if (intpart>0) {
+            digit = intpart % 10;
+            intpart = intpart / 10;
+            string = [NSString stringWithFormat:@"%d%@", digit, string];
+        }
+        else {
+            if (decimal == NO) {
+                if (string.length==0) {
+                    string = @"0";
+                }
+                decimal = YES;
+                string = [string stringByAppendingString:@"."];
+            }
+            digit = fmod(number*10, 10.0);
+            number = (number*10.0) - (int)(number*10.0);
+            string = [string stringByAppendingString:[NSString stringWithFormat:@"%d", digit]];
+        }
+    } while (number != 0.0);
+    return string;
 }
 
 @end

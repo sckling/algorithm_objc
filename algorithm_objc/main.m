@@ -16,14 +16,19 @@
 #import "Dictionary.h"
 #import "Matrix.h"
 #import "Numbers.h"
+#import "BinarySearch.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+//        BinarySearch *binarySearch = [[BinarySearch alloc] init];
+//        [binarySearch setup];
 //        Dictionary *dict = [[Dictionary alloc] init];
 //        [dict setup];
         
 //        Matrix *matrix = [[Matrix alloc] init];
 //        [matrix setup];
+        
+        // dfs iterative?
         
         Numbers *numbers = [[Numbers alloc] init];
         [numbers setup];
@@ -57,6 +62,7 @@ int main(int argc, const char * argv[]) {
 //        [graph setupSocialGraph];
         
 //        SocialGraph *socialGraph = [[SocialGraph alloc] init];
+//        [socialGraph printSocialGraphSetup];
 //        [socialGraph getRankedCourses:@"Joe"];
         
         //Graph *graph = [[Graph alloc] initWithSize:9];

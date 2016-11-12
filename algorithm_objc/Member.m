@@ -10,4 +10,18 @@
 
 @implementation Member
 
+- (instancetype)initWithName:(NSString *)name memberId:(NSUInteger)memberId {
+    return [self initWithName:name memberId:memberId friends:nil];
+}
+
+- (instancetype)initWithName:(NSString *)name memberId:(NSUInteger)memberId friends:(NSArray *)friends {
+    self = [super init];
+    if (self != nil) {
+        _name = name;
+        _memberId = memberId;
+        _friends = friends;
+    }
+    return self;
+}
+
 @end

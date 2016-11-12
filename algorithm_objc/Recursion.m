@@ -61,4 +61,38 @@ application.js
 //    }
 //}
 
+- (void)coinChangeSetup {
+    int n=4;
+    NSArray *coins = @[@1, @2, @3];
+    NSLog(@"Answer: %d", [self coinChange:4 coins:coins]);
+}
+
+- (int)coinChange:(int)n coins:(NSArray *)coins {
+    
+    return 0;
+}
+
+- (NSSet *)coinChangeHelper:(int)n position:(int)position coins:(NSArray *)coins change:(NSMutableArray *)change set:(NSMutableSet *)set {
+    if (position == n) {
+        NSLog(@"set: %@", change);
+        if (set == nil) {
+            set = [NSMutableSet new];
+        }
+        [set addObject:change];
+        return [set copy];
+    }
+    if (change == nil) {
+        change = [NSMutableArray new];
+    }
+    for (int i=0; i<coins.count; i++) {
+        
+    }
+    return set;
+}
+
+
+
+
+
+
 @end

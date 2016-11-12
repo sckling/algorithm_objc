@@ -181,7 +181,8 @@
     }
     //NSLog(@"low: %d, mid: %d, high: %d", low, middle, high);
     // Character not found
-    // low: position to be inserted. Should return -(low+1) to handle low = 0; since low starts at 0 and we only increment it, it never goes to negative
+    // low: position to be inserted. Should return -(low+1) to handle low = 0
+    // Since low starts at 0 and we only increment it, it never goes to negative
     // high: next position to be inserted
     return high;
 }
