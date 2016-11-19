@@ -30,14 +30,14 @@ int main(int argc, const char * argv[]) {
         
         // dfs iterative?
         
-        Numbers *numbers = [[Numbers alloc] init];
-        [numbers setup];
+//        Numbers *numbers = [[Numbers alloc] init];
+//        [numbers setup];
 
 //        Array *array = [[Array alloc] init];
 //        [array setup];
         
-//        String *string = [[String alloc] init];
-//        [string setup];
+        String *string = [[String alloc] init];
+        [string setup];
 //        [string filterWordSetup];
         
 //        [array twoDimenionalArray];

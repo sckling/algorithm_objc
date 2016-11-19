@@ -28,6 +28,8 @@
     
 //    [self isBracketsCountCorrectSetUp];
 //    [self smallestCharInArraySetup];
+    [self anagramsSetup];
+    
     
     [self findCommonArraySetup];
 
@@ -594,6 +596,67 @@
     else {
         NSLog(@"Missing: %@", noteDict);
     }
+}
+
+/*
+ Given two strings a and b, that may or may not be of the same length, determine the minimum number of character deletions required to make a and b anagrams. Any characters can be deleted from either of the strings.
+ 
+ Example: cde, abc, output = 4
+ 1. s1: remove d and e to get c
+ 2. s2: remove a and b to get c
+ */
+
+- (void)anagramsSetup {
+    NSString *s1 = @"fsqoiaidfaukvngpsugszsnseskicpejjvytviya";
+    NSString *s2 = @"ksmfgsxamduovigbasjchnoskolfwjhgetnmnkmcphqmpwnrrwtymjtwxget";
+    int answer = 42;
+    printf("%d\n", [self anagrams:s1 string:s2]);
+}
+
+/*
+ Solution:
+ cde, abc -> c
+ abb, caab -> ab
+ 1. put first string in hash
+ 2. loop second string and check each character
+ 3. Add matched character to another hash
+ 4. H2: c, n=2
+ 5. loop string one again and remove unmatched character
+ 6. Return n
+ */
+
+- (int)anagrams:(NSString *)s1 string:(NSString *)s2 {
+    int n=0;
+    unichar c = 'c';
+    NSString *cha = [NSString stringWithCharacters:&c length:1];
+    NSLog(@"char: %@", cha);
+    NSCountedSet *set1 = [[NSCountedSet alloc] initWithCapacity:s1.length];
+    NSCountedSet *set2 = [[NSCountedSet alloc] initWithCapacity:s2.length];
+    for (int i=0; i<s1.length; i++) {
+        NSString *c = [NSString stringWithFormat:@"%c", [s1 characterAtIndex:i]];
+        [set1 addObject:c];
+    }
+    for (int i=0; i<s2.length; i++) {
+        NSString *c = [NSString stringWithFormat:@"%c", [s2 characterAtIndex:i]];
+        // character matched in s1, added to a new hash
+        if ([set1 countForObject:c] > 0) {
+            [set2 addObject:c];
+            [set1 removeObject:c];
+        }
+        else {
+            n++;
+        }
+    }
+    for (int i=0; i<s1.length; i++) {
+        NSString *c = [NSString stringWithFormat:@"%c", [s1 characterAtIndex:i]];
+        if ([set2 countForObject:c] > 0) {
+            [set2 removeObject:c];
+        }
+        else {
+            n++;
+        }
+    }
+    return n;
 }
 
 @end
