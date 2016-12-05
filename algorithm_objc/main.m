@@ -36,8 +36,8 @@ int main(int argc, const char * argv[]) {
 //        Array *array = [[Array alloc] init];
 //        [array setup];
         
-        String *string = [[String alloc] init];
-        [string setup];
+//        String *string = [[String alloc] init];
+//        [string setup];
 //        [string filterWordSetup];
         
 //        [array twoDimenionalArray];
@@ -54,8 +54,8 @@ int main(int argc, const char * argv[]) {
 //            }
 //        }
         
-//        Tree *binarySearchTree = [[Tree alloc] init];
-//        [binarySearchTree setup];
+        Tree *binarySearchTree = [[Tree alloc] init];        
+        [binarySearchTree setup];
         
 //        Graph *graph = [[Graph alloc] initWithMember];
 //        [graph setupSocialGraphWithLevel];

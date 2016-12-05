@@ -27,12 +27,20 @@
 //    [self bracketPermutation:2 array:array];
     
 //    [self isBracketsCountCorrectSetUp];
+    
 //    [self smallestCharInArraySetup];
-    [self anagramsSetup];
     
+//    [self anagramsSetup];
     
-    [self findCommonArraySetup];
+//    [self findCommonArraySetup];
+    
+//    [self delimiterMatchingSetup];
+    
+    [self palindromeSetup];
+}
 
+- (void)delimiterMatchingSetup {
+    NSString *string;
     string =  @"{ac[bb]}";
     NSLog(@"Delimiter %@: %d", string, [self isDelimiterMatched:string stack:nil]);
     string = @"[dklf(df(kl))d]{}";
@@ -115,8 +123,64 @@
     return YES;
 }
 
+// Use a stack to store all the open brackets
+// When encounter a close bracket, pop the stack and compare against it
+// If it's a matched pair, continue
+// If not, return NO
+// If starts with close bracket, return no
+
+
+/*
+ Second attempt to complete this question via Hackerrank but there are several bugs:
+ 1. When there are still open brackets left in the stack, it returns YES
+ 2. When there are no open brackets but there are close brackets, it returns YES
+ 3. Need to define when it's an empty string, should return YES or NO
+ */
+
+- (void)areBracketsBalanced:(NSString *)string {
+    //printf("%s\n", [string UTF8String]);
+    NSMutableArray *stack = [NSMutableArray new];
+    for (int i=0; i<string.length; i++) {
+        unichar c = [string characterAtIndex:i];
+        if (c == '{' || c == '[' || c == '(' ) {
+            [stack addObject:[NSString stringWithCharacters:&c length:1]];
+        }
+        else {
+            // No open brackets to pop
+            if (stack.count == 0) {
+                printf("NO\n");
+                return;
+            }
+            unichar openBracket = [[stack lastObject] characterAtIndex:0];
+            if (openBracket == '{' && c != '}') {
+                printf("NO\n");
+                return;
+            }
+            else if (openBracket == '[' && c != ']') {
+                printf("NO\n");
+                return;
+            }
+            else if (openBracket == '(' && c != ')') {
+                printf("NO\n");
+                return;
+            }
+            else {
+                [stack removeLastObject];
+            }
+        }
+    }
+    // If there are still open brackets left in the stack, should return no.
+    if (stack.count == 0) {
+        printf("YES\n");
+    }
+    else {
+        printf("NO\n");
+    }
+    return;
+}
+
 - (void)smallestCharInArraySetup {
-    NSString *string = @"cccffffjpv";
+    NSString *string = @"cccffffjpv";  // string lenght = 10, character 0..9
     NSLog(@"Character c->f: %c", [self smallestCharacterInString:string character:'c']);
     NSLog(@"Character f->j: %c", [self smallestCharacterInString:string character:'f']);
     NSLog(@"Character v->c: %c", [self smallestCharacterInString:string character:'v']);
@@ -149,22 +213,24 @@
     // How to handle repeated character? Recursively search for next character that is not the same
     NSInteger idx = [self binarySearch:string character:character];
     //return idx >= string.length-1? [string characterAtIndex:0]: [string characterAtIndex:idx+1];
-    return [self nextCharacter:string index:idx];
+    return [self nextCharacter:string character:character index:idx];
 }
 
-- (unichar)nextCharacter:(NSString *)string index:(NSInteger)index {
+- (unichar)nextCharacter:(NSString *)string character:(unichar)character index:(NSInteger)index {
     // At the end of the string, no need to check next repeated character, return first character of the string
-    if (index == string.length-1) {
+    if (index > string.length-1) {
         return [string characterAtIndex:0];
     }
     // Next character is same as current character, recursively search for next character
-    if ([string characterAtIndex:index] == [string characterAtIndex:index+1]) {
-        return [self nextCharacter:string index:index+1];
+    //if ([string characterAtIndex:index] == [string characterAtIndex:index+1]) {
+    if (character == [string characterAtIndex:index]) {
+        return [self nextCharacter:string character:character index:index+1];
     }
     // Next character is not the same as current character, return next character
-    return [string characterAtIndex:index+1];
+    return [string characterAtIndex:index];
 }
 
+// This method can handle array with 0, 1 or 2 elements only
 - (NSInteger)binarySearch:(NSString *)string character:(unichar)character {
     NSInteger low = 0;
     NSInteger high = string.length - 1;
@@ -181,12 +247,12 @@
             low = middle+1;
         }
     }
-    //NSLog(@"low: %d, mid: %d, high: %d", low, middle, high);
+    //NSLog(@"low: %ld, mid: %ld, high: %ld", (long)low, (long)middle, (long)high);
     // Character not found
-    // low: position to be inserted. Should return -(low+1) to handle low = 0
-    // Since low starts at 0 and we only increment it, it never goes to negative
-    // high: next position to be inserted
-    return high;
+    // low: next position to insert character. Should return -(low+1) to handle low = 0
+    // Since low starts at 0 and we only increment it, it never goes to negative but could be out of bound
+    // high: replace previous position with this index
+    return low;
 }
 
 
@@ -657,6 +723,50 @@
         }
     }
     return n;
+}
+
+- (void)palindromeSetup {
+    NSString *string = @"abba";
+    printf("%s is palindrom? %d\n", [string UTF8String], [self isPalindrome:string]);
+    
+    string = @"abzba";
+    printf("%s is palindrom? %d\n", [string UTF8String], [self isPalindrome:string]);
+    
+    string = @"a";
+    printf("%s is palindrom? %d\n", [string UTF8String], [self isPalindrome:string]);
+    
+    string = @"";
+    printf("%s is palindrom? %d\n", [string UTF8String], [self isPalindrome:string]);
+    
+    string = @"ab";
+    printf("%s is palindrom? %d\n", [string UTF8String], [self isPalindrome:string]);
+    
+    string = @"11";
+    printf("%s is palindrom? %d\n", [string UTF8String], [self isPalindrome:string]);
+}
+
+/*
+ - Compare from the first and last character of the string
+ - When start >= end, stop
+ - abba, start=2, end=1, stop
+ - abcba, start=2, end=2, stop
+ - Is single character a palindrome? Yes
+ */
+
+- (BOOL)isPalindrome:(NSString *)string {
+    if (string.length == 0) {
+        return NO;
+    }
+    NSUInteger start = 0;
+    NSUInteger end = string.length-1;
+    while (start < end) {
+        if ([string characterAtIndex:start] != [string characterAtIndex:end]) {
+            return NO;
+        }
+        start++;
+        end--;
+    }
+    return YES;
 }
 
 @end

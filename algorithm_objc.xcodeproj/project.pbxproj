@@ -16,6 +16,8 @@
 		195E7DE31C7D54190085121E /* Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 195E7DE11C7D54190085121E /* Matrix.m */; };
 		19601AC21BF154E00096DA27 /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 19601AC11BF154E00096DA27 /* Member.m */; };
 		196466F91C17C7B100FA9E4D /* UndirectedGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 196466F81C17C7B100FA9E4D /* UndirectedGraph.m */; };
+		196CAFE61DEE3845000974EC /* MinHeap.m in Sources */ = {isa = PBXBuildFile; fileRef = 196CAFE51DEE3845000974EC /* MinHeap.m */; };
+		196CAFEF1DEEC266000974EC /* MaxHeap.m in Sources */ = {isa = PBXBuildFile; fileRef = 196CAFEE1DEEC266000974EC /* MaxHeap.m */; };
 		1978EAE01DCA9A3E00DCDD0F /* BinarySearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 1978EADF1DCA9A3E00DCDD0F /* BinarySearch.m */; };
 		199D61D91C89607000D0A795 /* Graph1.m in Sources */ = {isa = PBXBuildFile; fileRef = 199D61D81C89607000D0A795 /* Graph1.m */; };
 		19ACC4421CC59E9F00E2736E /* Numbers.m in Sources */ = {isa = PBXBuildFile; fileRef = 19ACC4411CC59E9F00E2736E /* Numbers.m */; };
@@ -63,6 +65,10 @@
 		19601AC11BF154E00096DA27 /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Member.m; sourceTree = "<group>"; };
 		196466F71C17C7B100FA9E4D /* UndirectedGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UndirectedGraph.h; sourceTree = "<group>"; };
 		196466F81C17C7B100FA9E4D /* UndirectedGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UndirectedGraph.m; sourceTree = "<group>"; };
+		196CAFE41DEE3845000974EC /* MinHeap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinHeap.h; sourceTree = "<group>"; };
+		196CAFE51DEE3845000974EC /* MinHeap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinHeap.m; sourceTree = "<group>"; };
+		196CAFED1DEEC266000974EC /* MaxHeap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaxHeap.h; sourceTree = "<group>"; };
+		196CAFEE1DEEC266000974EC /* MaxHeap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaxHeap.m; sourceTree = "<group>"; };
 		1978EADE1DCA9A3E00DCDD0F /* BinarySearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinarySearch.h; sourceTree = "<group>"; };
 		1978EADF1DCA9A3E00DCDD0F /* BinarySearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BinarySearch.m; sourceTree = "<group>"; };
 		199D61D71C89607000D0A795 /* Graph1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph1.h; sourceTree = "<group>"; };
@@ -165,6 +171,10 @@
 				1978EADF1DCA9A3E00DCDD0F /* BinarySearch.m */,
 				E42659D51BCA39D3001B49C4 /* NSArray+Methods.h */,
 				E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */,
+				196CAFE41DEE3845000974EC /* MinHeap.h */,
+				196CAFE51DEE3845000974EC /* MinHeap.m */,
+				196CAFED1DEEC266000974EC /* MaxHeap.h */,
+				196CAFEE1DEEC266000974EC /* MaxHeap.m */,
 			);
 			name = Arrays;
 			sourceTree = "<group>";
@@ -321,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1901CC131CC06B2F00BECDE3 /* Recursion.m in Sources */,
+				196CAFEF1DEEC266000974EC /* MaxHeap.m in Sources */,
 				19D2E3321DC11F050056073E /* Vertex.m in Sources */,
 				19B738AE1BF2F5E5005D29A2 /* SocialGraph.m in Sources */,
 				196466F91C17C7B100FA9E4D /* UndirectedGraph.m in Sources */,
@@ -335,6 +346,7 @@
 				19ACC4421CC59E9F00E2736E /* Numbers.m in Sources */,
 				E4A908B81BCA1CD500FA77B6 /* TreeNode.m in Sources */,
 				19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */,
+				196CAFE61DEE3845000974EC /* MinHeap.m in Sources */,
 				193A42861C485335004AF854 /* Dictionary.m in Sources */,
 				199D61D91C89607000D0A795 /* Graph1.m in Sources */,
 				19F696E81BD1F84D004F31AF /* Graph.m in Sources */,

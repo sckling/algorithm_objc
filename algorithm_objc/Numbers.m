@@ -18,8 +18,17 @@
 //    int n=10;
 //    printf("Fibonacci of %d = %d\n", n, [self fibonacci:n]);
     
+    int n=10;
+    printf("Fibonacci of %d = %d\n", n, [self fibonacciIterative:n]);
+    n=0;
+    printf("Fibonacci of %d = %d\n", n, [self fibonacciIterative:n]);
+    n=1;
+    printf("Fibonacci of %d = %d\n", n, [self fibonacciIterative:n]);
+    n=2;
+    printf("Fibonacci of %d = %d\n", n, [self fibonacciIterative:n]);
+
 //    [self printPhoneNumberWords];
-    [self isNumberSetup];
+//    [self isNumberSetup];
 //    [self convertStringToNumberSetup];
 //    [self parseIntToStringSetup];
 }
@@ -118,6 +127,33 @@
         }
     }
     return fib[n];
+}
+
+- (int)fibonacciIterative:(int)n {
+    if (n == 0) {
+        printf("%d\n", n);
+        return n;
+    }
+    if (n == 1) {
+        printf("0 %d\n", n);
+        return n;
+    }
+    // f(n) = f(n-1) + f(n-2)
+    // Shift f(n-1) and f(n-2)
+    // f(n-2) = f(n-1)
+    // f(n-1) = f(n)
+    int f1 = 1;
+    int f2 = 0;
+    int f = 0;
+    printf("%d %d ", f2, f1);
+    for (int i=2; i<=n; i++) {
+        f = f1 + f2;
+        printf("%d ", f);
+        f2 = f1;
+        f1 = f;
+    }
+    printf("\n");
+    return f;
 }
 
 /*

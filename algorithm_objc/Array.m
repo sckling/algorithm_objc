@@ -8,6 +8,9 @@
 
 #import "Array.h"
 #import "NSArray+Methods.h"
+#import "MinHeap.h"
+#import "MaxHeap.h"
+#import "BinarySearch.h"
 
 @interface Array()
 @property (nonatomic, strong) NSMutableArray *s1;
@@ -17,115 +20,6 @@
 @end
 
 @implementation Array
-
-- (void)setup {
-    // max subarray = 4, -1, 2, 1 = 6
-//    NSArray *array1 = @[@-2, @1, @-3, @4, @-1, @2, @1, @-5, @4];
-//    [self passArrayByReference:&array1];
-//    NSLog(@"New array after pass by reference: %@", array1);
-//    
-//    NSLog(@"Maximum sub-array sum: %ld", [array1 maximumSubArraySum]);
-//    
-//    NSArray *array2 = @[@2, @7, @2, @-2, @5, @-7];
-//    [array2 findPairsOfElementsEqualToSum:7];
-
-//    NSArray *array1 = @[@3, @1, @2, @5, @6, @4];
-//    NSLog(@"Product array: %@", [self getProductsOfAllIntsExceptAtIndex:array1]);
-//    NSLog(@"Product array: %@", [self buildAtIndex:array1]);
-    
-    
-    int a1[5] = {1,3,5,7,9};
-    int a2[5] = {9,7,5,3,1};
-    int a3[5] = {1,5,3,2,1};
-    int a4[5] = {9,10,5,9,10};
-    int a5[2] = {4,2};
-    
-    NSLog(@"Monotonic: %d", [self isMonotonic:a1 size:5]);
-    NSLog(@"Monotonic: %d", [self isMonotonic:a2 size:5]);
-    NSLog(@"Monotonic: %d", [self isMonotonic:a3 size:5]);
-    NSLog(@"Monotonic: %d", [self isMonotonic:a4 size:5]);
-    NSLog(@"Monotonic: %d", [self isMonotonic:a5 size:2]);
-    
-    [self sudokuValidationSetup];
-    
-    NSArray *array2 = @[@3, @1, @2, @4, @5];
-    NSLog(@"Highest product of 3 numbers in array: %ld", (long)[self maxProductOfThreeNumbers:array2]);
-    
-        array2 = @[@1, @10, @-5, @1, @-100];
-    NSLog(@"Highest product of 3 numbers in array: %ld", (long)[self maxProductOfThreeNumbers:array2]);
-    
-    NSMutableArray *a = [NSMutableArray arrayWithArray:@[@1,@2]];
-    self.s1 = a;
-    self.s2 = a;
-    [a addObject:@3];
-    NSLog(@"s1: %@, s2:%@", self.s1, self.s2);
-    self.s2 = self.s1;
-    NSLog(@"s1: %@, s2:%@", self.s1, self.s2);
-    [self.s1 addObject:@4];
-    NSLog(@"s1: %@, s2:%@", self.s1, self.s2);
-    
-    NSLog(@"int max: %d", INT_MAX);
-    NSLog(@"int max: %d", INT_MIN);
-    [self mergeTwoSortedArray1];
-    [self mergeTwoSortedArrayNoExtraSpace];
-    
-    
-    NSArray *array3 = @[@2, @4, @10, @7, @10];
-    if ([array3 indexOfObject:@10] != NSNotFound) {
-        NSLog(@"Index of object: %lu", (unsigned long)[array3 indexOfObject:@10]);
-    }
-
-    NSInteger number = 10;
-    NSLog(@"Binary search of %ld found: %ld", (long)number, (long)[array3 binarySearch:0 end:array3.count-1 number:number]);
-    NSLog(@"Binary search iterative: %ld", [array3 binarySearchIterative:@10]);
-
-//    NSArray *array4 = @[@"b", @"d", @"g", @"k"];
-//    NSLog(@"Binary search %@ found: %lu", @"b", (unsigned long)[array4 binarySearch:0 end:array4.count-1 character:@"z"]);
-//    
-//    NSArray *array5 = @[@3, @0, @-1, @4, @5, @0, @2, @0];
-//    [array5 sortArrayZeros:[array5 mutableCopy]];
-
-    self.enumeratorIdx = 0;
-    self.enumeratorArray = [NSMutableArray arrayWithArray:@[@"a", @"b", @[@"c", @[@"d"]], @[ @[@"e", @[@"f"]], @"g" ] ]];
-    self.enumeratorArray = [self.enumeratorArray mutableCopy];
-    
-    NSArray *words = @[@"ape", @"peel", @"pale", @"apple", @"appple"];
-    // ape+pl = apple, e+pal= ap?le, ????e, ????e
-    NSLog(@"Sticker count: %lu", (unsigned long)[words stickerCount]);
-    
-    NSArray *array = @[@3, @7, @1, @4, @5, @2];
-    for (NSNumber *num in array) {
-        NSLog(@"Rolling median: %f", [self rollingMedian:num]);
-    }
-}
-
-// NSEnumerator
-- (id)nextObject {
-    if (self.enumeratorArray.count > 0) {
-        id obj = self.enumeratorArray[0];
-        [self.enumeratorArray removeObjectAtIndex:0];
-        return [self firstObject:obj];
-    }
-    return nil;
-}
-
-// Takes out the first object and insert it back to the array recursively until the object is a string, then return it
-- (id)firstObject:(id)obj {
-    if ([obj isKindOfClass:[NSString class]]) {
-        return obj;
-    }
-    else if ([obj isKindOfClass:[NSArray class]]) {
-        NSMutableArray *newArray = [obj mutableCopy];
-        id firstObj = newArray[0];
-        [newArray removeObjectAtIndex:0];
-
-        if (newArray.count > 0) {
-            [self.enumeratorArray insertObject:[newArray copy] atIndex:0];
-        }
-        return [self firstObject:firstObj];
-    }
-    return nil;
-}
 
 - (void)passArrayByReference:(NSArray **)array {
     NSLog(@"Original array: %@", *array);
@@ -145,10 +39,17 @@
     }];
     
     NSLog(@"Second run of block");
-    self.propertyBlock = ^NSString *(int a, float b){return @"property block";};
+    self.propertyBlock = ^NSString *(int a, float b) {
+        return @"property block";
+    };
     [self executeBlock:self.propertyBlock];
-    [self executeBlock:^NSString *(int a, float b){return @"inline defined block";}];
-    [self executeDispatchBlock:^void{NSLog(@"Inside a dispatch block");}];
+    [self executeBlock:^NSString *(int a, float b) {
+        printf("inline defined block %d, %.1f", a, b);
+        return @"inline defined block";
+    }];
+    [self executeDispatchBlock:^void{
+        NSLog(@"Inside a dispatch block");
+    }];
 }
 
 - (void)executeDispatchBlock:(dispatch_block_t)block {
@@ -159,7 +60,7 @@
 - (void)executeBlock:(NSString *(^)(int, float))myBlock {
     int a = 10;
     float b = 20;
-
+    
     // myBlock function already defined, supply it with the required parameters and it'll return the result
     if (myBlock) {
         NSString *result = myBlock(a, b);
@@ -182,7 +83,6 @@
     newTypeDefBlock anotherBlock = ^NSNumber *(int a, NSNumber *b) {return @(a+[b integerValue]);};
     self.aTypeDefBlock = anotherBlock;
     NSLog(@"Execute a typedef block: %@", self.aTypeDefBlock(1, @2));
-    
 }
 
 - (void)twoDimenionalArray {
@@ -211,10 +111,115 @@
     NSLog(@"arr[2][1]: %@", arr[2*num2+1]);
     for(int i=0; i < num1; i++) {
         for(int j=0; j < num2; j++) {
-           printf("%i ", [arr[i*num2+j] intValue]);
+            printf("%i ", [arr[i*num2+j] intValue]);
         }
         printf("\n");
     }
+}
+
+- (void)passArrayByReferenceSetup {
+  NSArray *array = @[@-2, @1, @-3, @4, @-1, @2, @1, @-5, @4];
+    [self passArrayByReference:&array];
+    NSLog(@"New array after pass by reference: %@", array);
+}
+
+- (void)setup {
+    
+//    [self passArrayByReferenceSetup];
+//
+//    [self maximumSubArraySetup];
+//    
+//    [self findPairsOfElementsSetup];
+//    
+//    [self getProductsOfAllIntsExceptAtIndexSetup];
+//    
+//    [self monotonicSetup];
+//    
+//    [self maxProductOfTHreeNumbersSetup];
+//    
+//    [self mergeTwoSortedArraySetup];
+//    
+//    [self sudokuValidationSetup];
+//    
+//    [self stickerCountSetup];
+//    
+//    [self binarySearchSetup];
+//    
+//    [self rollingMedianSetup];
+//
+//    [self enumeratorSetup];
+    
+//    [self heapSetup];
+    
+    [self runningMedianUsingHeapsSetup];
+}
+
+- (void)binarySearchSetup {
+    NSArray *array3 = @[@2, @4, @10, @7, @10];
+    if ([array3 indexOfObject:@10] != NSNotFound) {
+        NSLog(@"Index of object: %lu", (unsigned long)[array3 indexOfObject:@10]);
+    }
+    
+    NSInteger number = 10;
+    NSLog(@"Binary search of %ld found: %ld", (long)number, (long)[array3 binarySearch:0 end:array3.count-1 number:number]);
+    NSLog(@"Binary search iterative: %ld", [array3 binarySearchIterative:@10]);
+    
+    NSArray *array4 = @[@"b", @"d", @"g", @"k"];
+    NSLog(@"Binary search %@ found: %lu", @"b", (unsigned long)[array4 binarySearch:0 end:array4.count-1 character:@"z"]);
+    
+    NSArray *array5 = @[@3, @0, @-1, @4, @5, @0, @2, @0];
+    [array5 sortArrayZeros:[array5 mutableCopy]];
+}
+
+- (void)stickerCountSetup {
+    NSArray *words = @[@"ape", @"peel", @"pale", @"apple", @"appple"];
+    // ape+pl = apple, e+pal= ap?le, ????e, ????e
+    NSLog(@"Sticker count: %lu", (unsigned long)[words stickerCount]);
+}
+
+- (void)findPairsOfElementsSetup {
+    NSArray *array2 = @[@2, @7, @2, @-2, @5, @-7];
+    [array2 findPairsOfElementsEqualToSum:7];
+}
+
+- (void)maximumSubArraySetup {
+    //max subarray = 4, -1, 2, 1 = 6
+    NSArray *array = @[@-2, @1, @-3, @4, @-1, @2, @1, @-5, @4];
+    NSLog(@"Maximum sub-array sum: %ld", [array maximumSubArraySum]);
+}
+
+- (void)enumeratorSetup {
+    self.enumeratorIdx = 0;
+    self.enumeratorArray = [NSMutableArray arrayWithArray:@[@"a", @"b", @[@"c", @[@"d"]], @[ @[@"e", @[@"f"]], @"g" ] ]];
+    self.enumeratorArray = [self.enumeratorArray mutableCopy];
+}
+
+// NSEnumerator
+- (id)nextObject {
+    if (self.enumeratorArray.count > 0) {
+        id obj = self.enumeratorArray[0];
+        [self.enumeratorArray removeObjectAtIndex:0];
+        return [self firstObject:obj];
+    }
+    return nil;
+}
+
+// Takes out the first object and insert it back to the array recursively until the object is a string, then return it
+- (id)firstObject:(id)obj {
+    if ([obj isKindOfClass:[NSString class]]) {
+        return obj;
+    }
+    else if ([obj isKindOfClass:[NSArray class]]) {
+        NSMutableArray *newArray = [obj mutableCopy];
+        id firstObj = newArray[0];
+        [newArray removeObjectAtIndex:0];
+
+        if (newArray.count > 0) {
+            [self.enumeratorArray insertObject:[newArray copy] atIndex:0];
+        }
+        return [self firstObject:firstObj];
+    }
+    return nil;
 }
 
 - (void)sudokuValidationSetup {
@@ -286,6 +291,13 @@
     return YES;
 }
 
+- (void)rollingMedianSetup {
+    NSArray *array = @[@3, @7, @1, @4, @5, @2];
+    for (NSNumber *num in array) {
+        NSLog(@"Rolling median: %f", [self rollingMedian:num]);
+    }
+}
+
 /*
     calculate an efficient streaming median of numbers.
     eg: set of numbers are- 3, 7, 1, 4, 5, median will be 4
@@ -346,6 +358,23 @@
  array1 = 1,2,3,5,8,9
  array2 = 10,13,15,20
  */
+
+- (void)mergeTwoSortedArraySetup {
+    NSMutableArray *a = [NSMutableArray arrayWithArray:@[@1,@2]];
+    self.s1 = a;
+    self.s2 = a;
+    [a addObject:@3];
+    NSLog(@"s1: %@, s2:%@", self.s1, self.s2);
+    self.s2 = self.s1;
+    NSLog(@"s1: %@, s2:%@", self.s1, self.s2);
+    [self.s1 addObject:@4];
+    NSLog(@"s1: %@, s2:%@", self.s1, self.s2);
+    
+    NSLog(@"int max: %d", INT_MAX);
+    NSLog(@"int max: %d", INT_MIN);
+    [self mergeTwoSortedArray1];
+    [self mergeTwoSortedArrayNoExtraSpace];
+}
 
 - (void)mergeTwoSortedArray1 {
     NSMutableArray *array2 = [NSMutableArray arrayWithArray:@[@1,@5,@9,@10,@15,@20]];
@@ -434,6 +463,13 @@
  Assume we can't use division.
  If we can use division, we can divide the total product by the at index value. However, needs to take care of 0 value element
  */
+
+- (void)getProductsOfAllIntsExceptAtIndexSetup {
+    NSArray *array1 = @[@3, @1, @2, @5, @6, @4];
+    NSLog(@"Product array: %@", [self getProductsOfAllIntsExceptAtIndex:array1]);
+    NSLog(@"Product array: %@", [self buildAtIndex:array1]);
+}
+
 - (NSArray *)getProductsOfAllIntsExceptAtIndex:(NSArray *)array {
 //    [1, 7, 3, 4] -> [7*3*4, 1*3*4, 1*7*4, 1*7*3] -> [84, 12, 28, 21]
     /*
@@ -502,6 +538,14 @@
         productSoFar *= [array[i] integerValue];
     }
     return [after copy];
+}
+
+- (void)maxProductOfTHreeNumbersSetup {
+    NSArray *array = @[@3, @1, @2, @4, @5];
+    NSLog(@"Highest product of 3 numbers in array: %ld", (long)[self maxProductOfThreeNumbers:array]);
+    
+    array = @[@1, @10, @-5, @1, @-100];
+    NSLog(@"Highest product of 3 numbers in array: %ld", (long)[self maxProductOfThreeNumbers:array]);
 }
 
 - (int)maxProductOfThreeNumbers:(NSArray *)array {
@@ -619,6 +663,20 @@
     //  7: 1 -> -7: 5
 }
 
+- (void)monotonicSetup {
+    int a1[5] = {1,3,5,7,9};
+    int a2[5] = {9,7,5,3,1};
+    int a3[5] = {1,5,3,2,1};
+    int a4[5] = {9,10,5,9,10};
+    int a5[2] = {4,2};
+    
+    NSLog(@"Monotonic: %d", [self isMonotonic:a1 size:5]);
+    NSLog(@"Monotonic: %d", [self isMonotonic:a2 size:5]);
+    NSLog(@"Monotonic: %d", [self isMonotonic:a3 size:5]);
+    NSLog(@"Monotonic: %d", [self isMonotonic:a4 size:5]);
+    NSLog(@"Monotonic: %d", [self isMonotonic:a5 size:2]);
+}
+
 - (BOOL)isMonotonic:(int[])array size:(int)size {
     BOOL asec = YES;
     int prev = 0;
@@ -643,5 +701,122 @@
     return YES;
 }
 
+- (void)heapSetup {
+    MinHeap *heap = [[MinHeap alloc] init];
+    [heap insertElement:@10];
+    [heap insertElement:@100];
+    [heap insertElement:@30];
+    [heap insertElement:@20];
+    [heap insertElement:@50];
+    
+    
+    //NSLog(@"%@", [heap peek]);
+    NSLog(@"Min: %@", [heap poll]);
+    //NSLog(@"%@", [heap peek]);
+    NSLog(@"%@", [heap poll]);
+    NSLog(@"%@", [heap poll]);
+    NSLog(@"%@", [heap poll]);
+    NSLog(@"%@", [heap poll]);
+    
+    MaxHeap *maxHeap = [[MaxHeap alloc] init];
+    [maxHeap insertElement:@10];
+    [maxHeap insertElement:@100];
+    [maxHeap insertElement:@30];
+    [maxHeap insertElement:@20];
+    [maxHeap insertElement:@50];
+    
+    NSLog(@"Max: %@", [maxHeap poll]);
+    NSLog(@"%@", [maxHeap poll]);
+    NSLog(@"%@", [maxHeap poll]);
+    NSLog(@"%@", [maxHeap poll]);
+    NSLog(@"%@", [maxHeap poll]);
+}
+
+- (void)runningMedianUsingHeapsSetup {
+    NSArray *array = @[@12,@4,@5,@3,@8,@7];
+    [self runningMedianUsingHeaps:array];
+}
+
+- (void)runningMedianUsingHeaps:(NSArray *)array {
+/*
+ 12 -> 12 = 12
+ 4 -> 4,12 = (4+12)/2 = 8
+ 5 -> 4,5,12 = 5
+ 3 -> 3,4,5,12 = (4+5)/2 = 4.5
+ 8 -> 3,4,5,8,12 = 5
+ 7 -> 3,4,5,7,8,12 = (5+7)/2 = 6
+ 
+ Use a min heap to store upper half and a max heap to store lower half
+ If new element < max, add to max heap
+ If new element > min, add to min heap
+ If new element > max && < min, pick one that's smaller
+ After inserting, need to balance the heaps.
+ If max heap - min heap > 1, pop the max and add it to the other heap and vice versa
+ If sizes of 2 heaps are equal, computer median by average of min and max
+ Else print the large heap's min/max value
+ 
+ Max (lower): 5,4,3
+ Min (upper): 7,8,12
+ */
+    
+    MinHeap *minHeap = [[MinHeap alloc] init];
+    MaxHeap *maxHeap = [[MaxHeap alloc] init];
+
+    for (NSNumber *num in array) {
+        [self insert:num minHeap:minHeap maxHeap:maxHeap];
+        [self balanceHeaps:minHeap maxHeap:maxHeap];
+        [self calculateMedian:maxHeap minHeap:minHeap];
+    }
+}
+
+- (void)insert:(NSNumber *)num minHeap:(MinHeap *)minHeap maxHeap:(MaxHeap *)maxHeap {
+    if (minHeap.size == 0) {
+        [minHeap insertElement:num];
+    }
+    else if (maxHeap.size == 0) {
+        [maxHeap insertElement:num];
+    }
+    else {
+        if ([num isLessThan:[maxHeap peek]]) {
+            [maxHeap insertElement:num];
+        }
+        else if ([num isGreaterThan:[minHeap peek]]) {
+            [minHeap insertElement:num];
+        }
+        else {
+            // Element is between min and max, insert it to the smaller heap
+            if (minHeap.size > maxHeap.size) {
+                [maxHeap insertElement:num];
+            }
+            else {
+                [minHeap insertElement:num];
+            }
+        }
+    }
+}
+
+- (void)balanceHeaps:(MinHeap *)minHeap maxHeap:(MaxHeap *)maxHeap {
+    if ((minHeap.size-maxHeap.size) > 1) {
+        NSNumber *min = [minHeap poll];
+        [maxHeap insertElement:min];
+    }
+    else if (maxHeap.size-minHeap.size > 1) {
+        NSNumber *max = [maxHeap poll];
+        [minHeap insertElement:max];
+    }
+}
+
+- (void)calculateMedian:(MaxHeap *)maxHeap minHeap:(MinHeap *)minHeap {
+    if (minHeap.size == maxHeap.size) {
+        float median = ([[minHeap peek] floatValue] + [[maxHeap peek] floatValue]) / 2.0;
+        printf("%.2f\n", median);
+    }
+    else if (minHeap.size > maxHeap.size) {
+        printf("%.2f\n", [[minHeap peek] floatValue]);
+    }
+    else {
+        printf("%.2f\n", [[maxHeap peek] floatValue]);
+    }
+}
 
 @end

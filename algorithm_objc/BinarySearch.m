@@ -188,4 +188,28 @@
     printf("Index of %c = %d\n", character, [[self binarySearchCharacter:string input:character] intValue]);
 }
 
+- (NSInteger)binarySearch:(NSArray *)array number:(NSNumber *)number {
+    NSInteger low = 0;
+    NSInteger high = array.count - 1;
+    NSInteger middle = 0;
+    while (low <= high) {
+        middle = low + (high-low)/2;
+        if ([array[middle] isEqualToNumber:number]) {
+            return middle;
+        }
+        if ([array[middle] isGreaterThan:number]) {
+            high = middle-1;
+        }
+        else {
+            low = middle+1;
+        }
+    }
+    //NSLog(@"low: %ld, mid: %ld, high: %ld", (long)low, (long)middle, (long)high);
+    // Character not found
+    // low: next position to insert character. Should return -(low+1) to handle low = 0
+    // Since low starts at 0 and we only increment it, it never goes to negative but could be out of bound
+    // high: replace previous position with this index
+    return low;
+}
+
 @end

@@ -30,7 +30,7 @@
 
     //deep copy of object using NSCopying
     //node = [left copy];
-    [node checkBST:node];
+    //[node checkBST:node];
 
     //   3
     //  2 6
@@ -58,7 +58,7 @@
 //    NSLog(@"Depth of tree: %ld", [root depthOfTree:root]);
 //    NSLog(@"Largest number: %lu", [root secondLargestInteger:root]);
 //    [root checkBST:root];
-    NSLog(@"Diameter of tree: %d", [root diameterOfTree:root]);
+//    NSLog(@"Diameter of tree: %d", [root diameterOfTree:root]);
     
 //    NSUInteger value = 21;
 //    printf("Largest value smaller than %ld: %ld\n", value, [[root largestValue2:root value:value].value integerValue]);
@@ -77,6 +77,76 @@
     
     TreeNode *binaryTree = [root deSerialize1:root array:[serialized mutableCopy]];
     [binaryTree depthFirstTraverse:binaryTree order:InOrder];
+    
+    [self buildBinaryTreeSetup];
+}
+
+- (void)buildBinaryTreeSetup {
+    /*
+        5
+       / \
+      7   1
+      /\ /
+     2 6 3
+        / \
+        8 4
+     */
+//    NSArray *parents  = @[@1,@1,@2,@2,@3,@3,@7,@7];
+//    NSArray *children = @[@2,@3,@4,@5,@6,@7,@8,@9];
+    NSArray *parents  = @[@7,@1,@5,@7,@3,@5,@3];
+    NSArray *children = @[@2,@3,@7,@6,@8,@1,@4];
+
+    TreeNode *root1 = [self buildBinaryTree:parents nodes:children];
+    [root1 breadthFirstTraverseByLevelSingleQueue:root1];
+}
+
+- (TreeNode *)buildBinaryTree:(NSArray *)parents nodes:(NSArray *)children {
+    NSMutableSet *childNodes = [NSMutableSet new];
+    for (NSNumber *child in children) {
+        [childNodes addObject:child];
+    }
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    NSNumber *root = [NSNumber new];
+    for (int i=0; i<parents.count; i++) {
+        if ([childNodes containsObject:parents[i]] == NO) {
+            root = parents[i];
+        }
+        if (dict[parents[i]] == nil) {
+            TreeNode *parentNode = [[TreeNode alloc] initWithValue:parents[i]];
+            TreeNode *childNode = [[TreeNode alloc] initWithValue:children[i]];
+            parentNode.left = childNode;
+            dict[parents[i]] = parentNode;
+        }
+        else {
+            TreeNode *parentNode = dict[parents[i]];
+            TreeNode *child = [[TreeNode alloc] initWithValue:children[i]];
+            parentNode.right = child;
+            dict[parents[i]] = parentNode;
+        }
+    }
+    for (NSNumber *parent in dict) {
+        TreeNode *node = dict[parent];
+        NSLog(@"p=%@, c=%@, %@", node.value, node.left.value, node.right.value);
+    }
+    TreeNode *rootNode = dict[root];
+    NSMutableArray *queue = [NSMutableArray new];
+    [queue addObject:rootNode];
+    while (queue.count > 0) {
+        TreeNode *node = queue[0];
+        TreeNode *parent = dict[node.value];
+        
+        [queue removeObjectAtIndex:0];
+        if (parent.left) {
+            node.left = parent.left;
+            [queue addObject:node.left];
+        }
+        if (parent.right) {
+            node.right = parent.right;
+            [queue addObject:node.right];
+        }
+    }
+    
+    return rootNode;
 }
 
 - (TreeNode *)createBinarySearchTree:(NSArray *)nodes {

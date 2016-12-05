@@ -51,6 +51,7 @@
 }
 
 - (void)insertValue:(id)value {
+    // If the next value is greater than current value, insert to the right child if it's empty, or go to next right to insert
     if ([value isGreaterThanOrEqualTo:self.value]) {
         if (self.right) {
             [self.right insertValue:value];
@@ -59,6 +60,7 @@
             self.right = [[TreeNode alloc] initWithValue:value];
         }
     }
+    // If the next value is less than current value, insert to the left child if it's empty, or go to next left to insert
     else if ([value isLessThan:self.value]) {
         if (self.left) {
             [self.left insertValue:value];
@@ -361,7 +363,49 @@
     return [self largestValueSmallerThanK:node.right value:value];
 }
 
+// lowest common ancestor of two nodes in a binary tree
+- (TreeNode *)findLCA:(TreeNode *)root value:(int)n1 value:(int)n2 {
+    TreeNode *node = nil;
+    [self findLCAUtility:root value:n1 value:n2 completion:^(TreeNode *lca, BOOL n1Found, BOOL n2Found) {
 
+    }];
+    return nil;
+}
+
+typedef void(^myCompletion)(BOOL, BOOL);
+
+- (void)findLCAUtility:(TreeNode *)node  value:(int)n1 value:(int)n2 completion:(void(^)(TreeNode *lca, BOOL n1Found, BOOL n2Found))completion {
+    completion(nil, YES, YES);
+}
+
+// print binary tree in vertical order
+/*
+ Perform pre-order traversal of the tree. Pass 0 as initial horizontal distance from root
+ For left child traversal, hd=hd-1
+ For right child traversal, hd+hd+1
+ Store the hd as key and node as value (in array)
+ To print in order from left to right, need to traverse the hash table to obtain the min and max, and retrieve the values from low to high.
+ Runtime = O(n)
+ 
+ */
+
+/*
+ Find the largest subtree in a tree that is a BST
+ 1. Perform an in order traverse of the tree and store nodes in an array (may not be necessary to store in an array)
+ 2. Traverse the array.
+ 3. For each subarray that is in order, compare the size to the current largest size.
+ 4. If it's larger, store it's start node and end node
+ 10,12,9,10,11,99,20,15
+
+ For each node, if next node is larger and start node is nil, set current node as start node. Increment tree size
+ If next node is smaller and start node is not nil, set current node as end node. Compute the final tree size.
+ If tree size is greater than current max, update the max size and the start and end nodes
+ Reset start and end nodes to nil
+ 
+ start node: 10,9
+ end node: 12,99
+ size: 2,4
+ */
 
 
 @end

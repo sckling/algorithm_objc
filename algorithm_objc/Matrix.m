@@ -67,16 +67,6 @@ typedef NS_ENUM(NSInteger, Dir) {
     NSLog(@"Square count should be 0: %d", [self totalSquareCount:matrix]);
 }
 
-- (BOOL)isSquare:(NSArray *)matrix {
-    // Check for matrix size nil & 0
-    if (matrix.count == 0) {
-        return NO;
-    }
-    // Check if it's a square
-    double size = sqrt(matrix.count);
-    return fmod(size, 1.0)==0? YES: NO;
-}
-
 - (int)totalSquareCount:(NSArray *)matrix {
     if (![self isSquare:matrix]) {
         return 0;
@@ -91,6 +81,16 @@ typedef NS_ENUM(NSInteger, Dir) {
         }
     }
     return count;
+}
+
+- (BOOL)isSquare:(NSArray *)matrix {
+    // Check for matrix size nil & 0
+    if (matrix.count == 0) {
+        return NO;
+    }
+    // Check if it's a square
+    double size = sqrt(matrix.count);
+    return fmod(size, 1.0)==0? YES: NO;
 }
 
 - (int)squareCount:(NSArray *)matrix row:(int)row col:(int)col size:(int)size count:(int)count {
