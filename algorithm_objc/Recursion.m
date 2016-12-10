@@ -61,15 +61,48 @@ application.js
 //    }
 //}
 
+- (void)setup {
+    [self coinChangeSetup];
+}
+
 - (void)coinChangeSetup {
     int n=4;
     NSArray *coins = @[@1, @2, @3];
-    NSLog(@"Answer: %d", [self coinChange:4 coins:coins]);
+    printf("Answer: %d\n", [self coinChange:coins sum:0 n:n]);
 }
 
-- (int)coinChange:(int)n coins:(NSArray *)coins {
-    
-    return 0;
+/*
+ Algorithm
+ For each coin, loop through the coin array from the beginning
+ When the coin size equal to or greater than the value, back track with next element
+ 1,1,1,1
+ 1,1,2
+ 1,2,1 -> repeat
+ 2,1,1 -> repeat
+ 1,3
+ 3,1 -> repeat
+ 2,2
+
+ */
+
+- (int)coinChange:(NSArray *)coins sum:(int)sum n:(int)n  {
+//    if (sum > n) {
+//        printf("Sum exceed: %d\n", sum);
+//        return 0;
+//    }
+    if (sum == n) {
+        return 1;
+    }
+    int combo = 0;
+    for (int i=0; i<coins.count; i++) {
+        sum = sum + [coins[i] intValue];
+        if (sum>n) {
+            break;
+        }
+        combo += [self coinChange:coins sum:sum n:n];
+        sum = sum - [coins[i] intValue];
+    }
+    return combo;
 }
 
 - (NSSet *)coinChangeHelper:(int)n position:(int)position coins:(NSArray *)coins change:(NSMutableArray *)change set:(NSMutableSet *)set {
@@ -89,10 +122,5 @@ application.js
     }
     return set;
 }
-
-
-
-
-
 
 @end

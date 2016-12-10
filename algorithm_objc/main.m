@@ -17,6 +17,7 @@
 #import "Matrix.h"
 #import "Numbers.h"
 #import "BinarySearch.h"
+#import "Recursion.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -33,8 +34,8 @@ int main(int argc, const char * argv[]) {
 //        Numbers *numbers = [[Numbers alloc] init];
 //        [numbers setup];
 
-//        Array *array = [[Array alloc] init];
-//        [array setup];
+        Array *array = [[Array alloc] init];
+        [array setup];
         
 //        String *string = [[String alloc] init];
 //        [string setup];
@@ -42,6 +43,9 @@ int main(int argc, const char * argv[]) {
         
 //        [array twoDimenionalArray];
 //        [array blockExecution];
+        
+//        Recursion *recursion = [[Recursion alloc] init];
+//        [recursion setup];
 
 //        BOOL stop = NO;
 //        while (stop == NO) {
@@ -54,8 +58,8 @@ int main(int argc, const char * argv[]) {
 //            }
 //        }
         
-        Tree *binarySearchTree = [[Tree alloc] init];        
-        [binarySearchTree setup];
+//        Tree *binarySearchTree = [[Tree alloc] init];        
+//        [binarySearchTree setup];
         
 //        Graph *graph = [[Graph alloc] initWithMember];
 //        [graph setupSocialGraphWithLevel];

@@ -151,7 +151,13 @@
     
 //    [self heapSetup];
     
-    [self runningMedianUsingHeapsSetup];
+//    [self runningMedianUsingHeapsSetup];
+    
+//    [self maxSumNonAdjacentSetup];
+    
+    [self mergeSortSetup];
+    
+    [self quickSortSetup];
 }
 
 - (void)binarySearchSetup {
@@ -180,12 +186,6 @@
 - (void)findPairsOfElementsSetup {
     NSArray *array2 = @[@2, @7, @2, @-2, @5, @-7];
     [array2 findPairsOfElementsEqualToSum:7];
-}
-
-- (void)maximumSubArraySetup {
-    //max subarray = 4, -1, 2, 1 = 6
-    NSArray *array = @[@-2, @1, @-3, @4, @-1, @2, @1, @-5, @4];
-    NSLog(@"Maximum sub-array sum: %ld", [array maximumSubArraySum]);
 }
 
 - (void)enumeratorSetup {
@@ -817,6 +817,169 @@
     else {
         printf("%.2f\n", [[maxHeap peek] floatValue]);
     }
+}
+
+- (void)maximumSubArraySetup {
+    //max subarray = 4, -1, 2, 1 = 6
+    NSArray *array = @[@-2, @1, @-3, @4, @-1, @2, @1, @-5, @4];
+    NSLog(@"Maximum sub-array sum: %ld", [array maximumSubArraySum]);
+}
+
+- (void)maxSumNonAdjacentSetup {
+    int array[6] = {4, 1, 1, 4, 2, 1};
+    printf("Max=%d\n", [self maxSumNonAdjacent:array size:6]);
+    int array1[6] = {5, 5, 10, 40, 50, 35};
+    printf("Max=%d\n", [self maxSumNonAdjacent:array1 size:6]);
+}
+
+/*
+                          4 1 1 4 2 1
+ incl=max(excl+curr,incl) 4 4 5 8 8 9
+ excl=prev inclusive      0 4 4 5 8 8
+ */
+
+- (int)maxSumNonAdjacent:(int[])array size:(int)n {
+    if (n == 0) {
+        return 0;
+    }
+    if (n == 1) {
+        return array[0];
+    }
+    int inclusive = array[0];
+    int exclusive = 0;
+    int temp = inclusive;
+    for (int i=1; i<n; i++) {
+        temp = inclusive;
+        inclusive = inclusive > exclusive+array[i] ? inclusive : exclusive+array[i];
+        exclusive = temp;
+    }
+    return inclusive > exclusive ? inclusive : exclusive;
+}
+
+- (void)mergeSortSetup {
+    NSArray *array = @[@14,@33,@27,@10,@35,@19,@42,@44];
+    NSLog(@"Merge sort: %@", [self mergeSort:array]);
+    
+    array = @[@14];
+    NSLog(@"Merge sort: %@", [self mergeSort:array]);
+    
+    array = @[];
+    NSLog(@"Merge sort: %@", [self mergeSort:array]);
+    
+    array = @[@133,@100];
+    NSLog(@"Merge sort: %@", [self mergeSort:array]);
+}
+
+/*
+ Merge sort has consistent performance
+ High parallelism and stable, but not in-place
+ Stable means order does not change for those values which have the same key. In some cases this is desirable
+ Need O(n) auxilliary space in best case
+ Good for large size of elements with tight memory space
+ Best, average, and worst case are O(n*log n)
+ 
+ Algorithm:
+ 1. Divide the list into the smallest unit (1 element)
+ 2. Compare each element with the adjacent list to sort and merge the two adjacent lists
+ 
+ */
+
+- (NSArray *)mergeSort:(NSArray *)array {
+    // Recursive calling and split up array into subarrays with halg size until down to 0 or 1 elements
+    // Merge it up level by level
+    // Base case. Array has only 0 or 1 element. Return the array
+    
+    /* Another way
+     if (left < right) {
+        mid = (low+high) / 2
+        sort(low, mid)
+        sort(mid+1, high)
+        merge(low,mid,high)
+     }
+     else { return array }
+     */
+    if (array.count < 2) {
+        return array;
+    }
+    // Split the array into half with left and right subarrays
+    long middle = array.count/2;
+    NSRange left = NSMakeRange(0, middle);
+    NSRange right = NSMakeRange(middle, (array.count-middle));
+    
+    // Recursive calling mergeSort to split up left and right array and merge them back
+    NSArray *leftArray = [self mergeSort:[array subarrayWithRange:left]];
+    NSArray *rightArray = [self mergeSort:[array subarrayWithRange:right]];
+    NSArray *mergedArray = [self merge:leftArray array:rightArray];
+    return mergedArray;
+}
+
+- (NSArray *)merge:(NSArray *)leftArray array:(NSArray *)rightArray {
+    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:leftArray.count+rightArray.count];
+    NSUInteger left = 0;
+    NSUInteger right = 0;
+    while (left < leftArray.count && right < rightArray.count) {
+        if ([leftArray[left] isLessThan:rightArray[right]]) {
+            [array addObject:leftArray[left++]];
+        }
+        else {
+            [array addObject:rightArray[right++]];
+        }
+    }
+    for (NSUInteger i=left; i<leftArray.count; i++) {
+        [array addObject:leftArray[i]];
+    }
+    for (NSUInteger i=right; i<rightArray.count; i++) {
+        [array addObject:rightArray[i]];
+    }
+    return array;
+}
+
+- (void)quickSortSetup {
+    NSArray *array = @[@14,@33,@27,@10,@35,@19,@42,@44];
+    NSLog(@"Quick sort: %@", [self quickSort:[array mutableCopy]]);
+    
+    array = @[@14];
+    NSLog(@"Quick sort: %@", [self quickSort:[array mutableCopy]]);
+    
+    array = @[];
+    NSLog(@"Quick sort: %@", [self quickSort:[array mutableCopy]]);
+    
+    array = @[@133,@100];
+    NSLog(@"Quick sort: %@", [self quickSort:[array mutableCopy]]);
+}
+
+/*
+ Good locality, requires little extra space (in-place)
+ Not a stable sort
+ Only need O(log n) auxilliary space
+ Can avoid worst case by picking a good pivot such as picking it at random (randomization)
+ Best: n Log n, Average: n log n, Worst:n^2 when contains lots of duplicate elements
+ */
+
+- (NSArray *)quickSort:(NSMutableArray *)array {
+    // Empty array, return nil
+    if (array.count < 1) {
+        return nil;
+    }
+    // Create two arrays, one for smaller than pivot, one for larger than pivot
+    NSMutableArray *less = [NSMutableArray new];
+    NSMutableArray *more = [NSMutableArray new];
+    NSUInteger pivotIdx = arc4random() % array.count;
+    NSNumber *pivot = array[pivotIdx];
+    [array removeObjectAtIndex:pivotIdx];
+    for (NSNumber *num in array) {
+        if ([num isLessThan:pivot]) {
+            [less addObject:num];
+        }
+        else {
+            [more addObject:num];
+        }
+    }
+    NSMutableArray *sortedArray = [NSMutableArray new];
+    [sortedArray addObjectsFromArray:[self quickSort:less]];
+    [sortedArray addObject:pivot];
+    [sortedArray addObjectsFromArray:[self quickSort:more]];
+    return sortedArray;
 }
 
 @end

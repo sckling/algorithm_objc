@@ -36,7 +36,8 @@ typedef NS_ENUM(NSInteger, Dir) {
  */
 
 - (void)setup {
-    [self connectedCellinGridSetup];
+    [self countObjectsInBitmapSetup];
+//    [self connectedCellinGridSetup];
 //    [self squareCountSetup];
 //    [self connectedComponentsSetup];
 }
@@ -293,6 +294,64 @@ typedef NS_ENUM(NSInteger, Dir) {
     return count;
 }
 
+/*
+ Coding question: Count how many objects in a 2-D bitmap.
+ Cells adjacent in horizontal or vertical are counted as same objectm diagonal is not.
+ 
+ 000000002
+ 110000022
+ 000000002
+ 300000000
+ 330040000
+ 
+ Input is binary 0,1
+ Answer is 4
+ */
+
+- (void)countObjectsInBitmapSetup {
+    int bitmap[5][9]  = {
+        {0,0,0,0,0,0,0,0,1},
+        {1,1,0,0,0,0,0,1,1},
+        {0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0},
+        {1,1,0,0,1,0,0,0,0}
+    };
+    int visit[5][9]  = {
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0}
+    };
+    printf("Total objects: %d\n", [self countObjectsInBitmap:bitmap visit:visit]);
+}
+
+- (int)countObjectsInBitmap:(int[][9])bitmap visit:(int[][9])visit {
+    int count = 0;
+    for (int row=0; row<5; row++) {
+        for (int col=0; col<9; col++) {
+            if (bitmap[row][col] == 1 && visit[row][col] == 0) {
+                [self dfs:bitmap visit:visit row:row col:col];
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+- (void)dfs:(int[][9])bitmap visit:(int[][9])visit row:(int)row col:(int)col {
+    /*
+     For each point in matrix, if it's not out of bound and already visited,
+     */
+    if (row>=0 && row <5 && col>=0 && col<9 && bitmap[row][col] == 1 && visit[row][col] == 0) {
+        visit[row][col] = 1;
+        [self dfs:bitmap visit:visit row:row+1 col:col];
+        [self dfs:bitmap visit:visit row:row-1 col:col];
+        [self dfs:bitmap visit:visit row:row col:col+1];
+        [self dfs:bitmap visit:visit row:row col:col-1];
+    }
+}
+
 - (void)connectedCellinGridSetup {
     NSArray *matrix = @[@1, @1, @0, @0, @0,
                         @0, @1, @1, @0, @1,
@@ -301,6 +360,7 @@ typedef NS_ENUM(NSInteger, Dir) {
     NSLog(@"Largest size of connected cell in grid: %d", [self connectedCellinGrid:matrix row:4 col:5]);
 }
 
+// Find size of the largest connected cell (horizontal/vertical/diagonal) in a grid.
 - (int)connectedCellinGrid:(NSArray *)matrix row:(int)row col:(int)col {
     int maxSoFar = 0;
     NSMutableArray *visit = [self initArray:row col:col];

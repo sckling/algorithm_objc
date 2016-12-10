@@ -10,4 +10,6 @@
 
 @interface Recursion : NSObject
 
+- (void)setup;
+
 @end
