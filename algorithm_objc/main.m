@@ -18,9 +18,20 @@
 #import "Numbers.h"
 #import "BinarySearch.h"
 #import "Recursion.h"
+#import "Interval.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+        /*
+         fb
+         Given an array of strings, remove any duplicates and return a new array containing the first occurrence of each string.
+         Given a number e.g. 234, print all combinations of their dial pad letters
+         Write a method to compare two binary trees.
+         */
+        
+        Interval *interval = [[Interval alloc] init];
+        [interval setup];
+        
 //        BinarySearch *binarySearch = [[BinarySearch alloc] init];
 //        [binarySearch setup];
 //        Dictionary *dict = [[Dictionary alloc] init];
@@ -34,8 +45,8 @@ int main(int argc, const char * argv[]) {
 //        Numbers *numbers = [[Numbers alloc] init];
 //        [numbers setup];
 
-        Array *array = [[Array alloc] init];
-        [array setup];
+//        Array *array = [[Array alloc] init];
+//        [array setup];
         
 //        String *string = [[String alloc] init];
 //        [string setup];

@@ -29,6 +29,14 @@
     return copy;
 }
 
+- (void)enumerateNodes:(void (^)(NSString *))block {
+    if (block) {
+        [self.left enumerateNodes:block];
+        block(self.value);
+        [self.right enumerateNodes:block];
+    }
+}
+
 - (void)insertNode:(TreeNode *)node {
     if (node.value != nil) {
         if ([node.value isGreaterThanOrEqualTo:self.value]) {

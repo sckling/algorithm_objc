@@ -19,6 +19,7 @@
     node.right = right;
     right.left = [[TreeNode alloc] initWithValue:@3];
     right.right = [[TreeNode alloc] initWithValue:@5];
+    
     /*
         2
        /\
@@ -55,6 +56,11 @@
     //NSArray *array = @[@"c", @"b", @"f"];
     NSArray *array = @[@20, @8, @4, @12, @10, @14, @22, @99, @90, @80, @95];
     TreeNode *root = [self createBinarySearchTree:array];
+    
+    [root enumerateNodes:^(NSString *string) {
+        NSLog(@"Node: %@", string);
+    }];
+    
 //    NSLog(@"Depth of tree: %ld", [root depthOfTree:root]);
 //    NSLog(@"Largest number: %lu", [root secondLargestInteger:root]);
 //    [root checkBST:root];

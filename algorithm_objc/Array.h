@@ -10,15 +10,7 @@
 
 @interface Array : NSEnumerator
 
-typedef NSNumber *(^newTypeDefBlock)(int, NSNumber *);
-
-@property (nonatomic, copy) newTypeDefBlock aTypeDefBlock;
-@property (nonatomic, copy) NSString * (^propertyBlock)(int, float);
-
 - (void)setup;
-- (void)blockExecution;
-- (void)executeDispatchBlock:(dispatch_block_t)block;
-- (void)executeBlock:(NSString * (^)(int a, float b))myBlock;
 - (void)twoDimenionalArray;
 - (double)rollingMedian:(NSNumber *)number;
 

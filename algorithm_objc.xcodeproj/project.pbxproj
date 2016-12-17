@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1901CC131CC06B2F00BECDE3 /* Recursion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901CC121CC06B2F00BECDE3 /* Recursion.m */; };
+		191B12901E00FF9700AC38CC /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 191B128F1E00FF9700AC38CC /* Block.m */; };
+		191B12951E01D4BA00AC38CC /* Interval.m in Sources */ = {isa = PBXBuildFile; fileRef = 191B12941E01D4BA00AC38CC /* Interval.m */; };
 		193A42811C4851AF004AF854 /* NSDictionary+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 193A42801C4851AF004AF854 /* NSDictionary+Methods.m */; };
 		193A42861C485335004AF854 /* Dictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 193A42851C485335004AF854 /* Dictionary.m */; };
 		19463C451C824A3A0076ED00 /* String.m in Sources */ = {isa = PBXBuildFile; fileRef = 19463C441C824A3A0076ED00 /* String.m */; };
@@ -53,6 +55,10 @@
 /* Begin PBXFileReference section */
 		1901CC111CC06B2F00BECDE3 /* Recursion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recursion.h; sourceTree = "<group>"; };
 		1901CC121CC06B2F00BECDE3 /* Recursion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recursion.m; sourceTree = "<group>"; };
+		191B128E1E00FF9700AC38CC /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
+		191B128F1E00FF9700AC38CC /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
+		191B12931E01D4BA00AC38CC /* Interval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Interval.h; sourceTree = "<group>"; };
+		191B12941E01D4BA00AC38CC /* Interval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Interval.m; sourceTree = "<group>"; };
 		193A427F1C4851AF004AF854 /* NSDictionary+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Methods.h"; sourceTree = "<group>"; };
 		193A42801C4851AF004AF854 /* NSDictionary+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Methods.m"; sourceTree = "<group>"; };
 		193A42841C485335004AF854 /* Dictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dictionary.h; sourceTree = "<group>"; };
@@ -118,6 +124,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		191B128D1E00FE9800AC38CC /* Heaps */ = {
+			isa = PBXGroup;
+			children = (
+				196CAFE41DEE3845000974EC /* MinHeap.h */,
+				196CAFE51DEE3845000974EC /* MinHeap.m */,
+				196CAFED1DEEC266000974EC /* MaxHeap.h */,
+				196CAFEE1DEEC266000974EC /* MaxHeap.m */,
+			);
+			name = Heaps;
+			sourceTree = "<group>";
+		};
 		193A42821C4851CF004AF854 /* Dictionary */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,15 +157,19 @@
 			name = "Strings and Numbers";
 			sourceTree = "<group>";
 		};
-		195E7DDF1C7D53B90085121E /* DP and Recursion */ = {
+		195E7DDF1C7D53B90085121E /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				191B128E1E00FF9700AC38CC /* Block.h */,
+				191B128F1E00FF9700AC38CC /* Block.m */,
 				195E7DE01C7D54190085121E /* Matrix.h */,
 				195E7DE11C7D54190085121E /* Matrix.m */,
 				1901CC111CC06B2F00BECDE3 /* Recursion.h */,
 				1901CC121CC06B2F00BECDE3 /* Recursion.m */,
+				191B12931E01D4BA00AC38CC /* Interval.h */,
+				191B12941E01D4BA00AC38CC /* Interval.m */,
 			);
-			name = "DP and Recursion";
+			name = Others;
 			sourceTree = "<group>";
 		};
 		19F696E91BD1F856004F31AF /* Trees */ = {
@@ -171,10 +192,6 @@
 				1978EADF1DCA9A3E00DCDD0F /* BinarySearch.m */,
 				E42659D51BCA39D3001B49C4 /* NSArray+Methods.h */,
 				E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */,
-				196CAFE41DEE3845000974EC /* MinHeap.h */,
-				196CAFE51DEE3845000974EC /* MinHeap.m */,
-				196CAFED1DEEC266000974EC /* MaxHeap.h */,
-				196CAFEE1DEEC266000974EC /* MaxHeap.m */,
 			);
 			name = Arrays;
 			sourceTree = "<group>";
@@ -223,11 +240,12 @@
 			children = (
 				E4A908A31BCA1B3A00FA77B6 /* main.m */,
 				19F696EA1BD1F862004F31AF /* Arrays */,
+				191B128D1E00FE9800AC38CC /* Heaps */,
 				19463C421C824A0A0076ED00 /* Strings and Numbers */,
 				193A42821C4851CF004AF854 /* Dictionary */,
 				19F696EB1BD1F86E004F31AF /* Graphs */,
 				19F696E91BD1F856004F31AF /* Trees */,
-				195E7DDF1C7D53B90085121E /* DP and Recursion */,
+				195E7DDF1C7D53B90085121E /* Others */,
 			);
 			path = algorithm_objc;
 			sourceTree = "<group>";
@@ -331,6 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1901CC131CC06B2F00BECDE3 /* Recursion.m in Sources */,
+				191B12901E00FF9700AC38CC /* Block.m in Sources */,
 				196CAFEF1DEEC266000974EC /* MaxHeap.m in Sources */,
 				19D2E3321DC11F050056073E /* Vertex.m in Sources */,
 				19B738AE1BF2F5E5005D29A2 /* SocialGraph.m in Sources */,
@@ -348,6 +367,7 @@
 				19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */,
 				196CAFE61DEE3845000974EC /* MinHeap.m in Sources */,
 				193A42861C485335004AF854 /* Dictionary.m in Sources */,
+				191B12951E01D4BA00AC38CC /* Interval.m in Sources */,
 				199D61D91C89607000D0A795 /* Graph1.m in Sources */,
 				19F696E81BD1F84D004F31AF /* Graph.m in Sources */,
 				E42659D71BCA39D3001B49C4 /* NSArray+Methods.m in Sources */,

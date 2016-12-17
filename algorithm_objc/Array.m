@@ -27,64 +27,6 @@
     *array = newArray;
 }
 
-- (void)blockExecution {
-    // We supply the executeBlock method with this inline defined block.
-    // executeBlock can execute this block and it'll return an NSString whenever it's executed
-    NSLog(@"First run of block");
-    [self executeBlock:^NSString *(int a, float b) {
-        float c = a + b;
-        NSString *string = [NSString stringWithFormat:@"Block result: %lf", c];
-        NSLog(@"%@", string);
-        return string;
-    }];
-    
-    NSLog(@"Second run of block");
-    self.propertyBlock = ^NSString *(int a, float b) {
-        return @"property block";
-    };
-    [self executeBlock:self.propertyBlock];
-    [self executeBlock:^NSString *(int a, float b) {
-        printf("inline defined block %d, %.1f", a, b);
-        return @"inline defined block";
-    }];
-    [self executeDispatchBlock:^void{
-        NSLog(@"Inside a dispatch block");
-    }];
-}
-
-- (void)executeDispatchBlock:(dispatch_block_t)block {
-    // typedef void (^dispatch_block_t)(void);
-    block();
-}
-
-- (void)executeBlock:(NSString *(^)(int, float))myBlock {
-    int a = 10;
-    float b = 20;
-    
-    // myBlock function already defined, supply it with the required parameters and it'll return the result
-    if (myBlock) {
-        NSString *result = myBlock(a, b);
-        NSLog(@"Execute input myBlock: %@", result);
-    }
-    
-    // Define newBlock
-    NSString *(^newBlock)(int, float) = ^NSString *(int a, float b) {
-        return @"something";
-    };
-    
-    // Execute new block
-    NSLog(@"Execute newBlock created inside a method: %@", newBlock(a, b));
-    
-    // Local variable
-    dispatch_block_t localBlock = ^void{NSLog(@"Execute a localBlock");};
-    localBlock();
-    
-    // Execute typedef block
-    newTypeDefBlock anotherBlock = ^NSNumber *(int a, NSNumber *b) {return @(a+[b integerValue]);};
-    self.aTypeDefBlock = anotherBlock;
-    NSLog(@"Execute a typedef block: %@", self.aTypeDefBlock(1, @2));
-}
-
 - (void)twoDimenionalArray {
     int num1=3, num2=4;
     NSLog(@"i=3, j=4");
@@ -100,7 +42,6 @@
             arr[i*num2+j] = @(i+j*2);
         }
     }
-    
     // access a value: i*num2+j, where i,j are the indexes for the bidimensional array
     // sam as arr[1][3]
     //    j0 j1 j2 j3
@@ -118,7 +59,7 @@
 }
 
 - (void)passArrayByReferenceSetup {
-  NSArray *array = @[@-2, @1, @-3, @4, @-1, @2, @1, @-5, @4];
+    NSArray *array = @[@-2, @1, @-3, @4, @-1, @2, @1, @-5, @4];
     [self passArrayByReference:&array];
     NSLog(@"New array after pass by reference: %@", array);
 }
@@ -127,8 +68,8 @@
     
 //    [self passArrayByReferenceSetup];
 //
-//    [self maximumSubArraySetup];
-//    
+//    [self maximumContinousSumSetup];
+//
 //    [self findPairsOfElementsSetup];
 //    
 //    [self getProductsOfAllIntsExceptAtIndexSetup];
@@ -155,9 +96,9 @@
     
 //    [self maxSumNonAdjacentSetup];
     
-    [self mergeSortSetup];
+//    [self mergeSortSetup];
     
-    [self quickSortSetup];
+//    [self quickSortSetup];
 }
 
 - (void)binarySearchSetup {
@@ -819,10 +760,29 @@
     }
 }
 
-- (void)maximumSubArraySetup {
-    //max subarray = 4, -1, 2, 1 = 6
+- (void)maximumContinousSumSetup {
+    // max continuous sum = 4, -1, 2, 1 = 6
     NSArray *array = @[@-2, @1, @-3, @4, @-1, @2, @1, @-5, @4];
-    NSLog(@"Maximum sub-array sum: %ld", [array maximumSubArraySum]);
+    NSLog(@"Maximum sub-array sum: %ld", [self maxiumContinousSum:array]);
+    
+    // max sum = -1
+    array = @[@-2, @-1, @-3, @-4, @-1, @-5];
+    NSLog(@"Maximum sub-array sum: %ld", [self maxiumContinousSum:array]);
+}
+
+- (NSInteger)maxiumContinousSum:(NSArray *)array {
+    NSInteger max = INT_MIN;
+    NSInteger sum = 0;
+    for (NSNumber *number in array) {
+        sum += [number integerValue];
+        if (sum > max) {
+            max = sum;
+        }
+        else if (sum <= 0) {
+            sum = 0;
+        }
+    }
+    return max;
 }
 
 - (void)maxSumNonAdjacentSetup {

@@ -36,7 +36,11 @@
     
 //    [self delimiterMatchingSetup];
     
-    [self palindromeSetup];
+//    [self palindromeSetup];
+    
+//    [self printStringWithValidBracketsSetup];
+    
+    [self wordCountSetup];
 }
 
 - (void)delimiterMatchingSetup {
@@ -326,6 +330,85 @@
     }
     return openBracket == 0? YES: NO;
 }
+/*
+ Amazon onsite 12/9/16
+ Remove brackets in order to print a string with valid brackets setup
+ 1. Print a valid string is valid.
+ 2. Remove each invalid bracket and save each new string into an array
+ 3. Check whether each of it is valid
+ 4. If not, repeat step 2 to 4
+    (a+b) ) (c) -> remove second ) or third ) will be valid
+    If a string is invalid, remove brackets one at a time and save the string
+    Check if the string is valid. If not, repeatedly remove one bracket at a time
+ */
+
+- (void)printStringWithValidBracketsSetup {
+    NSString *brackets = @"(a,(b+c)";
+    [self printStringWithValidBrackets:brackets];
+    brackets = @")(";
+    [self printStringWithValidBrackets:brackets];
+    brackets = @"(b+c):a)(end)";
+    [self printStringWithValidBrackets:brackets];
+    brackets = @"()";
+    [self printStringWithValidBrackets:brackets];
+    brackets = @"(())";
+    [self printStringWithValidBrackets:brackets];
+}
+
+- (void)printStringWithValidBrackets:(NSString *)string {
+    NSMutableArray *strings = [NSMutableArray new];
+    [strings addObject:string];
+    NSUInteger idx = 0;
+    NSUInteger count = strings.count;
+    while (idx < count) {
+        NSArray *array = [self correctBracketsStrings:strings[idx]];
+        if (array.count == 0) {
+            printf("%s\n", [strings[idx] UTF8String]);
+        }
+        count += array.count;
+        [strings addObjectsFromArray:array];
+        idx++;
+    }
+}
+
+- (NSArray *)correctBracketsStrings:(NSString *)string {
+    NSMutableArray *openStack = [NSMutableArray new];
+    NSMutableArray *closeStack = [NSMutableArray new];
+    NSMutableArray *array = [NSMutableArray new];
+    if (string == nil || string.length == 0) {
+        return NO;
+    }
+    NSInteger openBracket = 0;
+    
+    for (NSUInteger idx=0; idx<string.length; idx++) {
+        unichar character = [string characterAtIndex:idx];
+        if (character == '(') {
+            openBracket++;
+            [openStack addObject:@(idx)];
+        }
+        else if (character == ')') {
+            if (openBracket == 0) {
+                [closeStack addObject:@(idx)];
+            }
+            else {
+                openBracket--;
+                [openStack removeLastObject];
+            }
+        }
+    }
+    for (NSNumber *index in openStack) {
+        NSMutableString *temp = [NSMutableString stringWithString:string];
+        [temp deleteCharactersInRange:NSMakeRange([index integerValue], 1)];
+        [array addObject:temp];
+    }
+    for (NSNumber *index in closeStack) {
+        NSMutableString *temp = [NSMutableString stringWithString:string];
+        [temp deleteCharactersInRange:NSMakeRange([index integerValue], 1)];
+        [array addObject:temp];
+    }
+    return array;
+}
+
 
 // Hulu
 // 1: [()]
@@ -767,6 +850,59 @@
         end--;
     }
     return YES;
+}
+
+/*
+ Amazon onsite 12/9/16
+ 1. Write a method print out the word count for a string
+ 2. Leverage the previous method, write a method that reads a book from a text file (assume many pages) and print the top k words
+ */
+
+- (void)wordCountSetup {
+    [self topWords:@"fake filename" rank:3];
+}
+
+- (void)topWords:(NSString *)filename rank:(NSUInteger)rank {
+    NSArray *pages = [self buildPagesFromFile:filename];
+    NSCountedSet *counts = [NSCountedSet new];
+    
+    // runtime = O(p*w), p=total number of pages, w=number of words counted
+    for (NSString *page in pages) {
+        NSCountedSet *set = [self wordCount:page];
+        [counts unionSet:set];
+    }
+    
+    // sorting = w*log(w)
+    NSMutableArray *unsortedCounts = [NSMutableArray new];
+    for (NSString *word in counts) {
+        NSDictionary *dict = @{@"word": word, @"count": @([counts countForObject:word])};
+        [unsortedCounts addObject:dict];
+    }
+    NSArray *sortedCounts = [unsortedCounts sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"count" ascending:NO]]];
+    NSUInteger topK = sortedCounts.count < rank ? counts.count : rank;
+    
+    // O(k), worst case O(w).
+    // Final runtime in worst case = p*w+w*log(w)+w = w*(p+log(w))+w = w*(p+1+log(w)) w*(p+log(w))
+    for (NSUInteger i=0; i<topK; i++) {
+        NSDictionary *wordCount = sortedCounts[i];
+        NSLog(@"%@: %@", wordCount[@"word"], wordCount[@"count"]);
+    }
+}
+
+- (NSCountedSet *)wordCount:(NSString *)page {
+    NSArray *words = [page componentsSeparatedByString:@" "];
+    NSCountedSet *counts = [NSCountedSet new];
+    for (NSString *word in words) {
+        [counts addObject:word];
+    }
+    return counts;
+}
+
+- (NSArray *)buildPagesFromFile:(NSString *)filename {
+    NSString *page1 = @"This is page 1";
+    NSString *page2 = @"This is page 2 with nothing new";
+    NSString *page3 = @"page 3 is kind of same as page 2";
+    return @[page1, page2, page3];
 }
 
 @end

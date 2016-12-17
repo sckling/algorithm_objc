@@ -10,33 +10,6 @@
 
 @implementation NSArray (Methods)
 
-- (NSUInteger)maximumSubArraySum {
-    // Given an array of numbers, find the maximum sum of a sub-array
-    // Example: 2,1,-3,4,1,-2,3,-5,-4
-    // Max: 4+1-2+3=6
-    //
-    // NSArray *array = @[@2, @1, @-3, @4, @1, @-2, @3, @-5, @-4];
-    // Kadane's algorithm
-    // max subarray = 4, -1, 2, 1 = 6
-    
-    __block NSInteger maxSoFar = 0;
-    __block NSInteger sum = 0;
-    __weak typeof(self) weakSelf = self;
-    [self enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (weakSelf) {
-            //__strong typeof(weakSelf) strongSelf = weakSelf;
-        }
-        sum += [(NSNumber *)obj integerValue];
-        if (sum > maxSoFar) {
-            maxSoFar = sum;
-        }
-        else if (sum < 0) {
-            sum = 0;
-        }
-    }];
-    return maxSoFar;
-}
-
 - (void)findPairsOfElementsEqualToSum:(NSUInteger)sum {
     NSMutableDictionary *dict = [NSMutableDictionary new];
     for (int i=0; i<self.count; i++) {

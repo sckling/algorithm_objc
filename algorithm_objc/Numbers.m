@@ -17,7 +17,8 @@
 //    [self isHappyNumber:5 original:5];
 //    int n=10;
 //    printf("Fibonacci of %d = %d\n", n, [self fibonacci:n]);
-    
+
+    /*
     int n=10;
     printf("Fibonacci of %d = %d\n", n, [self fibonacciIterative:n]);
     n=0;
@@ -26,11 +27,14 @@
     printf("Fibonacci of %d = %d\n", n, [self fibonacciIterative:n]);
     n=2;
     printf("Fibonacci of %d = %d\n", n, [self fibonacciIterative:n]);
+     */
 
 //    [self printPhoneNumberWords];
 //    [self isNumberSetup];
 //    [self convertStringToNumberSetup];
 //    [self parseIntToStringSetup];
+    
+    [self moveZeroesToEndSetup];
 }
 
 - (BOOL)isHappyNumber:(NSUInteger)number original:(NSUInteger)original {
@@ -454,6 +458,70 @@ PQRS  TUV   WXYZ
         }
     } while (number != 0.0);
     return string;
+}
+
+/*
+ Questions to ask:
+ 1. Do we need to preserve original order?
+ 2. Are we allow to use auxillary storage?
+ 
+ */
+
+- (void)moveZeroesToEndSetup {
+    NSArray <NSNumber *>*array = @[@1, @2, @0, @3, @0, @1, @2];
+    NSLog(@"Counter: %@", [self moveZeroesUseCounter:[array mutableCopy]]);
+    NSLog(@"Exchange: %@", [self moveZeroesUseExchange:[array mutableCopy]]);
+    
+    array = @[@1, @2, @0, @3, @0, @1, @0, @0];
+    NSLog(@"Counter: %@", [self moveZeroesUseCounter:[array mutableCopy]]);
+    NSLog(@"Exchange: %@", [self moveZeroesUseExchange:[array mutableCopy]]);
+
+    array = @[@0,@0];
+    NSLog(@"Counter: %@", [self moveZeroesUseCounter:[array mutableCopy]]);
+    NSLog(@"Exchange: %@", [self moveZeroesUseExchange:[array mutableCopy]]);
+}
+
+- (NSArray <NSNumber *>*)moveZeroesUseCounter:(NSMutableArray <NSNumber *>*)array {
+    NSUInteger zeros = 0;
+    NSUInteger end = array.count;
+    NSUInteger i=0;
+    while (i < end) {
+        if ([array[i] isEqualToNumber:@0]) {
+            [array removeObjectAtIndex:i];
+            end--;
+            zeros++;
+        }
+        i++;
+    }
+    for (int i=0; i<zeros; i++) {
+        [array addObject:@0];
+    }
+    return [array copy];
+}
+
+- (NSArray <NSNumber *>*)moveZeroesUseExchange:(NSMutableArray <NSNumber *>*)array {
+    if (array.count <= 1) {
+        return [array copy];
+    }
+    NSInteger end = array.count-1;
+    for (NSUInteger i=array.count-1; i>0; i--) {
+        if ([array[i] isEqualToNumber:@0]) {
+            end--;
+        }
+        else {
+            break;
+        }
+    }
+    NSUInteger idx=0;
+    while (idx <= end && end > 0 && idx < array.count) {
+        //NSLog(@"%d, %d", idx, end);
+        if ([array[idx] isEqualToNumber:@0]) {
+            [array exchangeObjectAtIndex:idx withObjectAtIndex:end];
+            end--;
+        }
+        idx++;
+    }
+    return [array copy];
 }
 
 @end
