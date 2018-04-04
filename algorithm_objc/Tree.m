@@ -72,8 +72,8 @@
 //    printf("Largest value smaller than %ld: %ld\n", value, [[root largestValue2:root value:value].value integerValue]);
     
     [root breadthFirstTraverseByLevelSingleQueue:root];
-//    NSMutableArray *path = [NSMutableArray arrayWithCapacity:array.count];
-//    [root allPathsOfTree:root path:path];
+    NSMutableArray *path = [NSMutableArray arrayWithCapacity:array.count];
+    [root allPathsOfTree:root path:path];
 //    [root depthFirstTraverse:root order:PreOrder];
 //    [root depthFirstTraverse:root order:InOrder];
 //    [root depthFirstTraverse:root order:PostOrder];

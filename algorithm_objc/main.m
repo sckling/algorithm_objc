@@ -19,26 +19,41 @@
 #import "BinarySearch.h"
 #import "Recursion.h"
 #import "Interval.h"
+#import "Trie.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        /*
-         fb
+        /* fb
          Given an array of strings, remove any duplicates and return a new array containing the first occurrence of each string.
          Given a number e.g. 234, print all combinations of their dial pad letters
          Write a method to compare two binary trees.
          */
         
-        Interval *interval = [[Interval alloc] init];
-        [interval setup];
+        /* Nest
+         Sum of root to leaf nodes in a tree that equals to given input value.
+         Reverse a tree
+         Given an array of integers of length N from 1 to N-1, how would you detect a single duplicate in the array?
+         Implement LRU cache.
+         Print all permutations of a string. (x2)
+         Implement a stack using an array in C
+         Implement a trie data structure to hold words read from the input
+         Write a code that, given a stream of data compress it as the value and its frequencies that occurs consecutively, for ex (1,1,1,1,2,2,3,3,3,2) return (1,4) (2,2) (3,3) (2,1).
+         Write a browser app that replace all instance of "nest" word with an arbitrary word (eg. Hello)
+         */
+        
+//        Trie *trie = [[Trie alloc] init];
+//        [trie setup];
+        
+//        Interval *interval = [[Interval alloc] init];
+//        [interval setup];
         
 //        BinarySearch *binarySearch = [[BinarySearch alloc] init];
 //        [binarySearch setup];
 //        Dictionary *dict = [[Dictionary alloc] init];
 //        [dict setup];
         
-//        Matrix *matrix = [[Matrix alloc] init];
-//        [matrix setup];
+        Matrix *matrix = [[Matrix alloc] init];
+        [matrix setup];
         
         // dfs iterative?
         
@@ -49,7 +64,7 @@ int main(int argc, const char * argv[]) {
 //        [array setup];
         
 //        String *string = [[String alloc] init];
-//        [string setup];
+//        [string distanceBetweenTwoWordsSetup];
 //        [string filterWordSetup];
         
 //        [array twoDimenionalArray];
@@ -69,8 +84,8 @@ int main(int argc, const char * argv[]) {
 //            }
 //        }
         
-//        Tree *binarySearchTree = [[Tree alloc] init];        
-//        [binarySearchTree setup];
+//        Tree *tree = [[Tree alloc] init];
+//        [tree setup];
         
 //        Graph *graph = [[Graph alloc] initWithMember];
 //        [graph setupSocialGraphWithLevel];

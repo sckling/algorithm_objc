@@ -65,7 +65,13 @@
 }
 
 - (void)setup {
-    
+    NSArray *array = @[@3, @0, @-1, @4, @5, @0, @2, @0];
+    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[array mutableCopy]]);
+    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[NSMutableArray arrayWithObject:@0]]);
+    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[NSMutableArray arrayWithObjects:@0, @0, @0, nil]]);
+    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[NSMutableArray arrayWithObjects:@0, @2, @2, @5, @0, nil]]);
+    NSLog(@"moveZerosToStart: %@", [array moveZerosToStart:[NSMutableArray arrayWithObjects:@0, @2, @2, @5, @0, nil]]);
+
 //    [self passArrayByReferenceSetup];
 //
 //    [self maximumContinousSumSetup];

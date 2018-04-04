@@ -16,4 +16,6 @@
 
 - (void)filterWordSetup;
 
+- (void)distanceBetweenTwoWordsSetup;
+
 @end

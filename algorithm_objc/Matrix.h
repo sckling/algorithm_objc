@@ -13,5 +13,6 @@
 - (void)setup;
 - (NSUInteger)numberOfObjectsInBitmap:(NSMutableArray *)bitmap width:(NSUInteger)width height:(NSUInteger)height;
 - (NSUInteger)numberOfSquare:(NSUInteger)n;
+- (void)pathInMatrixSetup;
 
 @end

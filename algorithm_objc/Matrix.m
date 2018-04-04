@@ -36,10 +36,12 @@ typedef NS_ENUM(NSInteger, Dir) {
  */
 
 - (void)setup {
-    [self countObjectsInBitmapSetup];
+//    [self pathInMatrixSetup];
+//    [self countObjectsInBitmapSetup];
 //    [self connectedCellinGridSetup];
 //    [self squareCountSetup];
 //    [self connectedComponentsSetup];
+    [self isWordExistSetup];
 }
 
 - (void)squareCountSetup {
@@ -294,6 +296,83 @@ typedef NS_ENUM(NSInteger, Dir) {
     return count;
 }
 
+- (void)pathInMatrixSetup {
+    int bitmap[3][3]  = {
+        {0,0,0},
+        {1,0,0},
+        {0,0,0}
+    };
+    NSLog(@"Path in matrix: %d", [self pathInMatrix:bitmap row:0 col:0 rowSize:3 colSize:3]);
+    [self allPathInMatrix:bitmap row:0 col:0 rowSize:3 colSize:3 path:@[]];
+    
+    int bitmap2[3][3]  = {
+        {0,0,0},
+        {1,1,0},
+        {0,0,1}
+    };
+    NSLog(@"Path in matrix: %d", [self pathInMatrix:bitmap2 row:0 col:0 rowSize:3 colSize:3]);
+    [self allPathInMatrix:bitmap2 row:0 col:0 rowSize:3 colSize:3 path:@[]];
+    
+    int bitmap3[3][3]  = {
+        {0,0,0},
+        {0,1,0},
+        {0,0,0}
+    };
+    NSLog(@"Path in matrix: %d", [self pathInMatrix:bitmap3 row:0 col:0 rowSize:3 colSize:3]);
+    [self allPathInMatrix:bitmap3 row:0 col:0 rowSize:3 colSize:3 path:@[]];
+}
+
+- (Boolean)pathInMatrix:(int[][3])matrix row:(int)row col:(int)col rowSize:(int)rowSize colSize:(int)colSize {
+    // Hit a wall and can't proceed, return NO
+    if (matrix[row][col] == 1) {
+        return NO;
+    }
+    // If reached the end corner of the matrix, check whether it's hitting a wall of not
+    if (row == rowSize-1 && col == colSize-1) {
+        return matrix[row][col] == 0 ? YES : NO;
+    }
+    // If hits the end of a row, continues to move on the column
+    if (row == rowSize-1) {
+        return [self pathInMatrix:matrix row:row col:col+1 rowSize:rowSize colSize:colSize];
+    }
+    // If hits the end of a column, continue to move on the row
+    if (col == colSize-1) {
+        return [self pathInMatrix:matrix row:row+1 col:col rowSize:rowSize colSize:colSize];
+    }
+    // If both row and column paths return NO, there's no path
+    if ([self pathInMatrix:matrix row:row+1 col:col rowSize:rowSize colSize:colSize] == NO) {
+        if ([self pathInMatrix:matrix row:row col:col+1 rowSize:rowSize colSize:colSize] == NO) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (void)allPathInMatrix:(int[][3])matrix row:(int)row col:(int)col rowSize:(int)rowSize colSize:(int)colSize path:(NSArray *)path {
+    // Hit a wall and can't proceed, return
+    if (matrix[row][col] == 1) {
+        return;
+    }
+    // Add the current location to the path
+    NSMutableArray *newPath = [NSMutableArray arrayWithArray:path];
+    [newPath addObject:@(1000+row*10+col)];
+
+    // If reached the end corner of the matrix, print the path and return
+    if (row == rowSize-1 && col == colSize-1) {
+        NSLog(@"Path: %@", newPath);
+        return;
+    }
+    // If hit the bound of the row, or column is less than bound, move to next column
+    if (row == rowSize-1 || col<colSize) {
+        [self allPathInMatrix:matrix row:row col:col+1 rowSize:rowSize colSize:colSize path:newPath];
+    }
+    // If hit the bound of the column, or row is less than bound, move to next row
+    if (col == colSize-1 || row <rowSize) {
+        [self allPathInMatrix:matrix row:row+1 col:col rowSize:rowSize colSize:colSize path:newPath];
+    }
+    return;
+}
+
 /*
  Coding question: Count how many objects in a 2-D bitmap.
  Cells adjacent in horizontal or vertical are counted as same objectm diagonal is not.
@@ -403,6 +482,98 @@ typedef NS_ENUM(NSInteger, Dir) {
         array[i] = @NO;
     }
     return array;
+}
+
+/*
+ Given a 2D board and a word, find if the word exists in the grid.
+ 
+ The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
+ 
+ For example,
+ Given board =
+ 
+ [
+ ['A','B','C','E'],
+ ['S','F','C','S'],
+ ['A','D','E','E']
+ ]
+ word = "ABCCED", -> returns true,
+ word = "SEE", -> returns true,
+ word = "ABCB", -> returns false.
+ */
+
+- (void)isWordExistSetup {
+    char board[3][4] = {
+        {'a','b','c','e'},
+        {'s','f','c','s'},
+        {'a','d','e','e'}
+    };
+    NSString *word = @"a";
+    NSLog(@"isWordExist: %@ %hhd", word, [self isWordExist:board word:word]);
+    word = @"abcced";
+    NSLog(@"isWordExist: %@ %hhd", word, [self isWordExist:board word:word]);
+    word = @"see";
+    NSLog(@"isWordExist: %@ %hhd", word, [self isWordExist:board word:word]);
+    word = @"abcb";
+    NSLog(@"isWordExist: %@ %hhd", word, [self isWordExist:board word:word]);
+    NSLog(@"isWordExist: %hhd", [self isWordExist:board word:@""]);
+}
+
+- (BOOL)isWordExist:(char[][4])board word:(NSString *)word {
+    // 1. Initialize a 'visit' matrix that is same size of the board
+    // 2. Extract the first character of the word and find the start position and search for word
+    // 3. If can't find it, find the next start position and search
+    if (board == nil || word == nil || word.length == 0) {
+        return NO;
+    }
+    int visit[3][4];
+    for (int i=0; i<3; i++) {
+        for (int j=0; j<4; j++) {
+            if (board[i][j] == [word characterAtIndex:0]) {
+                // Found the position of the first character, search if word exist from current position
+                [self initVisit:visit];
+                if ([self findCharacter:board word:word cIndex:0 row:i rowSize:3 col:j colSize:4 visit:visit]) {
+                    return YES;
+                }
+            }
+        }
+    }
+    return NO;
+}
+
+- (BOOL)findCharacter:(char[][4])board word:(NSString *)word cIndex:(int)cIndex row:(int)row rowSize:(int)rowSize col:(int)col colSize:(int)colSize visit:(int[][4])visit {
+    if (row >= rowSize || col >= colSize || visit[row][col] == 1) {
+        return NO;
+    }
+    if (board[row][col] == [word characterAtIndex:cIndex++]) {
+//        NSLog(@"%c, index:%d row: %d, col:%d", board[row][col], cIndex, row, col);
+        visit[row][col] = 1;
+        if (cIndex == word.length) {
+            // Reach the end of the word and all characters matched, word found
+            return YES;
+        }
+        if ([self findCharacter:board word:word cIndex:cIndex row:row+1 rowSize:rowSize col:col colSize:colSize visit:visit]) {
+            return YES;
+        }
+        if ([self findCharacter:board word:word cIndex:cIndex row:row-1 rowSize:rowSize col:col colSize:colSize visit:visit]) {
+            return YES;
+        }
+        if ([self findCharacter:board word:word cIndex:cIndex row:row rowSize:rowSize col:col+1 colSize:colSize visit:visit]) {
+            return YES;
+        }
+        if ([self findCharacter:board word:word cIndex:cIndex row:row rowSize:rowSize col:col-1 colSize:colSize visit:visit]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (void)initVisit:(int[][4])visit {
+    for (int i=0; i<3; i++) {
+        for (int j=0; j<4; j++) {
+            visit[i][j] = 0;
+        }
+    }
 }
 
 @end

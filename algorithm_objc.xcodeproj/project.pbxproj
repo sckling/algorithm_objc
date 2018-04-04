@@ -28,6 +28,8 @@
 		19D2E3321DC11F050056073E /* Vertex.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D2E3311DC11F050056073E /* Vertex.m */; };
 		19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E41BD1F772004F31AF /* EdgeNode.m */; };
 		19F696E81BD1F84D004F31AF /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E71BD1F84D004F31AF /* Graph.m */; };
+		43927F1920672B8F007EE991 /* Trie.m in Sources */ = {isa = PBXBuildFile; fileRef = 43927F1820672B8F007EE991 /* Trie.m */; };
+		43D5D9A22066F40D00C769BE /* TrieNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D5D9A12066F40D00C769BE /* TrieNode.m */; };
 		E41E2B1B1C2618A9008DD8B3 /* ArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E41E2B1A1C2618A9008DD8B3 /* ArrayTests.m */; };
 		E41E2B1C1C261BAA008DD8B3 /* NSArray+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */; };
 		E42659D71BCA39D3001B49C4 /* NSArray+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */; };
@@ -89,6 +91,10 @@
 		19F696E41BD1F772004F31AF /* EdgeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeNode.m; sourceTree = "<group>"; };
 		19F696E61BD1F84D004F31AF /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
 		19F696E71BD1F84D004F31AF /* Graph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph.m; sourceTree = "<group>"; };
+		43927F1720672B8F007EE991 /* Trie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Trie.h; sourceTree = "<group>"; };
+		43927F1820672B8F007EE991 /* Trie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Trie.m; sourceTree = "<group>"; };
+		43D5D9A02066F40D00C769BE /* TrieNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrieNode.h; sourceTree = "<group>"; };
+		43D5D9A12066F40D00C769BE /* TrieNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrieNode.m; sourceTree = "<group>"; };
 		E41E2B1A1C2618A9008DD8B3 /* ArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrayTests.m; sourceTree = "<group>"; };
 		E42659D51BCA39D3001B49C4 /* NSArray+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Methods.h"; sourceTree = "<group>"; };
 		E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Methods.m"; sourceTree = "<group>"; };
@@ -217,6 +223,17 @@
 			name = Graphs;
 			sourceTree = "<group>";
 		};
+		43D5D99F2066F3A900C769BE /* Trie */ = {
+			isa = PBXGroup;
+			children = (
+				43D5D9A02066F40D00C769BE /* TrieNode.h */,
+				43D5D9A12066F40D00C769BE /* TrieNode.m */,
+				43927F1720672B8F007EE991 /* Trie.h */,
+				43927F1820672B8F007EE991 /* Trie.m */,
+			);
+			path = Trie;
+			sourceTree = "<group>";
+		};
 		E4A908971BCA1B3A00FA77B6 = {
 			isa = PBXGroup;
 			children = (
@@ -245,6 +262,7 @@
 				193A42821C4851CF004AF854 /* Dictionary */,
 				19F696EB1BD1F86E004F31AF /* Graphs */,
 				19F696E91BD1F856004F31AF /* Trees */,
+				43D5D99F2066F3A900C769BE /* Trie */,
 				195E7DDF1C7D53B90085121E /* Others */,
 			);
 			path = algorithm_objc;
@@ -353,6 +371,7 @@
 				196CAFEF1DEEC266000974EC /* MaxHeap.m in Sources */,
 				19D2E3321DC11F050056073E /* Vertex.m in Sources */,
 				19B738AE1BF2F5E5005D29A2 /* SocialGraph.m in Sources */,
+				43927F1920672B8F007EE991 /* Trie.m in Sources */,
 				196466F91C17C7B100FA9E4D /* UndirectedGraph.m in Sources */,
 				195E7DE21C7D54190085121E /* Matrix.m in Sources */,
 				E42659DD1BCB389D001B49C4 /* Tree.m in Sources */,
@@ -371,6 +390,7 @@
 				199D61D91C89607000D0A795 /* Graph1.m in Sources */,
 				19F696E81BD1F84D004F31AF /* Graph.m in Sources */,
 				E42659D71BCA39D3001B49C4 /* NSArray+Methods.m in Sources */,
+				43D5D9A22066F40D00C769BE /* TrieNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -109,6 +109,52 @@
     return -1;
 }
 
+- (NSArray *)moveZerosToStartUsingSwap:(NSMutableArray *)array {
+    if (array.count <= 1) {
+        return [NSArray arrayWithArray:array];
+    }
+    NSInteger zeroIndex = 0;
+    for (NSInteger i=0; i<array.count; i++) {
+        if ([array[i] isEqualToNumber:@0]) {
+            array[i] = array[zeroIndex];
+            array[zeroIndex++] = @0;
+        }
+    }
+    return [NSArray arrayWithArray:array];
+}
+
+- (NSArray *)moveZerosToStart:(NSMutableArray *)array {
+    /*
+     Question:
+     1. Need to preserve original non-zero order?
+     2. Negative integer
+     3. No zeroes
+     
+     Algorithm:
+     1. Check the number of elements. If only one, return immediately
+     2. Create a zero counter. For each 0, increase counter by one and remove the 0 in the array
+     3. Very important: if a zero is removed, the for-loop count should be decrease by 1. Otherwise it'll out-of-bound and crash
+     4. Create a new array with correct amount of zeroes and concatenate with original array
+     5. Edge cases: 1 element, all zeros, no zeros
+     */
+    if (array.count <= 1) {
+        return [NSArray arrayWithArray:array];
+    }
+    NSInteger zeroCount = 0;
+    NSInteger arrayCount = array.count;
+    for (NSInteger i=0; i<arrayCount; i++) {
+        if ([array[i] isEqualToNumber:@0]) {
+            [array removeObjectAtIndex:i];
+            arrayCount--;
+            zeroCount++;
+        }
+    }
+    for (NSInteger i=0; i<zeroCount; i++) {
+        [array insertObject:@0 atIndex:0];
+    }
+    return [NSArray arrayWithArray:array];
+}
+
 - (void)sortArrayZeros:(NSMutableArray *)array {
     // NSArray *array5 = @[@3, @0, @-1, @4, @5, @0, @2, @0];
 

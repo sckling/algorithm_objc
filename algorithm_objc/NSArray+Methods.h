@@ -22,6 +22,10 @@
 
 - (NSDictionary *)executeBlock:(id (^)(id object))myBlock;
 
+- (NSArray *)moveZerosToStartUsingSwap:(NSMutableArray *)array;
+
+- (NSArray *)moveZerosToStart:(NSMutableArray *)array;
+
 - (void)sortArrayZeros:(NSMutableArray *)array;
 
 - (NSUInteger)stickerCount;

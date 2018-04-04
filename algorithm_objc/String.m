@@ -11,7 +11,7 @@
 @implementation String
 
 - (void)setup {
-    NSString *string = @"abc";
+//    NSString *string = @"abc";
 //    NSLog(@"%lu", string.length);
 //    NSLog(@"%c", [string characterAtIndex:2]);
 //    
@@ -20,6 +20,10 @@
 //    NSLog(@"char array %c", c[0]);
 //    NSLog(@"char array %c", c[1]);
 //    NSLog(@"char array %c%c,%c", c1[2], c1[3], c1[4]);
+    
+    NSLog(@"P=1, %@", [self permutateBracketsIterative:1]);
+    NSLog(@"P=2, %@", [self permutateBracketsIterative:2]);
+    NSLog(@"P=3, %@", [self permutateBracketsIterative:3]);
     
 //    [self bracketPermutation:5];
 //    [self bracketPermutation:6];
@@ -42,6 +46,41 @@
     
     [self wordCountSetup];
 }
+
+// Apple
+// Goal: convert hex string into RGB value
+// Algorithm
+// 1. Validate and Tokenize the string into 3 sets of RGB: ff, ff, ff
+// 2. For each set, convert it from hex to RGB (decimal) value: ff->255,
+// 3. Store each of the decimal value in the loop
+// 4. return UIColor colorWithRed: G B alpha
+/*
+- (UIColor *)hexColor:(NSString *)hexColor {
+    // Assume hexColor is a valid hex string
+    NSMutableArray<NSNumber *> *colors = [NSMutableArray new];
+    for (NSInteger i=0; i<3; i++) {
+        // ffffff
+        // 012345
+        NSString *hex = [hexColor substringWithRange:NSMakeRange(i*2, 2)];
+        // a=10, b=11, c=12, d=13, e=14, f=15
+        [colors addObject:[self hexToDecimal:hex]];
+    }
+    return [UIColor colorWithRed:[colors[0] doubleValue]/255.0
+                            blue:[colors[1] doubleValue]/255.0
+                           green:[colors[2] doubleValue]/255.0
+                           alpha:1.0];
+}
+         
+- (NSNumber *)hexToDecimal:(NSString *)hex {
+ // ff=255
+ NSInteger dec = 0;
+ for (NSInteger i=0; i<hex.length; i++) {
+     // af, i=0, charAtIndex:2-0-1=1->f
+     dec += [[hex characterAtIndex:hex.length-i-1] doubleValue] * 16^i;
+ }
+ return @(dec);
+}
+*/
 
 - (void)delimiterMatchingSetup {
     NSString *string;
@@ -195,6 +234,7 @@
 }
 
 /**
+ * LinkedIn
  * Return the smallest character that is strictly larger than the search character,
  * otherwise return the first character in the string.
  * @param sortedStr : sorted list of letters, sorted in ascending order.
@@ -258,6 +298,170 @@
     // high: replace previous position with this index
     return low;
 }
+
+/**
+ * LinkedIn, 3/27/18, Curtis
+ *
+ * This function determines if the braces ('(' and ')') in a string are properly matched.
+ * it ignores non-brace characters.
+ * Some examples:
+ * "()()()()"   -> true
+ * "((45+)*a3)" -> true
+ * "(((())())"  -> false
+ 
+ Edge cases:
+ 1. () -> true, )( -> false
+ 2. String with no brackets -> true
+ 3. One type of bracket ()
+ 4. (( -> false
+ 
+ Algorithm:
+ 1. for-loop to traverse every character of the string
+ 2. For each character, do something with (), ignore all others
+ 3. FILO -> stack: For an open bracket, store it in the stack, for a close bracket, check the following:
+ a. If counter > 0, remove counter by 1 and continue
+ b. If counter <= 0, return false
+ */
+
+- (BOOL)matched:(NSString *)string {
+    NSInteger counter = 0;
+    for (NSInteger i=0; i<string.length; i++) {
+        unichar c = [string characterAtIndex:i];
+        if (c == '(') {
+            counter++;
+        }
+        else if (c == ')') {
+            if (counter <= 0) {
+                return NO;
+            }
+            counter--;
+        }
+    }
+    return (counter == 0);
+}
+
+/* This class will be given a list of words (such as might be tokenized
+ * from a paragraph of text), and will provide a method that takes two
+ * words and returns the shortest distance (in words) between those two
+ * words in the provided text.
+ * Example:
+ *   WordDistanceFinder finder = new WordDistanceFinder(Arrays.asList("the", "quick", "brown", "fox", "quick"));
+ *   assert(finder.distance("fox", "the") == 3);
+ *   assert(finder.distance("quick", "fox") == 1);
+ *
+ * "quick" appears twice in the input. There are two possible distance values for "quick" and "fox":
+ *     (3 - 1) = 2 and (4 - 3) = 1.
+ * Since we have to return the shortest distance between the two words we return 1.
+ 
+ Quesions:
+ quick, quick, fox, fox = 3,4,1
+ Always matched words? quick, foo = int.max; foo, bar = int.max
+ quick, fox, quick, fox, quick = 0
+ quick = 0
+ 
+ Algorithm
+ 1. Use hash to store key (word), value (index) -> array of indices (2, 4)
+ 2. We'll have two arrays of integers and calculate the min distance
+ 3. If one or no word found, return int.max
+ 4. If one word with multiple instances, return 0;
+ */
+/*
+@interface WordDistanceFinder : NSObject
+
+@proprety(nonatomic, strong) NSMutableDictionary *words;
++ (instancetype)wordDistanceFinder:(NSArray *)words;
+- (NSInteger)distanceBetweenWordOne:(NSString *)wordOne wordTwo:(NSString *)wordTwo;
+
+@end
+
+@implementation WordDistance
+
++ (instancetype)wordDistanceFinder:(NSArray<NSString *> *)words {
+    // Store entire words in dictionary
+    self.words = [NSMutableDictionary new];
+    for (NSInteger i=0; i<words.count; i++) {
+        // No existing word
+        if (!self.words[words[i]]) {
+            self.words[words[i]] = @[@i];
+        }
+        // Existing word
+        else {
+            NSMutableArray *array = [NSMutableArray arrayWithArray:self.words[words[i]];
+            self.words[words[i] = [array addObject:@i];
+        }
+    }
+}
+*/
+
+- (NSInteger)distanceBetweenWordOne:(NSString *)wordOne wordTwo:(NSString *)wordTwo dict:(NSDictionary *)words {
+    NSArray *array1 = words[wordOne];
+    NSArray *array2 = words[wordTwo];
+                
+    // Case 1: One word found, return 0;
+    if ((!array1 && array2) || (array1 && !array2)) {
+        return 0;
+    }
+    // Case 2: One or no words found, return int.nax
+    if (!array1 || !array2) {
+        return INTMAX_MAX;
+    }
+    return [self minDistance:array1 array:array2];
+}
+
+-(void)distanceBetweenTwoWordsSetup {
+    NSArray *array1 = @[@2, @5, @9, @20, @25];
+    NSArray *array2 = @[@7, @8, @12, @18];
+    NSLog(@"Min: %ld", [self minDistance:array1 array:array2]);
+    
+    array1 = @[@2, @5, @12, @20, @25, @26, @27, @100, @101];
+    array2 = @[@7, @12, @99];
+    NSLog(@"Min: %ld", [self minDistance:array1 array:array2]);
+    
+    array1 = @[];
+    array2 = @[@7, @8, @12, @18];
+    NSLog(@"Min: %ld", [self minDistance:array1 array:array2]);
+}
+
+- (NSInteger)minDistance:(NSArray *)array1 array:(NSArray *)array2 {
+    // Two for loop, O(n*m); arrays are sorted:
+    // 2,5,9,20,25
+    // 7,8,12,18
+    // i=0,j=0: 2-7=5, min=5
+    // i=1,j=0: 5-7=2, min=2
+    // i=2,j=0: 9-7=2, min=2
+    // i=2,j=1: 9-8=1, min=1
+    // i=2,j=2: 9-12=3, min=1
+    // i=3,j=2: 20-12=8, min=1
+    // i=3,j=3: 20-18=2, min=1
+    // Subtract index i-j and compare to min and update it if it's smaller
+    // Move the index of the smaller element, since the next element is larger and have the chance to generate a smaller difference
+    // Keep doing it until both indices reach the end
+    // Set 2:
+    // 2,5,9,20,25,26,27,100,101
+    // 7,12,99
+    if (array1.count == 0 && array2.count == 0) {
+        return 0;
+    }
+    if (array1.count == 0) {
+        return [array2[0] integerValue];
+    }
+    if (array2.count == 0) {
+        return [array1[0] integerValue];
+    }
+    NSInteger minSoFar = INT_MAX;
+    NSInteger i=0;
+    NSInteger j=0;
+    while (i<array1.count && j<array2.count) {
+        NSInteger diff = abs([array1[i] intValue] - [array2[j] intValue]);
+        minSoFar = diff < minSoFar ? diff : minSoFar;
+        if (minSoFar == 0) {
+            return 0;
+        }
+        [array1[i] isLessThan:array2[j]] ? i++ : j++;
+    }
+    return minSoFar;
+}
+
 
 
 - (void)isBracketsCountCorrectSetUp {
@@ -330,6 +534,64 @@
     }
     return openBracket == 0? YES: NO;
 }
+
+/* Nest David Fichou, 3/6/18
+ What's retain cycle and give some examples.
+ What's difference between NSSet and NSArray and why use one over the other
+ How does NSSet implement
+ How to make a network call to retreive data?
+ How to handle the data in the block after download
+ Give me some example of UITableView delegate and datasource methods
+ What would happen if UI is running on a background thread?
+ How to animate UIKit objects?
+ Give me some tool that can handle multi-threading: GCD, NSOperationQueue (what's the difference), atom vs non-atomic, NSThread
+ Difference between delegate and NSNotification. When to use which?
+ */
+
+// You and your friend have a code language. To encode a message you replace
+// every letter with another letter 2 ahead of it in the alphabet.
+// The letter “A” becomes the letter “C”, “B” -> “D”...
+// E.g. “ENCODED MESSAGE” becomes "GPEQFGF OGUUCIG"
+// Write a program that given a string encodes it this way.
+// Input: "ENCODED MESSAGE"
+// Output: "GPEQFGF OGUUCIG"
+/*
+ 1. What about numeric and non-alphabetic characters?   A1->C1, !A->!C
+ 2. X->Z, Y->A, Z->B
+ 2. Upper case only
+ 3. Length of string
+ 
+ Algorithm:
+ 1. For loop each character in the string
+ 2. If it's alphabetic, get the ascII and add 2, if it's y and z, subtract by 24
+ 3. For non-alphabetic, keep it as is
+ 4. Write char into a NSMutableString
+ */
+
+//NSString *encodeString(NSString *string) {
+- (NSString *)encodeString:(NSString *)string {
+    if (string == nil || string.length == 0) {
+        return nil;
+    }
+    // Improvement: should use NSString instead
+    NSMutableString *newString = [NSMutableString new];
+    // String=@"abc", length=3, last index=2
+    for (int i=0; i<string.length; i++) {
+        unichar c = [string characterAtIndex:i];
+        // A=65
+        // Z=91
+        // Case 1: Between A to Z. Original solution use real ascii number like 65.
+        if (c >= 'A' && c <= 'Z') {
+            [newString appendFormat:@"%c", c < 'Y' ? c+2 : c-24];
+        }
+        // Case 2: If char is non-alphabet
+        else {
+            [newString appendFormat:@"%c", c];
+        }
+    }
+    return [newString copy];
+}
+
 /*
  Amazon onsite 12/9/16
  Remove brackets in order to print a string with valid brackets setup
@@ -417,6 +679,32 @@
 // Input: positive integer
 // Output: NSArray: each element contains a string of () permutations
 // Needs to be valid open/close brackets (), invalid: )()(
+
+/*
+ 3/2/18: Algorithm
+ 1. Print n-1 pair of brackets in string: n=3 => ()()
+ 2. Insert a pair of bracket in the string for each position: 0.()() 1.(())() 2.()()() 3.()(())
+ 3. For each insertion, save the permutation in the array
+ 4. Take out the inserted bracket
+ */
+- (NSSet *)permutateBracketsIterative:(int)n {
+    if (n==0) {
+        return nil;
+    }
+    NSString *brackets = [NSString new];
+    NSMutableSet *permutations = [NSMutableSet new];
+    for (int i=0; i<n-1; i++) {
+        brackets = [brackets stringByAppendingString:@"()"];
+    }
+    NSLog(@"Initial string: %@", brackets);
+    for (int i=0; i<n*2-2; i++) {
+        NSMutableString *permutate = [NSMutableString stringWithString:brackets];
+        [permutate insertString:@"()" atIndex:i];
+        NSLog(@"p%d: %@", i, permutate);
+        [permutations addObject:permutate];
+    }
+    return permutations;
+}
 
 /* original solution
 - (NSArray *)bracketPermutation:(NSUInteger)number array:(NSMutableArray *)array {

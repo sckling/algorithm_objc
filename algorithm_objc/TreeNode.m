@@ -280,17 +280,20 @@
 //     8     22
 //   /  \      \
 //  4    12    99
-//       / \
-//      10 14
+//       / \   /
+//      10 14 90
+//            / \
+//           80  95
 
 - (void)allPathsOfTree:(TreeNode *)node path:(NSArray *)path {
-    NSLog(@"node: %@", node.value);
+    // if node == nil => previous node's left or right child is empty, but not both
     if (node == nil) {
-        //NSLog(@"Path: %@", path);
         return;
     }
     NSMutableArray *newPath = [NSMutableArray arrayWithArray:path];
     [newPath addObject:node.value];
+    // NSLog(@"node: %@", node.value);
+    // Check if the node is an end node that has no left and right children
     if ((node.left == nil) && (node.right == nil)) {
         NSLog(@"Path: %@", newPath);
     }
