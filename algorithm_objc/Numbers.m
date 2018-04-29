@@ -33,8 +33,8 @@
 //    [self isNumberSetup];
 //    [self convertStringToNumberSetup];
 //    [self parseIntToStringSetup];
-    
-    [self moveZeroesToEndSetup];
+//    [self moveZeroesToEndSetup];
+    [self setupPrintWordsFromPhoneNumber];
 }
 
 - (BOOL)isHappyNumber:(NSUInteger)number original:(NSUInteger)original {
@@ -161,8 +161,6 @@
 }
 
 /*
- Description of Question
- 
  Generate all possible 10 digit phone numbers and corresponding "words". Words are formed by using any of the letters corresponding to each digit of the phone number.
  
  e.g. The number 2222222222 maps to the word AAAAAAAAAA. It also maps to the word BBBBBBBBBB, ABCAAAABBCA, etc.
@@ -179,6 +177,7 @@ GHI   JKL   MNO
 PQRS  TUV   WXYZ
  
        0
+ 
  Expected output
  
  Your program takes no input and prints a great number of lines. These output of your program would look something like the following (… implies some missing lines.)
@@ -201,6 +200,68 @@ PQRS  TUV   WXYZ
  You must print an exhaustive list. All printed lines must be unique (no duplicates.) However, the order in which the lines are printed does NOT matter.
  You do not have to print the spaces between the digits or letters as shown in the sample output–I've grouped them into runs of 3 or 4 characters to make it easier for us to read. It's totally OK for if there is no whitespace in the lines you print (e.g. a line like 2345557777ADGJJLPPQS is perfectly acceptable.)
  */
+
+- (void)setupPrintWordsFromPhoneNumber {
+    NSSet<NSString *> *expected = [NSSet setWithObjects:@"AA", @"AB", @"BA", @"BB", nil];
+    [self generateWordsFromPhoneNumbers:@2];
+}
+
+/*
+ Algorithm:
+ 1. Create a dictionary that maps number to characters
+ 2. For each digit, get all the characters associate with it and traverse the next digit
+ 3. When reaches the end. returns
+ 
+ */
+
+- (void)generateWordsFromPhoneNumbers:(NSNumber *)digit {
+    NSDictionary *word = @{@1: @"", @2:@"ABC", @3: @"DEF", @4: @"GHI", @5: @"JKL", @6: @"MNO", @7: @"PQRS", @8: @"TUV", @9: @"WXYZ", @0: @""};
+    
+}
+
+- (void)generateWords:(NSNumber *)digit words:(NSDictionary *)words {
+    
+}
+
+- (void)extractDigits {
+    int number = 12345;
+    while (number != 0) {
+        int digit = fmod(number, 10.0);
+        number = (number*10.0) - (int)(number*10.0);
+        number = number / 10;
+        NSLog(@"%d, %d", digit, number);
+    }
+    double num = 0.2045;
+    while (num != 0) {
+        int d = fmod(num*10, 10);
+        num = (num*10.0) - d;
+        NSLog(@"%d, %.5f", d, num);
+    }
+    number = 10;
+    NSLog(@"f: %.2f", [self getFactor:number]);
+    number = 101;
+    NSLog(@"f: %.2f", [self getFactor:number]);
+    number = 222;
+    NSLog(@"f: %.2f", [self getFactor:number]);
+    number = 1022340;
+    NSLog(@"f: %.2f", [self getFactor:number]);
+    
+    double digits = [self getFactor:number];
+    while (digits > 0) {
+        int d = (number - fmod(number, pow(10, digits-1))) / pow(10, digits-1);
+        number = number - pow(10, digits-1) * d;
+        NSLog(@"d: %d n: %d, f:%.2f", d, number, digits--);
+    }
+}
+
+- (double)getFactor:(int)number {
+    double digit = 0;
+    while (number >= 1) {
+        number /= 10;
+        digit++;
+    }
+    return digit;
+}
 
 - (void)printPhoneNumberWords {
     NSArray *words = @[@"", @"", @"abc", @"def", @"ghi", @"jkl", @"mno", @"pqrs", @"tuv", @"wxyz"];

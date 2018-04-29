@@ -39,9 +39,9 @@ typedef NS_ENUM(NSInteger, Dir) {
 //    [self pathInMatrixSetup];
 //    [self countObjectsInBitmapSetup];
 //    [self connectedCellinGridSetup];
-//    [self squareCountSetup];
+    [self squareCountSetup];
 //    [self connectedComponentsSetup];
-    [self isWordExistSetup];
+//    [self isWordExistSetup];
 }
 
 - (void)squareCountSetup {
@@ -70,6 +70,12 @@ typedef NS_ENUM(NSInteger, Dir) {
     NSLog(@"Square count should be 0: %d", [self totalSquareCount:matrix]);
 }
 
+/*
+ Algorithm:
+ 1. Traverse each element in the matrix, if it's 0, call helper methox to start counting
+ 2. Pass in the start size 1
+ */
+
 - (int)totalSquareCount:(NSArray *)matrix {
     if (![self isSquare:matrix]) {
         return 0;
@@ -84,16 +90,6 @@ typedef NS_ENUM(NSInteger, Dir) {
         }
     }
     return count;
-}
-
-- (BOOL)isSquare:(NSArray *)matrix {
-    // Check for matrix size nil & 0
-    if (matrix.count == 0) {
-        return NO;
-    }
-    // Check if it's a square
-    double size = sqrt(matrix.count);
-    return fmod(size, 1.0)==0? YES: NO;
 }
 
 - (int)squareCount:(NSArray *)matrix row:(int)row col:(int)col size:(int)size count:(int)count {
@@ -113,6 +109,17 @@ typedef NS_ENUM(NSInteger, Dir) {
     }
     count = [self squareCount:matrix row:row+1 col:col+1 size:size+1 count:count+1];
     return count;
+}
+
+
+- (BOOL)isSquare:(NSArray *)matrix {
+    // Check for matrix size nil & 0
+    if (matrix.count == 0) {
+        return NO;
+    }
+    // Check if it's a square
+    double size = sqrt(matrix.count);
+    return fmod(size, 1.0)==0? YES: NO;
 }
 
 - (BOOL)isSquare:matrix row:(int)row col:(int)col {

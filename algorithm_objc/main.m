@@ -23,6 +23,15 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+        /*
+         Review:
+         1. Extract numbers (leftmost->rightmost and vice versa
+         2. Binary search
+         3. DFS and BFS on tree and graph
+         4. Dynamic program and back tracking
+         5. Recursively extract inner objects
+         */
+        
         /* fb
          Given an array of strings, remove any duplicates and return a new array containing the first occurrence of each string.
          Given a number e.g. 234, print all combinations of their dial pad letters
@@ -57,8 +66,8 @@ int main(int argc, const char * argv[]) {
         
         // dfs iterative?
         
-//        Numbers *numbers = [[Numbers alloc] init];
-//        [numbers setup];
+        Numbers *numbers = [[Numbers alloc] init];
+        [numbers setup];
 
 //        Array *array = [[Array alloc] init];
 //        [array setup];
