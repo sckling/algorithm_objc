@@ -56,10 +56,15 @@
     //NSArray *array = @[@"c", @"b", @"f"];
     NSArray *array = @[@20, @8, @4, @12, @10, @14, @22, @99, @90, @80, @95];
     TreeNode *root = [self createBinarySearchTree:array];
+//    NSLog(@"Path to sum 32: %d", [root pathEqualToSum:root sum:32]);
+//    NSLog(@"Path to sum 40: %d", [root pathEqualToSum:root sum:40]);
+//    NSLog(@"Path to sum 54: %d", [root pathEqualToSum:root sum:54]);
+//    NSLog(@"Path to sum 42: %d", [root pathEqualToSum:root sum:42]);
+//    NSLog(@"Path to sum 326: %d", [root pathEqualToSum:root sum:326]);
     
-    [root enumerateNodes:^(NSString *string) {
-        NSLog(@"Node: %@", string);
-    }];
+//    [root enumerateNodes:^(NSString *string) {
+//        NSLog(@"Node: %@", string);
+//    }];
     
 //    NSLog(@"Depth of tree: %ld", [root depthOfTree:root]);
 //    NSLog(@"Largest number: %lu", [root secondLargestInteger:root]);
@@ -72,19 +77,23 @@
 //    printf("Largest value smaller than %ld: %ld\n", value, [[root largestValue2:root value:value].value integerValue]);
     
     [root breadthFirstTraverseByLevelSingleQueue:root];
-    NSMutableArray *path = [NSMutableArray arrayWithCapacity:array.count];
-    [root allPathsOfTree:root path:path];
+    [root reverseTree:root];
+    [root breadthFirstTraverseByLevelSingleQueue:root];
+    
+//    NSMutableArray *path = [NSMutableArray arrayWithCapacity:array.count];
+//    [root allPathsOfTree:root path:path];
+
 //    [root depthFirstTraverse:root order:PreOrder];
 //    [root depthFirstTraverse:root order:InOrder];
 //    [root depthFirstTraverse:root order:PostOrder];
     
-    NSArray *serialized = @[@20, @8 ,@4 ,@-1 ,@-1 ,@12 ,@10 ,@-1 ,@-1 ,@14 ,@-1 ,@-1 ,@-1];
-    root = [[TreeNode alloc] init];
-    
-    TreeNode *binaryTree = [root deSerialize1:root array:[serialized mutableCopy]];
-    [binaryTree depthFirstTraverse:binaryTree order:InOrder];
-    
-    [self buildBinaryTreeSetup];
+//    NSArray *serialized = @[@20, @8 ,@4 ,@-1 ,@-1 ,@12 ,@10 ,@-1 ,@-1 ,@14 ,@-1 ,@-1 ,@-1];
+//    root = [[TreeNode alloc] init];
+//
+//    TreeNode *binaryTree = [root deSerialize1:root array:[serialized mutableCopy]];
+//    [binaryTree depthFirstTraverse:binaryTree order:InOrder];
+//
+//    [self buildBinaryTreeSetup];
 }
 
 - (void)buildBinaryTreeSetup {

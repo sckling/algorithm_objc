@@ -62,8 +62,10 @@
     dispatch_block_t localBlock = ^void{NSLog(@"Execute a localBlock");};
     localBlock();
     
-    // Execute typedef block
-    newTypeDefBlock anotherBlock = ^NSNumber *(int a, NSNumber *b) {return @(a+[b integerValue]);};
+    // Create a typedef block: take int and NSNumber and returns NSNumber
+    newTypeDefBlock anotherBlock = ^NSNumber *(int a, NSNumber *b) {
+        return @(a+[b integerValue]);
+    };
     self.aTypeDefBlock = anotherBlock;
     NSLog(@"Execute a typedef block: %@", self.aTypeDefBlock(1, @2));
 }

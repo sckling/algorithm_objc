@@ -36,10 +36,12 @@ typedef NS_ENUM(NSInteger, Dir) {
  */
 
 - (void)setup {
+    [self longestSequenceSumSetup];
+//    [self uniquePathsSetup];
 //    [self pathInMatrixSetup];
 //    [self countObjectsInBitmapSetup];
 //    [self connectedCellinGridSetup];
-    [self squareCountSetup];
+//    [self squareCountSetup];
 //    [self connectedComponentsSetup];
 //    [self isWordExistSetup];
 }
@@ -334,9 +336,10 @@ typedef NS_ENUM(NSInteger, Dir) {
     if (matrix[row][col] == 1) {
         return NO;
     }
+    // Current cell is zero (a path)
     // If reached the end corner of the matrix, check whether it's hitting a wall of not
     if (row == rowSize-1 && col == colSize-1) {
-        return matrix[row][col] == 0 ? YES : NO;
+        return YES;
     }
     // If hits the end of a row, continues to move on the column
     if (row == rowSize-1) {
@@ -362,22 +365,116 @@ typedef NS_ENUM(NSInteger, Dir) {
     }
     // Add the current location to the path
     NSMutableArray *newPath = [NSMutableArray arrayWithArray:path];
-    [newPath addObject:@(1000+row*10+col)];
+    [newPath addObject:[NSString stringWithFormat:@"%d,%d", row, col]];
 
     // If reached the end corner of the matrix, print the path and return
     if (row == rowSize-1 && col == colSize-1) {
-        NSLog(@"Path: %@", newPath);
+//        NSLog(@"Path: %@", newPath);
         return;
     }
     // If hit the bound of the row, or column is less than bound, move to next column
-    if (row == rowSize-1 || col<colSize) {
+//    if (row == rowSize-1 || col<colSize) {
+    if (col < colSize-1) {
         [self allPathInMatrix:matrix row:row col:col+1 rowSize:rowSize colSize:colSize path:newPath];
     }
     // If hit the bound of the column, or row is less than bound, move to next row
-    if (col == colSize-1 || row <rowSize) {
+//    if (col == colSize-1 || row <rowSize) {
+    if (row < rowSize-1) {
         [self allPathInMatrix:matrix row:row+1 col:col rowSize:rowSize colSize:colSize path:newPath];
     }
     return;
+}
+
+- (void)uniquePathsSetup {
+    int rowSize = 3;
+    int colSize = 2;
+    NSLog(@"Unique paths=3: %d", [self uniquePaths:rowSize n:colSize]);
+    rowSize = 7;
+    colSize = 3;
+    NSLog(@"Unique paths=28: %d", [self uniquePaths:rowSize n:colSize]);
+}
+
+- (int)uniquePaths:(int)rowSize n:(int)colSize {
+    return [self findPath:0 col:0 size:rowSize size:colSize];
+}
+
+- (int)findPath:(int)row col:(int)col size:(int)rowSize size:(int)colSize {
+    // Reach the lower right corner of the matrix, a path is found
+//    NSLog(@"row:%d, col:%d", row, col);
+    if (row == rowSize-1 && col == colSize-1) {
+        return 1;
+    }
+    int path = 0;
+    // Go to next row if not at the end
+    if (row < rowSize-1) {
+        path += [self findPath:row+1 col:col size:rowSize size:colSize];
+    }
+    // Go to next col if not at the end
+    if (col < colSize-1) {
+        path += [self findPath:row col:col+1 size:rowSize size:colSize];
+    }
+    return path;
+}
+
+/*
+ Given a rectangle matrix with size n*m, find the longest sequence inside.
+ 2 3 9 10
+ 1 7 8 11
+ 5 4 6 12
+ [1,2,3], [4,5], [6], [7,8,9,10,11,12] -> longest sequence count = 6
+ */
+
+- (void)longestSequenceSumSetup {
+    int matrix[3][4]  = {
+        {2,3,9,10},
+        {1,7,8,11},
+        {5,4,6,12}
+    };
+    NSLog(@"Longest: %d", [self longestSequenceSum:matrix]);
+}
+
+- (int)longestSequenceSum:(int[][4])matrix {
+    int maxSoFar = 0;
+    for (int row=0; row<3; row++) {
+        for (int col=0; col<4; col++) {
+            int count = [self findSequenceSum:matrix row:row col:col size:3 size:4 count:1];
+            maxSoFar = count > maxSoFar ? count : maxSoFar;
+        }
+    }
+    return maxSoFar;
+}
+
+- (int)findSequenceSum:(int[][4])matrix row:(int)row col:(int)col size:(int)rowSize size:(int)colSize count:(int)count {
+//    NSLog(@"%d, count: %d", matrix[row][col], count);
+    // Base case when row or col larger than matrix size
+    // 0,1,2,4: row size >= 3
+    if (row >= rowSize || col >= colSize) {
+        return count;
+    }
+    // Check which direction is the next sequence
+    // Both row and col are within size-1, no need to check
+    // Or check before recursive call to make one less recursive call
+//    if (row < rowSize-1) {
+        if (matrix[row+1][col] == matrix[row][col]+1) {
+            return [self findSequenceSum:matrix row:row+1 col:col size:rowSize size:colSize count:count+1];
+        }
+//    }
+//    if (row > 0) {
+        if (matrix[row-1][col] == matrix[row][col]+1) {
+            return [self findSequenceSum:matrix row:row-1 col:col size:rowSize size:colSize count:count+1];
+        }
+//    }
+//    if (col < colSize-1) {
+        if (matrix[row][col+1] == matrix[row][col]+1) {
+            return [self findSequenceSum:matrix row:row col:col+1 size:rowSize size:colSize count:count+1];
+        }
+//    }
+//    if (col > 0) {
+        if (matrix[row][col-1] == matrix[row][col]+1) {
+            return [self findSequenceSum:matrix row:row col:col-1 size:rowSize size:colSize count:count+1];
+        }
+//    }
+    return count;
 }
 
 /*
@@ -582,5 +679,6 @@ typedef NS_ENUM(NSInteger, Dir) {
         }
     }
 }
+
 
 @end

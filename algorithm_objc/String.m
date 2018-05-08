@@ -21,9 +21,12 @@
 //    NSLog(@"char array %c", c[1]);
 //    NSLog(@"char array %c%c,%c", c1[2], c1[3], c1[4]);
     
-    NSLog(@"P=1, %@", [self permutateBracketsIterative:1]);
-    NSLog(@"P=2, %@", [self permutateBracketsIterative:2]);
-    NSLog(@"P=3, %@", [self permutateBracketsIterative:3]);
+//    NSLog(@"P=1, %@", [self permutateBracketsIterative:1]);
+//    NSLog(@"P=2, %@", [self permutateBracketsIterative:2]);
+//    NSLog(@"P=3, %@", [self permutateBracketsIterative:3]);
+    
+//    [self permutateString:@"abc"];
+    [self permutateString:@"all"];
     
 //    [self bracketPermutation:5];
 //    [self bracketPermutation:6];
@@ -535,7 +538,7 @@
     return openBracket == 0? YES: NO;
 }
 
-/* Nest David Fichou, 3/6/18
+/* Nest Lab, David Fichou, 3/6/18
  What's retain cycle and give some examples.
  What's difference between NSSet and NSArray and why use one over the other
  How does NSSet implement
@@ -671,7 +674,6 @@
     return array;
 }
 
-
 // Hulu
 // 1: [()]
 // 2: ["(())", "()()"]
@@ -772,6 +774,65 @@
 
 - (BOOL)isEvenNumber:(NSUInteger)number {
     return number%2==0? YES : NO;
+}
+
+/*
+ ABC ->ABC ACB BAC BCA CBA CAB
+ Algorithm:
+ a->bc, b->ac, c-ab
+ ab->c, ac->b, ba->c, bc->a, ca->b, cb->a
+ 
+ i  s1  s2
+ 0  a   bc
+ Time complexity: O(n) to print all string, and O(n!) permutation = O(n*n!)
+ 4!=4x3x2x1=24
+ How to handle duplicate strings?
+ 1. Use NSSet to store strings but space is n! because there are worst case n! permutation
+ 2. For each swap, check if there will be duplicate between start char to current char. If yes, don't swap
+ 3. Time complexity should be O(n*n*n!) because for each swap, we need to check swappable from start to current, with each check smaller
+ */
+- (void)permutateString:(NSString *)string {
+    [self permutate:string start:0];
+}
+
+- (void)permutate:(NSString *)string start:(NSUInteger)start {
+    if (start == string.length-1) {
+        NSLog(@"Final: %@", string);
+        return;
+    }
+    else {
+        // Swap  start index and next character
+        // Increment start index by 1 and recursive
+        // After recursive call, swap back to origin string and ready for next character until end of string
+        // a->bc, b->ac, c->ba
+        for (NSUInteger i=start; i<string.length; i++) {
+            // To create only distinct set, check if same two characters swap already happened. If yes, don't swap and permutate
+            if ([self shouldSwapString:string start:start current:i]) {
+                string = [self swapString:string start:start end:i];
+//                NSLog(@"s1: %@", string);
+                [self permutate:string start:start+1];
+                string = [self swapString:string start:start end:i];
+//                NSLog(@"s2: %@", string);
+            }
+        }
+    }
+}
+// Check if there is any repeated characters from start to current index. If yes, return NO;
+- (BOOL)shouldSwapString:(NSString *)string start:(NSUInteger)start current:(NSUInteger)current {
+    for (NSUInteger i=start; i<current; i++) {
+        if ([string characterAtIndex:current] == [string characterAtIndex:i]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (NSString *)swapString:(NSString *)string start:(NSUInteger)start end:(NSUInteger)end {
+    NSString *c1 = [NSString stringWithFormat:@"%c", [string characterAtIndex:start]];
+    NSString *c2 = [NSString stringWithFormat:@"%c", [string characterAtIndex:end]];
+    string = [string stringByReplacingCharactersInRange:NSMakeRange(start, 1) withString:c2];
+    string = [string stringByReplacingCharactersInRange:NSMakeRange(end, 1) withString:c1];
+    return string;
 }
 
 /*
@@ -1046,7 +1107,7 @@
 - (void)anagramsSetup {
     NSString *s1 = @"fsqoiaidfaukvngpsugszsnseskicpejjvytviya";
     NSString *s2 = @"ksmfgsxamduovigbasjchnoskolfwjhgetnmnkmcphqmpwnrrwtymjtwxget";
-    int answer = 42;
+//    int answer = 42;
     printf("%d\n", [self anagrams:s1 string:s2]);
 }
 

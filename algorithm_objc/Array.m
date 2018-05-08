@@ -65,12 +65,17 @@
 }
 
 - (void)setup {
-    NSArray *array = @[@3, @0, @-1, @4, @5, @0, @2, @0];
-    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[array mutableCopy]]);
-    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[NSMutableArray arrayWithObject:@0]]);
-    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[NSMutableArray arrayWithObjects:@0, @0, @0, nil]]);
-    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[NSMutableArray arrayWithObjects:@0, @2, @2, @5, @0, nil]]);
-    NSLog(@"moveZerosToStart: %@", [array moveZerosToStart:[NSMutableArray arrayWithObjects:@0, @2, @2, @5, @0, nil]]);
+    /*
+     For array problems or anything that needs to sum up lots of number, becareful about int overflow or divided by zero
+     */
+    
+    
+//    NSArray *array = @[@3, @0, @-1, @4, @5, @0, @2, @0];
+//    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[array mutableCopy]]);
+//    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[NSMutableArray arrayWithObject:@0]]);
+//    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[NSMutableArray arrayWithObjects:@0, @0, @0, nil]]);
+//    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[NSMutableArray arrayWithObjects:@0, @2, @2, @5, @0, nil]]);
+//    NSLog(@"moveZerosToStart: %@", [array moveZerosToStart:[NSMutableArray arrayWithObjects:@0, @2, @2, @5, @0, nil]]);
 
 //    [self passArrayByReferenceSetup];
 //
@@ -94,6 +99,8 @@
 //    
 //    [self rollingMedianSetup];
 //
+//    [self setupSumOfArray];
+    
 //    [self enumeratorSetup];
     
 //    [self heapSetup];
@@ -105,6 +112,10 @@
 //    [self mergeSortSetup];
     
 //    [self quickSortSetup];
+    
+//    [self compressRepeatNumberSetup];
+    
+    [self compressConsecutiveNumbersSetup];
 }
 
 - (void)binarySearchSetup {
@@ -135,39 +146,142 @@
     [array2 findPairsOfElementsEqualToSum:7];
 }
 
+/*
+ Given an array that contains numbers and/or other nested arrays, write an algorithm to come up with a sum of these elements,
+ multiplied by the depth (or how many arrays deep) you are. For example, what would you do with an input array that looks like:
+
+[ 2, 3, [ 9, [ 1, 2 ]], 4] = 2x1+3x1+9x1+(1x2+2x2)+4 = 24
+ */
+
+- (void)setupSumOfArray {
+    NSMutableArray *array = [NSMutableArray arrayWithArray:@[@2, @3, @[@9, @[@1, @2]], @4]];
+    NSLog(@"Total: %ld", [self sumOfArray:array]);
+}
+
+- (NSInteger)sumOfArray:(NSMutableArray *)array {
+    NSInteger sum = 0;
+    for (int i=0; i<array.count; i++) {
+        sum += [self sumOfElement:array obj:array[i] index:i depth:1 sum:0];
+        NSLog(@"sum1: %ld", sum);
+        
+    }
+    return sum;
+}
+
+- (NSInteger)sumOfElement:(NSMutableArray *)array obj:(id)obj index:(NSInteger)index depth:(NSInteger)depth sum:(NSInteger)sum {
+    // If element is a number add it to the sum and return it
+    if ([obj isKindOfClass:[NSNumber class]]) {
+        return sum + [(NSNumber *)obj integerValue];
+    }
+    if ([obj isKindOfClass:[NSArray class]]) {
+        // Extract the first element from this array of element
+        NSMutableArray *new = [NSMutableArray arrayWithArray:obj];
+        [new removeObjectAtIndex:0];
+        // Check if the updated array element has any element. If yes, insert it back to the main array
+        if (new.count > 0) {
+            // index+1 won't crash because it's only used if there's need to expand the element
+            [array insertObject:new atIndex:index+1];
+        }
+//        NSLog(@"sum1: %ld, %ld", sum, depth);
+        if ([obj[0] isKindOfClass:[NSArray class]]) {
+//            NSLog(@"obj: %@", obj[0]);
+            depth = depth + 1;
+        }
+        return sum + [self sumOfElement:array obj:obj[0] index:index+1 depth:depth sum:sum] * depth;
+    }
+    return sum;
+}
+
+
 - (void)enumeratorSetup {
     self.enumeratorIdx = 0;
-    self.enumeratorArray = [NSMutableArray arrayWithArray:@[@"a", @"b", @[@"c", @[@"d"]], @[ @[@"e", @[@"f"]], @"g" ] ]];
+    self.enumeratorArray = [NSMutableArray arrayWithArray:@[@"a", @"b", @[@"c", @[@"d"]], @[ @[@"e", @[@"f"]], @"g" ], @"h"]];
     self.enumeratorArray = [self.enumeratorArray mutableCopy];
 }
 
-// NSEnumerator
+/*
+ Algorithm
+ For each element in the array, extract the first object
+ If it is a string return it
+ If it is an array, extract the first element, insert the updated element with the first element into the next index
+ Continue the recursive call. Effectively we are "flattening" the array.
+ */
 - (id)nextObject {
-    if (self.enumeratorArray.count > 0) {
-        id obj = self.enumeratorArray[0];
-        [self.enumeratorArray removeObjectAtIndex:0];
-        return [self firstObject:obj];
+    if (self.enumeratorIdx < self.enumeratorArray.count) {
+        //    if (self.enumeratorArray.count > 0) {
+        //        [self.enumeratorArray removeObjectAtIndex:0];
+        id obj = self.enumeratorArray[self.enumeratorIdx++];
+        return [self firstElement:obj index:self.enumeratorIdx];
     }
     return nil;
 }
 
-// Takes out the first object and insert it back to the array recursively until the object is a string, then return it
-- (id)firstObject:(id)obj {
+- (id)firstElement:(id)obj index:(NSInteger)index {
+    // If the first element is a string, can stop extracting and return it
     if ([obj isKindOfClass:[NSString class]]) {
         return obj;
     }
-    else if ([obj isKindOfClass:[NSArray class]]) {
-        NSMutableArray *newArray = [obj mutableCopy];
-        id firstObj = newArray[0];
+    // Keep extracting the first element and insert at the current index. So the array size would be increasing unitl the first element is a string
+    if ([obj isKindOfClass:[NSArray class]]) {
+        // How to handle empty array??
+        id firstObj = obj[0];
+        NSMutableArray *newArray = [NSMutableArray arrayWithArray:obj];
         [newArray removeObjectAtIndex:0];
-
         if (newArray.count > 0) {
-            [self.enumeratorArray insertObject:[newArray copy] atIndex:0];
+            [self.enumeratorArray insertObject:newArray atIndex:index];
         }
-        return [self firstObject:firstObj];
+        return [self firstElement:firstObj index:index];
     }
     return nil;
 }
+
+- (NSArray *)allObjects {
+    NSMutableArray *array = [NSMutableArray new];
+    NSInteger tmp = self.enumeratorIdx;
+    self.enumeratorIdx = 0;
+    int i = 0;
+    BOOL stop = NO;
+    while (stop == NO) {
+        id obj = [self nextObject];
+        if (obj) {
+            array[i++] = obj;
+        }
+        else {
+            stop = YES;
+        }
+    }
+    self.enumeratorIdx = tmp;
+    return array;
+}
+
+
+// NSEnumerator
+//- (id)nextObject {
+//    if (self.enumeratorArray.count > 0) {
+//        id obj = self.enumeratorArray[0];
+//        [self.enumeratorArray removeObjectAtIndex:0];
+//        return [self firstObject:obj];
+//    }
+//    return nil;
+//}
+//
+//// Takes out the first object and insert it back to the array recursively until the object is a string, then return it
+//- (id)firstObject:(id)obj {
+//    if ([obj isKindOfClass:[NSString class]]) {
+//        return obj;
+//    }
+//    else if ([obj isKindOfClass:[NSArray class]]) {
+//        NSMutableArray *newArray = [obj mutableCopy];
+//        id firstObj = newArray[0];
+//        [newArray removeObjectAtIndex:0];
+//
+//        if (newArray.count > 0) {
+//            [self.enumeratorArray insertObject:[newArray copy] atIndex:0];
+//        }
+//        return [self firstObject:firstObj];
+//    }
+//    return nil;
+//}
 
 - (void)sudokuValidationSetup {
     int grid[][9] = {
@@ -947,5 +1061,75 @@
     [sortedArray addObjectsFromArray:[self quickSort:more]];
     return sortedArray;
 }
+
+
+- (void)compressRepeatNumberSetup {
+    /*
+     Write a code that, given a stream of data compress it as the value and its frequencies that occurs consecutively
+     Example: (1,1,1,1,2,2,3,3,3,2) return (1,4) (2,2) (3,3) (2,1).
+     */
+    NSArray *array = @[@1,@1,@1,@1,@2,@2,@5,@3,@3,@3,@2];
+    NSLog(@"Compressed Array: %@", [self compressRepeatNumber:array]);
+    array = @[@1,@2,@2,@2];
+    NSLog(@"Compressed Array: %@", [self compressRepeatNumber:array]);
+}
+
+- (NSArray *)compressRepeatNumber:(NSArray *)array {
+    NSMutableArray<NSString *> *result = [NSMutableArray new];
+    NSUInteger count = 1;
+    for (NSUInteger i=0; i<array.count; i++) {
+        // Check if there is next element
+        if (i+1 < array.count) {
+            // If next element is same
+            if (array[i] == array[i+1]) {
+                count++;
+            }
+            else {
+                [result addObject:[NSString stringWithFormat:@"%@,%ld", array[i], count]];
+                count = 1;
+            }
+        }
+        // Last element with no next character
+        else {
+            [result addObject:[NSString stringWithFormat:@"%@,%ld", array[i], count]];
+        }
+    }
+    return [result copy];
+}
+
+- (void)compressConsecutiveNumbersSetup {
+    /*
+     Given an array with input - [1,2,3,4,5] , [1,3,4,5,7]
+     Program should output [1-5],[1-1,3-5,7-7] Compress consecutive numbers
+     */
+    NSArray<NSNumber *> *array = @[@1,@2,@3,@4,@5,@1,@3,@4,@5,@7];
+    NSLog(@"Compressed Array: %@", [self compressConsecutiveNumbers:array]);
+}
+
+- (NSArray *)compressConsecutiveNumbers:(NSArray<NSNumber *> *)array {
+    if (array.count == 0) {
+        return nil;
+    }
+    NSMutableArray *result = [NSMutableArray new];
+    // 1. Use a start variable to keep track of the start
+    // 2. Check if next element the same. If not, make current element the end and next element the start
+    NSNumber *start = array[0];
+    for (NSUInteger i=0; i<array.count; i++) {
+        // Check if there is next element
+        if (i+1 < array.count) {
+            // If next element is not consecutive, add the start and current element to array, and update start=next element
+            if (array[i].integerValue+1 != array[i+1].integerValue) {
+                [result addObject:[NSString stringWithFormat:@"%@-%@", start, array[i]]];
+                start = array[i+1];
+            }
+        }
+        // Last element with no next character
+        else {
+            [result addObject:[NSString stringWithFormat:@"%@-%@", start, array[i]]];
+        }
+    }
+    return [result copy];
+}
+
 
 @end

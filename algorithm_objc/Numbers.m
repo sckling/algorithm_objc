@@ -134,12 +134,8 @@
 }
 
 - (int)fibonacciIterative:(int)n {
-    if (n == 0) {
+    if (n <= 1) {
         printf("%d\n", n);
-        return n;
-    }
-    if (n == 1) {
-        printf("0 %d\n", n);
         return n;
     }
     // f(n) = f(n-1) + f(n-2)

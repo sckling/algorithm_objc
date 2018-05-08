@@ -231,6 +231,7 @@
     if (visited == nil) {
         visited = [NSMutableSet new];
     }
+    // For each memeber, travser each of his friend/node and go dfs one by one until exhausted
     [visited addObject:member];
     printf("%s, ", [member.name UTF8String]);
     for (int i=0; i<member.friends.count; i++) {

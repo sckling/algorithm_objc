@@ -37,6 +37,8 @@ typedef enum {
 - (TreeNode *)largestValue2:(TreeNode *)node value:(NSInteger)value;
 - (int)diameterOfTree:(TreeNode *)root;
 - (void)enumerateNodes:(void(^)(NSString *string))block;
+- (BOOL)pathEqualToSum:(TreeNode *)node sum:(int)sum;
+- (void)reverseTree:(TreeNode *)root;
 
 // For unit test demo only
 - (NSInteger)addNums:(NSInteger)num1 num2:(NSInteger)num2;

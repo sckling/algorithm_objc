@@ -58,6 +58,8 @@
         NSLog(@"Word: %@", word);
         return;
     }
+    // This is backtracking: add each child character of the current character and perform recursive call
+    // After recursive call, remove the last character added before the call and addd the next character
     NSArray *letters = [node.children allKeys];
     for (NSString *letter in letters) {
         word = [word stringByAppendingString:letter];

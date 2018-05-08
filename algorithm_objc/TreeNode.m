@@ -29,6 +29,14 @@
     return copy;
 }
 
+/*
+ NSArray *array = @[@20, @8, @4, @12, @10, @14, @22, @99, @90, @80, @95];
+ TreeNode *root = [self createBinarySearchTree:array];
+ [root enumerateNodes:^(NSString *string) {
+    NSLog(@"Node: %@", string);
+ }];
+ */
+
 - (void)enumerateNodes:(void (^)(NSString *))block {
     if (block) {
         [self.left enumerateNodes:block];
@@ -78,6 +86,58 @@
         }
     }
 }
+
+// Can pass only numbmer and subtract that until reaches to zero
+// Time complexity O(n), n=number of tree nodes
+// Need to take care of edge case like node is nil or single node
+- (BOOL)pathEqualToSum:(TreeNode *)node sum:(int)sum {
+    if (!node) {
+        return NO;  // return (sum == number); Does it matter?
+    }
+//    NSLog(@"%@", node.value);
+    int subsum = sum - [(NSNumber *)node.value intValue];
+    // Optimize to return NO if sum exceed number. No need to continue this path
+    if (subsum < 0) {
+        return NO;
+    }
+    // If reaches leaf node, check if sum is equal to number
+    if (!node.left && !node.right) {
+//        return (sum == number) ? YES : NO;  <- No need. See next line
+        return (subsum == 0);
+    }
+//    if ([self pathEqualToSum:node.left sum:subsum] == YES) {
+//        return YES;
+//    }
+    // Continue on right node if left node doesn't has a path to sum
+//    return [self pathEqualToSum:node.right sum:subsum];
+    
+    // Can do this in one line. If first method call returns YES, the second method call won't run
+    return ([self pathEqualToSum:node.left sum:subsum] || [self pathEqualToSum:node.right sum:subsum]);
+}
+
+// Use BFS and traverse tree in level order. For each node, swap left and right nodes. O(n), n=number of tree nodes
+- (void)reverseTree:(TreeNode *)root {
+    if (!root) {
+        return;
+    }
+    NSMutableArray *queue = [NSMutableArray new];
+    [queue addObject:root];
+    while (queue.count > 0) {
+        TreeNode *node = [queue firstObject];
+        [queue removeObjectAtIndex:0];
+        TreeNode *temp = node.left;
+        node.left = node.right;
+        node.right = temp;
+        NSLog(@"%@, ", node.value);
+        if (node.left) {
+            [queue addObject:node.left];
+        }
+        if (node.right) {
+            [queue addObject:node.right];
+        }
+    }
+}
+
 
 - (void)depthFirstTraverse:(TreeNode *)node order:(Order)order {
     if (node) {

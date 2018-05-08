@@ -23,9 +23,17 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+    
+        NSLog(@"XOR: %d, %d, %d", 1^2^3^4, 1^2^2^3^4, (1^2^3^4)^(1^2^2^3^4));
+        /*
+         XOR two arrays of numbers to find out the duplicate
+         1,2,  3,4
+         1,2,2,3,4
+         XOR first and second set and XOR both set. The duplicate will be the answer.
+         */
         /*
          Review:
-         1. Extract numbers (leftmost->rightmost and vice versa
+         1. Extract numbers: leftmost->rightmost and vice versa. 23: (int)23/10=2, 23%10=3
          2. Binary search
          3. DFS and BFS on tree and graph
          4. Dynamic program and back tracking
@@ -46,8 +54,16 @@ int main(int argc, const char * argv[]) {
          Print all permutations of a string. (x2)
          Implement a stack using an array in C
          Implement a trie data structure to hold words read from the input
-         Write a code that, given a stream of data compress it as the value and its frequencies that occurs consecutively, for ex (1,1,1,1,2,2,3,3,3,2) return (1,4) (2,2) (3,3) (2,1).
+         Write a code that, given a stream of data compress it as the value and its frequencies that occurs consecutively
+         Example: (1,1,1,1,2,2,3,3,3,2) return (1,4) (2,2) (3,3) (2,1).
+         
+         Given an array with input - [1,2,3,4,5] , [1,3,4,5,7]
+         Program should output [1-5],[1-1,3-5,7-7] Compress consecutive numbers
+         
          Write a browser app that replace all instance of "nest" word with an arbitrary word (eg. Hello)
+         Implement a trie data structure to hold words read from the input
+         
+         The system design question was more focused on a Nest-specific scenario.
          */
         
 //        Trie *trie = [[Trie alloc] init];
@@ -61,18 +77,19 @@ int main(int argc, const char * argv[]) {
 //        Dictionary *dict = [[Dictionary alloc] init];
 //        [dict setup];
         
-        Matrix *matrix = [[Matrix alloc] init];
-        [matrix setup];
+//        Matrix *matrix = [[Matrix alloc] init];
+//        [matrix setup];
         
         // dfs iterative?
         
-        Numbers *numbers = [[Numbers alloc] init];
-        [numbers setup];
+//        Numbers *numbers = [[Numbers alloc] init];
+//        [numbers setup];
 
 //        Array *array = [[Array alloc] init];
 //        [array setup];
         
 //        String *string = [[String alloc] init];
+//        [string setup];
 //        [string distanceBetweenTwoWordsSetup];
 //        [string filterWordSetup];
         
@@ -92,7 +109,8 @@ int main(int argc, const char * argv[]) {
 //                stop = YES;
 //            }
 //        }
-        
+//        NSLog(@"All object: %@", [array allObjects]);
+
 //        Tree *tree = [[Tree alloc] init];
 //        [tree setup];
         
