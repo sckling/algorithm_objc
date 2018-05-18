@@ -21,12 +21,6 @@
 
 @implementation Array
 
-- (void)passArrayByReference:(NSArray **)array {
-    NSLog(@"Original array: %@", *array);
-    NSArray *newArray = @[@1, @2, @3];
-    *array = newArray;
-}
-
 - (void)twoDimenionalArray {
     int num1=3, num2=4;
     NSLog(@"i=3, j=4");
@@ -59,17 +53,25 @@
 }
 
 - (void)passArrayByReferenceSetup {
-    NSArray *array = @[@-2, @1, @-3, @4, @-1, @2, @1, @-5, @4];
-    [self passArrayByReference:&array];
-    NSLog(@"New array after pass by reference: %@", array);
+    // If want to pass by reference, should pass NSMutableArray instead
+    NSArray *array1 = @[@1, @2];
+    NSMutableArray *array2 = [NSMutableArray arrayWithObjects:@1, @2, @3, nil];
+    [self passArrayByReference:&array1 mutable:array2];
+    NSLog(@"Array1 after pass by reference: %@", array1);
+    NSLog(@"Array2 after changed in method: %@", array2);
+}
+
+- (void)passArrayByReference:(NSArray **)array mutable:(NSMutableArray *)array2 {
+//    NSLog(@"Original array: %@", *array);
+    NSArray *newArray = @[@1, @2, @3];
+    *array = newArray;
+    [array2 addObject:@(4)];
 }
 
 - (void)setup {
     /*
      For array problems or anything that needs to sum up lots of number, becareful about int overflow or divided by zero
      */
-    
-    
 //    NSArray *array = @[@3, @0, @-1, @4, @5, @0, @2, @0];
 //    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[array mutableCopy]]);
 //    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[NSMutableArray arrayWithObject:@0]]);
@@ -77,7 +79,7 @@
 //    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[NSMutableArray arrayWithObjects:@0, @2, @2, @5, @0, nil]]);
 //    NSLog(@"moveZerosToStart: %@", [array moveZerosToStart:[NSMutableArray arrayWithObjects:@0, @2, @2, @5, @0, nil]]);
 
-//    [self passArrayByReferenceSetup];
+    [self passArrayByReferenceSetup];
 //
 //    [self maximumContinousSumSetup];
 //
@@ -115,7 +117,7 @@
     
 //    [self compressRepeatNumberSetup];
     
-    [self compressConsecutiveNumbersSetup];
+//    [self compressConsecutiveNumbersSetup];
 }
 
 - (void)binarySearchSetup {

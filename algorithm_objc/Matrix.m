@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, Dir) {
  */
 
 - (void)setup {
-    [self longestSequenceSumSetup];
+//    [self longestSequenceSumSetup];
 //    [self uniquePathsSetup];
 //    [self pathInMatrixSetup];
 //    [self countObjectsInBitmapSetup];
@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, Dir) {
 //    [self squareCountSetup];
 //    [self connectedComponentsSetup];
 //    [self isWordExistSetup];
+    [self islandCountSetup];
 }
 
 - (void)squareCountSetup {
@@ -70,6 +71,70 @@ typedef NS_ENUM(NSInteger, Dir) {
                @1, @1, @1,
                @1, @1, @1,];
     NSLog(@"Square count should be 0: %d", [self totalSquareCount:matrix]);
+}
+
+- (void)islandCountSetup {
+    // Use nested NSArray for 2-dimensional arrays
+    NSArray<NSArray *> *map1 = @[@[@1,@1,@0,@0],
+                                 @[@0,@0,@1,@0],
+                                 @[@1,@0,@1,@1],
+                                 @[@0,@0,@0,@1]];
+    NSLog(@"Island count should be 3: %ld", [self islandCount:map1]);
+    
+    NSArray<NSArray *> *map2 = @[@[@1,@1,@0,@0],
+                                 @[@0,@0,@1,@0],
+                                 @[@0,@1,@0,@1],
+                                 @[@1,@1,@0,@1]];
+    NSLog(@"Island count should be 4: %ld", [self islandCount:map2]);
+    
+    NSArray<NSArray *> *map3 = @[@[@0,@1,@0,@0],
+                                 @[@0,@1,@1,@0],
+                                 @[@1,@1,@0,@1],
+                                 @[@1,@1,@0,@1]];
+    NSLog(@"Island count should be 2: %ld", [self islandCount:map3]);
+}
+
+/*
+ Nest Lab, 5/7/18
+ */
+- (NSInteger)islandCount:(NSArray<NSArray *> *)map {
+    NSInteger count = 0;
+    NSMutableSet *visited = [NSMutableSet new];
+    for (NSInteger row = 0; row < map.count; row++) {
+        for (NSInteger col = 0; col < map[row].count; col++) {
+            NSString *location = [NSString stringWithFormat:@"%ld,%ld", row, col];
+            if (![visited containsObject:location] && [map[row][col] isEqualToNumber:@1]) {
+                [self traverseMap:map visited:visited row:row col:col];
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+/*
+ For islands with only rectangular shape, traverse right and down is sufficient
+ For islands with any shape except diagonal, need to traverse left and check for visit before traverse to avoid loop
+ Didn't clarify the island shape during interview and assume it's always rectangle
+ */
+- (void)traverseMap:(NSArray<NSArray *> *)map visited:(NSMutableSet *)visited row:(NSInteger)row col:(NSInteger)col {
+    // If location is out of bounds from the map, return
+    if (row < 0 || row >= map.count || col < 0 || col >= map[row].count) {
+        return;
+    }
+    // If location is ocean, return
+    if ([map[row][col] isEqualToNumber:@0]) {
+        return;
+    }
+    // Location is land, but if already visited, return
+    NSString *location = [NSString stringWithFormat:@"%ld,%ld", row, col];
+    if ([visited containsObject:location]) {
+        return;
+    }
+    [visited addObject:location];
+    [self traverseMap:map visited:visited row:row+1 col:col];
+    [self traverseMap:map visited:visited row:row col:col+1];
+    [self traverseMap:map visited:visited row:row col:col-1];
 }
 
 /*

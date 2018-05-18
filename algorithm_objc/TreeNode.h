@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) TreeNode *left;
 @property (nonatomic, strong) TreeNode *right;
+@property (nonatomic, strong) NSArray *nodes;
 @property (nonatomic, strong) id value;
 
 typedef enum {

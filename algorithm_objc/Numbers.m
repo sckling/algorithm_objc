@@ -34,7 +34,60 @@
 //    [self convertStringToNumberSetup];
 //    [self parseIntToStringSetup];
 //    [self moveZeroesToEndSetup];
-    [self setupPrintWordsFromPhoneNumber];
+//    [self setupPrintWordsFromPhoneNumber];
+    [self addNumbersSetup];
+}
+
+- (void)addNumbersSetup {
+    NSString *n1 = @"101";
+    NSString *n2 = @"100";
+    NSLog(@"Sume of %@ & %@ = %@", n1, n2, [self addNumbers:n1 number:n2 base:2]);
+    
+    n1 = @"10111";
+    n2 = @"111";
+    NSLog(@"Sum of %@ & %@ = %@", n1, n2, [self addNumbers:n1 number:n2 base:2]);
+    
+    n1 = @"11";
+    n2 = @"11";
+    NSLog(@"Sum of %@ & %@ = %@", n1, n2, [self addNumbers:n1 number:n2 base:2]);
+    
+    n1 = @"25";
+    n2 = @"1996";
+    NSLog(@"Sum of %@ & %@ = %@", n1, n2, [self addNumbers:n1 number:n2 base:10]);
+    
+    n1 = @"999";
+    n2 = @"9999";
+    NSLog(@"Sum of %@ & %@ = %@", n1, n2, [self addNumbers:n1 number:n2 base:10]);
+}
+
+/*
+ 1. Numbers could be different length or empty
+ 2. Starts from right to left to the shorter number, add each digit and store overflow digit
+ 3. Easy messed up the index of n1 and n2 since they both start different from right
+ 4. When done, check for overflow digit and add it to the result string
+ */
+- (NSString *)addNumbers:(NSString *)n1 number:(NSString *)n2 base:(int)base {
+    NSString *result = [NSString new];
+    int current = 0;
+    int overflow = 0;
+    int i1 = (int)n1.length-1;
+    int i2 = (int)n2.length-1;
+    int start = i1 > i2 ? i1 : i2;
+    while (start>=0) {
+        int d1 = i1 < n1.length ? [n1 characterAtIndex:i1--] - '0' : 0;
+        int d2 = i2 < n2.length ? [n2 characterAtIndex:i2--] - '0' : 0;
+        // current = (d1+d2+overflow)%base; overflow = (int)((d1+d2+overflow)/base)
+        // (8+4)%10 = 2; (int)((8+4)/10) = 1
+        current = (d1 + d2 + overflow) % base;
+        overflow = (d1 + d2 + overflow) / base;
+//        NSLog(@"c:%d, o:%d", current, overflow);
+        result = [NSString stringWithFormat:@"%@%@", @(current), result];
+        start--;
+    }
+    if (overflow > 0) {
+        result = [NSString stringWithFormat:@"%@%@", @(overflow), result];
+    }
+    return result;
 }
 
 - (BOOL)isHappyNumber:(NSUInteger)number original:(NSUInteger)original {

@@ -25,6 +25,7 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
     
         NSLog(@"XOR: %d, %d, %d", 1^2^3^4, 1^2^2^3^4, (1^2^3^4)^(1^2^2^3^4));
+        // Use nested arrays for multi-dimensional arrays
         /*
          XOR two arrays of numbers to find out the duplicate
          1,2,  3,4
@@ -80,21 +81,19 @@ int main(int argc, const char * argv[]) {
 //        Matrix *matrix = [[Matrix alloc] init];
 //        [matrix setup];
         
-        // dfs iterative?
-        
 //        Numbers *numbers = [[Numbers alloc] init];
 //        [numbers setup];
 
-//        Array *array = [[Array alloc] init];
-//        [array setup];
+        Array *array = [[Array alloc] init];
+        [array setup];
+//        [array twoDimenionalArray];
+//        [array blockExecution];
+
         
 //        String *string = [[String alloc] init];
 //        [string setup];
 //        [string distanceBetweenTwoWordsSetup];
 //        [string filterWordSetup];
-        
-//        [array twoDimenionalArray];
-//        [array blockExecution];
         
 //        Recursion *recursion = [[Recursion alloc] init];
 //        [recursion setup];

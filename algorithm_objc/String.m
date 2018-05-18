@@ -26,7 +26,7 @@
 //    NSLog(@"P=3, %@", [self permutateBracketsIterative:3]);
     
 //    [self permutateString:@"abc"];
-    [self permutateString:@"all"];
+//    [self permutateString:@"all"];
     
 //    [self bracketPermutation:5];
 //    [self bracketPermutation:6];
@@ -47,7 +47,9 @@
     
 //    [self printStringWithValidBracketsSetup];
     
-    [self wordCountSetup];
+//    [self wordCountSetup];
+    
+    [self drawArcFromStringSetup];
 }
 
 // Apple
@@ -84,6 +86,56 @@
  return @(dec);
 }
 */
+
+- (void)drawArcFromStringSetup {
+    NSString *string = @"101110";
+    NSLog(@"%@, (0,0), (2,4)", string);
+    [self drawArcFromString:string];
+    
+    string = @"101111";
+    NSLog(@"%@, (0,0), (2,5)", string);
+    [self drawArcFromString:string];
+    
+    string = @"1";
+    NSLog(@"%@, (0,0)", string);
+    [self drawArcFromString:string];
+    
+    string = @"000";
+    NSLog(@"%@, (0,0), no drawing", string);
+    [self drawArcFromString:string];
+}
+
+/*
+ Facebook, 4/30/18
+ Input: streams of 1's and 0's
+ Ignore 0's. When there's a 1, call drawArc
+ For consecutive 1's, call drawArc one time from start to end
+ For example, 0,0,1,1,1,1 -> drawArc(2,5)
+ 
+ Algorithm:
+ Traverse the string and check if char if 1.
+ For the start 1, store the index
+ If the next character is 1, continue and increase index by 1
+ If the next character is 0, call drawArc(start, current)
+ */
+- (void)drawArcFromString:(NSString *)string {
+    int start = -1;
+    for (int i=0; i<string.length; i++) {
+        // Track start of a 1
+        if ([string characterAtIndex:i] == '1' && start == -1) {
+            start = i;
+        }
+        // Track end of a 1
+        else if ([string characterAtIndex:i] == '0' && start != -1) {
+            NSLog(@"%d, %d", start, i-1);
+            start = -1;
+        }
+    }
+    // Did thought about this part during interview. Hence a bug when the last character is 1 that it won't call out
+    if (start >=0) {
+        NSLog(@"%d, %d", start, (int)string.length-1);
+    }
+}
 
 - (void)delimiterMatchingSetup {
     NSString *string;
@@ -608,16 +660,62 @@
  */
 
 - (void)printStringWithValidBracketsSetup {
-    NSString *brackets = @"(a,(b+c)";
-    [self printStringWithValidBrackets:brackets];
-    brackets = @")(";
-    [self printStringWithValidBrackets:brackets];
-    brackets = @"(b+c):a)(end)";
-    [self printStringWithValidBrackets:brackets];
-    brackets = @"()";
-    [self printStringWithValidBrackets:brackets];
-    brackets = @"(())";
-    [self printStringWithValidBrackets:brackets];
+    NSString *string = @"(a,(b+c)";
+    NSLog(@"%@, valid: %@", string, [self stringWithValidBrackets:string]);
+    // [self printStringWithValidBrackets:string];
+
+    string = @")(";
+    NSLog(@"%@, valid: %@", string, [self stringWithValidBrackets:string]);
+    // [self printStringWithValidBrackets:string];
+    
+    string = @"(b+c):a)(end)";
+    NSLog(@"%@, valid: %@", string, [self stringWithValidBrackets:string]);
+    // [self printStringWithValidBrackets:string];
+    
+    string = @"()";
+    NSLog(@"%@, valid: %@", string, [self stringWithValidBrackets:string]);
+    // [self printStringWithValidBrackets:string];
+    
+    string = @"(())";
+    NSLog(@"%@, valid: %@", string, [self stringWithValidBrackets:string]);
+    // [self printStringWithValidBrackets:string];
+}
+
+/*
+ Case 1: a(b))(be) -> a(b)(be)
+ Case 2: (a(b) - Need to remove one (
+ Algorithm:
+ 1. Count every (
+ 2. For every ), check if there's ( in stack. If yes, subtract ( count and add ) to string; if no, skip it.
+ 3. When first traverse is done, if count==0, return string
+ 4. If count > 0, traverse the string and remove all the ( till count reaches to zero.
+ */
+- (NSString *)stringWithValidBrackets:(NSString *)string {
+    NSString *valid = [NSMutableString new];
+    NSInteger brackets = 0;
+    for (NSUInteger i = 0; i < string.length; i++) {
+        unichar c = [string characterAtIndex:i];
+        if (c == ')' && brackets <= 0) {
+            continue;
+        }
+        if (c == '(') {
+            brackets++;
+        }
+        else if (c == ')') {
+            brackets--;
+        }
+        valid = [valid stringByAppendingString:[NSString stringWithFormat:@"%c", c]];
+    }
+    NSUInteger i=0;
+    while (brackets > 0 && i < valid.length) {
+        unichar c = [string characterAtIndex:i];
+        if (c == '(') {
+            valid = [valid stringByReplacingCharactersInRange:NSMakeRange(i, 1) withString:@""];
+            brackets--;
+        }
+        i++;
+    }
+    return valid;
 }
 
 - (void)printStringWithValidBrackets:(NSString *)string {

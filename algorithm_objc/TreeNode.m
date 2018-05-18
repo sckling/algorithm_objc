@@ -87,6 +87,33 @@
     }
 }
 
+- (BOOL)areTreesEqual:(TreeNode *)r1 tree:(TreeNode *)r2 {
+    if (r1 == nil && r2 == nil) {
+        return YES;
+    }
+    NSMutableArray *q1 = [NSMutableArray new];
+    NSMutableArray *q2 = [NSMutableArray new];
+    [q1 addObject:r1];
+    [q2 addObject:r2];
+    while (q1.count > 0 && q2.count > 0) {
+        TreeNode *n1 = [q1 firstObject];
+        TreeNode *n2 = [q2 firstObject];
+        [q1 removeObject:n1];
+        [q2 removeObject:n2];
+        // Check if both nodes are same class
+        if (![q1.className isEqualToString:q2.className]) {
+            return NO;
+        }
+        // Check if both nodes have same size of child nodes
+        if (n1.nodes.count != n2.nodes.count) {
+            return NO;
+        }
+        [q1 addObjectsFromArray:n1.nodes];
+        [q2 addObjectsFromArray:n2.nodes];
+    }
+    return YES;
+}
+
 // Can pass only numbmer and subtract that until reaches to zero
 // Time complexity O(n), n=number of tree nodes
 // Need to take care of edge case like node is nil or single node
