@@ -49,7 +49,248 @@
     
 //    [self wordCountSetup];
     
-    [self drawArcFromStringSetup];
+//    [self drawArcFromStringSetup];
+    
+//    [self longestSubstringWithTwoUniqueCharactersSetup];
+    
+//    [self longestSubstringWithUniqueCharactersSetup];
+    
+    [self removeDuplicateLettersSetup];
+}
+
+- (void)removeDuplicateLettersSetup {
+    NSString *string = @"combat";
+    NSLog(@"%@ -> %@", string, [self removeDuplicateLetters:string]);
+    string = @"hello";
+    NSLog(@"%@ -> %@", string, [self removeDuplicateLetters:string]);
+    string = @"Mississippi";
+    NSLog(@"%@ -> %@", string, [self removeDuplicateLetters:string]);
+    string = @"aaaaa";
+    NSLog(@"%@ -> %@", string, [self removeDuplicateLetters:string]);
+}
+
+/*
+ Edge cases: No duplicates, only duplicates, empty string
+ combat -> combat
+ hello -> helo
+ Algorithm:
+ 1. Create an NSMutableSet to store characters. Alernatively, use an array (a=0, b=1, etc). Make sure to agree on the size and init the value. Otherwise crash.
+ 2. For each char, check if existing
+ 3. If not, add to the set and add to the new string
+ 4. Otherwise, skip to next char
+ 
+ Example: h,e,l,l(exist, skip),o
+ M,i,s,s(skp),i(skp),s(skp),s(skp),i(skp),p,p(skp),i(skp)
+ Runtime O(n)
+ Space: O(26) for the set and O(2n) for 2 strings => O(n)
+ */
+- (NSString *)removeDuplicateLetters:(NSString *)string {
+    NSMutableSet *set = [NSMutableSet new];
+    NSString *newString = [NSString new];
+    NSString *c = [NSString new];
+    for (int i=0; i<string.length; i++) {
+        c = [NSString stringWithFormat:@"%c", [string characterAtIndex:i]];
+        if (![set containsObject:c]) {
+            [set addObject:c];
+            newString = [newString stringByAppendingString:c];
+        }
+    }
+    return newString;
+}
+
+/*
+ Longest Common Substring
+ Given two strings ‘X’ and ‘Y’, find the length of the longest common substring.
+ 
+ Input: x = "GeekforGeeks", y = "GeeksQuiz"
+ Output : "Geeks", length 5.
+ 
+ Input : X = "abcdxyz", y = "xyzabcd"
+ Output : "abcd", length 4.
+ 
+ Input : X = "zxabcdezy", y = "yzabcdezx"
+ Output : "abcdez", length 6.
+ 
+ Algorithm:
+ Brute force:
+ For each substring in X, find every matched char in Y and compare length until unmatched
+ eg. g: geeks, e: [eeks], e: eks, k: ks, s...
+ Time complexity =  O(m^2*n), m=lenght of x, n=lenght of y; print all substring in X = O(m^2)
+ 
+ Optimal solution:
+ Use a matrix to store the length of 
+ For each char in X, check if it's in the hash table
+ If yes, remove the value from hash and start traverse from the index.
+ For each matc
+ 
+ 
+ */
+
+- (void)longestCommonSubstringSetup {
+    NSString *x = @"GeeksforGeeks";
+    NSString *y = @"GeeksQuiz";
+//    NSLog(@"LCS = %@");
+    
+    x = @"abcdxyz";
+    y = @"xyzabcd";
+    
+    x = @"zxabcdezy";
+    y = @"yzabcdezx";
+    
+    // No LCS:
+    x = @"abcd";
+    y = @"xyz";
+    
+    // Empty string
+    x = @"abc";
+    y = @"";
+}
+
+
+
+
+/*
+ Given a string, find the longest substring which contains 2 unique characters.
+ For example, "abcbbbbcccbdddadacb" => "bcbbbbcccb"
+ 
+ Clarifications:
+ 1. Return the longest substring or just the lenght? The substring
+ 2. What to return if no substring meets the requirement? Return nil
+ 
+ Algorithm:
+ 1. Use 2 vars - start and end to record the substring index
+ 2. Traverse linearly. For each new substring, use NSSet to store the character sets
+ 3. For each char, check if check if char exists in the set
+ 4. If yes, continue.
+ 5. If not, check if set size <=2. Yes->add it to set; No->calculate size of substring and reset start=end and end=start+1, and reset set
+ 6. Continue until end == string.length. Careful to handle end of string or string with 0 or 1 character
+ 
+ Run time = O(n), Space = O(1)
+ 
+ Edge cases:
+ 1. Empty string or no substring exists with 2 unique characters:  abcdefg -> returns nil
+ 2. String with only 1 character: aaaaaaa
+ */
+
+- (void)longestSubstringWithTwoUniqueCharactersSetup {
+    NSString *string = @"abcbbbbcccbdddadacb";
+    NSLog(@"Longest substrings: %@, %@", string, [self longestSubstringWithTwoUniqueCharacters:string]);
+    string = @"abbbecbbbbcccbdddadacb";
+    NSLog(@"Longest substrings: %@, %@", string, [self longestSubstringWithTwoUniqueCharacters:string]);
+    string = @"aabbb";
+    NSLog(@"Longest substrings: %@, %@", string, [self longestSubstringWithTwoUniqueCharacters:string]);
+    string = @"aaaaaaaaa";
+    NSLog(@"Longest substrings: %@, %@", string, [self longestSubstringWithTwoUniqueCharacters:string]);
+}
+
+- (NSString *)longestSubstringWithTwoUniqueCharacters:(NSString *)string {
+    if (string.length <= 2) {
+        return string;
+    }
+    NSMutableSet *set = [NSMutableSet new];
+    int numberOfUniqueChar = 2;
+    int first = 0;
+    int second = 0;
+    int maxSoFar = 0;
+    char prev = [string characterAtIndex:0];
+    char curr = 0;
+    [set addObject:[NSString stringWithFormat:@"%c", prev]];
+    NSString *sub = nil;
+    for (int i=1; i<string.length; i++) {
+        curr = [string characterAtIndex:i];
+        // A bug here if the string is aaaaaaa and it'll return nil. Is this expected?
+        // Fixed at the return line.
+        if (curr != prev) {
+            // Still within 2 or less unique characters or char exists in set
+            if ([set containsObject:[NSString stringWithFormat:@"%c", curr]]
+                || (![set containsObject:[NSString stringWithFormat:@"%c", curr]] && set.count < numberOfUniqueChar)) {
+                [set addObject:[NSString stringWithFormat:@"%c", curr]];
+            }
+            // End of a substring. Need the third unique character to trigger this statement
+            else {
+                if (i-first > maxSoFar) {
+                    maxSoFar = i-first;
+                    sub = [string substringWithRange:NSMakeRange(first, i-first)];
+                    NSLog(@"sub: %d %@", i, sub);
+                }
+                [set removeAllObjects];
+                [set addObject:[NSString stringWithFormat:@"%c", prev]];
+                [set addObject:[NSString stringWithFormat:@"%c", curr]];
+                // Another bug here that if the next character is unique again, second never got changed. eg: aabbbec
+                // Fixed it by update second every time when there's a character change
+                first = second;
+            }
+        }
+        second = i;
+        prev = curr;
+    }
+    return sub == nil ? string : sub;
+}
+
+- (void)longestSubstringWithUniqueCharactersSetup {
+    NSString *string = @"geeksforgeeks";
+    NSLog(@"%@=7, actual: %ld", string, [self longestSubstringWithUniqueCharacters:string]);
+    string = @"abcabcbb";
+    NSLog(@"%@=3, actual: %ld", string, [self longestSubstringWithUniqueCharacters:string]);
+    string = @"bbbbb";
+    NSLog(@"%@=1, actual: %ld", string, [self longestSubstringWithUniqueCharacters:string]);
+    string = @"pwwkew";
+    NSLog(@"%@=3, actual: %ld", string, [self longestSubstringWithUniqueCharacters:string]);
+    string = @"a";
+    NSLog(@"%@=1, actual: %ld", string, [self longestSubstringWithUniqueCharacters:string]);
+    string = @"ab";
+    NSLog(@"%@=2, actual: %ld", string, [self longestSubstringWithUniqueCharacters:string]);
+}
+
+/*
+ Algorithm:
+ 1. Use a start index to store the start of a substring. start=0
+ 2. Use a dictionary to store character and it's index
+ 3. For each char, compare to the dict.
+ 4. If exist, do the following:
+    - Check if the existing index is smaller than start index. If yes, it's from previous substring
+    - Else calculate the length from start to current index and store to max if length is greater.
+    - Replace start with the index+1 of the matched char in dict.
+ 5. Replace the char with updated index
+ 
+ Runtime = O(n)
+ */
+
+- (NSInteger)longestSubstringWithUniqueCharacters:(NSString *)string {
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    NSInteger start = 0;
+    NSInteger max = 0;
+    
+    for (int i=0; i<string.length; i++) {
+        NSString *curr = [NSString stringWithFormat:@"%c", [string characterAtIndex:i]];
+        if (dict[curr]) {
+            // the repeated location could be from previous, so we only need to update if it's after the start
+            start = MAX(start, [dict[curr] integerValue]+1);
+        }
+        dict[curr] = @(i);
+        max = MAX(max, i-start+1);
+    }
+    return max;
+}
+
+- (NSInteger)subStringLength:(NSString *)string dict:(NSMutableDictionary *)dict start:(NSInteger)start idx:(NSInteger)idx {
+    NSString *curr = [NSString stringWithFormat:@"%c", [string characterAtIndex:idx]];
+    // If char is unique
+    if (![dict doesContain:curr]) {
+        dict[curr] = @(idx);
+    }
+    else {
+        NSInteger prev = [dict[curr] integerValue];
+        // If char is still unique
+        if (prev < start) {
+            dict[curr] = @(idx);
+        }
+        // If char is not unique
+        else {
+            start = prev+1;
+        }
+    }
+    return idx-start;
 }
 
 // Apple

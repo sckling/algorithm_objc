@@ -31,11 +31,12 @@
 
 //    [self printPhoneNumberWords];
 //    [self isNumberSetup];
-//    [self convertStringToNumberSetup];
+    [self convertStringToNumberSetup];
 //    [self parseIntToStringSetup];
 //    [self moveZeroesToEndSetup];
 //    [self setupPrintWordsFromPhoneNumber];
-    [self addNumbersSetup];
+//    [self addNumbersSetup];
+//    [self extractDigits];
 }
 
 - (void)addNumbersSetup {
@@ -276,16 +277,17 @@ PQRS  TUV   WXYZ
     int number = 12345;
     while (number != 0) {
         int digit = fmod(number, 10.0);
-        number = (number*10.0) - (int)(number*10.0);
+//        number = (number*10.0) - (int)(number*10.0);
         number = number / 10;
         NSLog(@"%d, %d", digit, number);
     }
-    double num = 0.2045;
-    while (num != 0) {
-        int d = fmod(num*10, 10);
-        num = (num*10.0) - d;
-        NSLog(@"%d, %.5f", d, num);
-    }
+    
+//    double num = 0.2045;
+//    while (num != 0) {
+//        int d = fmod(num*10, 10);
+//        num = (num*10.0) - d;
+//        NSLog(@"%d, %.5f", d, num);
+//    }
     number = 10;
     NSLog(@"f: %.2f", [self getFactor:number]);
     number = 101;
@@ -295,8 +297,13 @@ PQRS  TUV   WXYZ
     number = 1022340;
     NSLog(@"f: %.2f", [self getFactor:number]);
     
+    // Digit = numbers of significant. 1,022,340 = 7
     double digits = [self getFactor:number];
     while (digits > 0) {
+//        123 % 10 = 3
+//        223 % 100 = 23
+        // 10^6 = 1,000,000
+        // 567 - 567 % 100 = 567 - 67 = 500 => 500 / 100 = 5
         int d = (number - fmod(number, pow(10, digits-1))) / pow(10, digits-1);
         number = number - pow(10, digits-1) * d;
         NSLog(@"d: %d n: %d, f:%.2f", d, number, digits--);
@@ -374,30 +381,62 @@ PQRS  TUV   WXYZ
 }
 
 - (NSInteger)convertStringToNumber:(NSString *)string {
+    // Return 0 for an emopty string
     if (string == nil || string.length == 0) {
         return 0;
     }
+    // Extract the first char to look for +/-
+    // Assume string can contain non-numeric characters. Return 0 if that's the case
     unichar sign = [string characterAtIndex:0];
     int start = 0;
-    if (sign == '+' || sign == '-') {
+    NSInteger num = 0;
+    if (sign == '-' || sign == '+') {
         start = 1;
     }
-    NSInteger number = 0;
+    /*
+     - Traverse from left to right
+     - For each char, num*10+current digit
+     12345
+     0*1+1=1
+     1*10+2=12
+     12*10+3=123
+     */
     for (int i=start; i<string.length; i++) {
-        unichar letter = [string characterAtIndex:i];
-        if (letter<'0' || letter>'9') {
+        unichar c = [string characterAtIndex:i];
+        if (c < '0' || c > '9') {
             return 0;
         }
-        else {
-            NSInteger digit = letter - '0';
-            // 0*10+1=1
-            // 1*10+2=12
-            // 12*10+3=123
-            number = number * 10 + digit;
-        }
+        num = num * 10 + (c-'0');
     }
-    return sign == '-' ? -number : number;
+    return sign == '-' ? -num : num;
 }
+
+
+//- (NSInteger)convertStringToNumber:(NSString *)string {
+//    if (string == nil || string.length == 0) {
+//        return 0;
+//    }
+//    unichar sign = [string characterAtIndex:0];
+//    int start = 0;
+//    if (sign == '+' || sign == '-') {
+//        start = 1;
+//    }
+//    NSInteger number = 0;
+//    for (int i=start; i<string.length; i++) {
+//        unichar letter = [string characterAtIndex:i];
+//        if (letter<'0' || letter>'9') {
+//            return 0;
+//        }
+//        else {
+//            NSInteger digit = letter - '0';
+//            // 0*10+1=1
+//            // 1*10+2=12
+//            // 12*10+3=123
+//            number = number * 10 + digit;
+//        }
+//    }
+//    return sign == '-' ? -number : number;
+//}
 
 - (void)isNumberSetup {
     //Not numbers:

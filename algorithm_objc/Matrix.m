@@ -23,6 +23,33 @@ typedef NS_ENUM(NSInteger, Dir) {
 };
 
 /*
+ Map colors or island counts problema and genenral 2D matrix problems
+ 
+ Color map question
+ 1. Data structure? 2D array
+ 2. Value in array? UIColor or color enum or int
+ 3. Dimension? MxN
+ 4. Blank cell? Yes
+ 5. Edge cases: no color, size=0, size=1, super large size, or equal amount of color cells, overflow.
+ 
+ Algorithm:
+ 1. Created a blank visited array that mirror the size of the grid. This is a junior approach and could be red flag. A hash map is better because of time and space complexity. Keys could be string "x,y" or float "x.y". Need to talk about namespace collision.
+ 2. If modification of original matrix is allowed, can simply change value of visited cell.
+ 3. Traverse each cell and if it's not been visited, start traversal from it
+ 4. For a single cell location, initiate a DFS:  pass the x, y, color and count. Iterative vs Recursive; proper count
+ Stack overflow from recursion because recursion uses stack space and maybe machine will run out of stack space (let's say 10k stacks). Good to ask how big the grid will be and estimate if it can fit in stack space when using recursion.
+ Iteration has no limit on stack space and can use as much as the memory space available on the machine. Use stack or queue to push the cell's 4 neighbors to it and pop when done.
+ 5. Return count if one of the following conditions met:
+ - At grid boundary: 0<=x<=row, 0<=y<=col
+ - Color doesn't match previous cell
+ - Already visited
+ 6. Else mark current cell as visit and traverse to all direction: x+1,y; x-1,y; x,y+1; x,y-1
+ 7. For each return count, compare to the current max value and update if greater then it.
+ 8. Write a helper method to do bounce check to make the code cleaner
+ 9. Try to do time and space complexity analysis and trade-offs before coding instead of after.
+ */
+
+/*
  Adjacency matrix:
  4 nodes: 0-1 2
           | |

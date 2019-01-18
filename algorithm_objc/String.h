@@ -18,4 +18,6 @@
 
 - (void)distanceBetweenTwoWordsSetup;
 
+- (void)removeDuplicateLettersSetup;
+
 @end

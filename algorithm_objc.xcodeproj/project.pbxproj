@@ -28,6 +28,7 @@
 		19D2E3321DC11F050056073E /* Vertex.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D2E3311DC11F050056073E /* Vertex.m */; };
 		19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E41BD1F772004F31AF /* EdgeNode.m */; };
 		19F696E81BD1F84D004F31AF /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E71BD1F84D004F31AF /* Graph.m */; };
+		4349ED3F21BB364A00DD6BF8 /* NotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4349ED3E21BB364A00DD6BF8 /* NotificationCenter.m */; };
 		43927F1920672B8F007EE991 /* Trie.m in Sources */ = {isa = PBXBuildFile; fileRef = 43927F1820672B8F007EE991 /* Trie.m */; };
 		43D5D9A22066F40D00C769BE /* TrieNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D5D9A12066F40D00C769BE /* TrieNode.m */; };
 		E41E2B1B1C2618A9008DD8B3 /* ArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E41E2B1A1C2618A9008DD8B3 /* ArrayTests.m */; };
@@ -91,6 +92,8 @@
 		19F696E41BD1F772004F31AF /* EdgeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeNode.m; sourceTree = "<group>"; };
 		19F696E61BD1F84D004F31AF /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
 		19F696E71BD1F84D004F31AF /* Graph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph.m; sourceTree = "<group>"; };
+		4349ED3D21BB364A00DD6BF8 /* NotificationCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationCenter.h; sourceTree = "<group>"; };
+		4349ED3E21BB364A00DD6BF8 /* NotificationCenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationCenter.m; sourceTree = "<group>"; };
 		43927F1720672B8F007EE991 /* Trie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Trie.h; sourceTree = "<group>"; };
 		43927F1820672B8F007EE991 /* Trie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Trie.m; sourceTree = "<group>"; };
 		43D5D9A02066F40D00C769BE /* TrieNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrieNode.h; sourceTree = "<group>"; };
@@ -168,6 +171,8 @@
 			children = (
 				191B128E1E00FF9700AC38CC /* Block.h */,
 				191B128F1E00FF9700AC38CC /* Block.m */,
+				4349ED3D21BB364A00DD6BF8 /* NotificationCenter.h */,
+				4349ED3E21BB364A00DD6BF8 /* NotificationCenter.m */,
 				195E7DE01C7D54190085121E /* Matrix.h */,
 				195E7DE11C7D54190085121E /* Matrix.m */,
 				1901CC111CC06B2F00BECDE3 /* Recursion.h */,
@@ -379,6 +384,7 @@
 				1978EAE01DCA9A3E00DCDD0F /* BinarySearch.m in Sources */,
 				E4A908A41BCA1B3A00FA77B6 /* main.m in Sources */,
 				19463C451C824A3A0076ED00 /* String.m in Sources */,
+				4349ED3F21BB364A00DD6BF8 /* NotificationCenter.m in Sources */,
 				E42659DA1BCB1C67001B49C4 /* Array.m in Sources */,
 				19601AC21BF154E00096DA27 /* Member.m in Sources */,
 				19ACC4421CC59E9F00E2736E /* Numbers.m in Sources */,

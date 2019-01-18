@@ -21,16 +21,90 @@
 #import "Interval.h"
 #import "Trie.h"
 
+/*
+ Shortcuts:
+ NSMArray, NSMDict, NSMSet
+ s[i] => [s characterAtIndex:1]
+ substring?? [s substring:NSMakeRange(1,1)];
+ substringToIndex, substringFromIndex
+ Assume int/double can be manipulate as objects
+ NSCountedSet. Better to use dict and assume it can count directly
+ set[str].count
+ arr[i] = 3
+ dict[i] += 3
+ 
+ Sort values of dict, sort strings
+
+ 
+ */
+
+/*
+ You are given a list, containg english language words. Please design a function that takes a word and returns all possible anagrams.
+ An anagram is defined as a rearrangement of the given word that is a valid english word.
+ 
+ eye => eye
+ on => no, on
+ ton => not, ton,
+ saint => stain, saint
+ emit => item, mite, time, emit
+ 
+ 1. Given a static list of valid english words in list
+ 2. lenght of word = m, O(m) traverse all letters and convert it into a set
+ 3. length of list = n, O(n*m)
+ 4. O(m+m*n) = O(m*n)
+ 
+ i,t,e,m => set
+ m,i,t,e => set
+ 
+ key: set(i,t,e,m), value: item, mite
+ */
+NSSet *convertStringToSet(NSString *s) {
+    NSMutableSet *set = [NSMutableSet new];
+    for (int i=0; i<s.length; i++) {
+        // [set addObject:[NSString stringWithFormat:@"%c", [s characterAtIndex:i]]];
+        // Convert ASCII to NSNumber instead of string
+        [set addObject:@([s characterAtIndex:i])];
+    }
+    return [set copy];
+}
+
+NSArray *anagramCheck(NSArray *words, NSString *word) {
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    NSSet *set = [NSSet new];
+    for (NSString *s in words) {
+        // Alternatively, can use an array with 26 elements to represent counts of each character
+        // Can also sort each string by characters but run time is n*log(n)
+        set = convertStringToSet(s);
+        if (!dict[set]) {
+            dict[set] = [NSMutableArray new];
+        }
+        [dict[set] addObject:s];
+    }
+    return [dict[convertStringToSet(word)] copy];
+}
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-    
-        NSLog(@"XOR: %d, %d, %d", 1^2^3^4, 1^2^2^3^4, (1^2^3^4)^(1^2^2^3^4));
+        NSArray *a = @[@"on", @"no", @"bye"];
+        NSLog(@"anagram 'on': %@", anagramCheck(a, @"on"));
+        a = @[@"ton", @"item", @"mite", @"bye"];
+        NSLog(@"anagram 'item': %@", anagramCheck(a, @"item"));
+        a = @[@"ton", @"item", @"mite", @"bye"];
+        NSLog(@"anagram no match: %@", anagramCheck(a, @"something"));
+        
         // Use nested arrays for multi-dimensional arrays
+        // Design and code a task scheduler that can take unsynchronized or synchronized tasks.
+        // Google iOS: Design an image browsing app
+        // Big O of n*(n-1)*(n-2)*(n-3)... = n*(n+1)/2
+        
         /*
+         NSLog(@"XOR: %d, %d, %d", 4^2^3^4^3, 1^2^2^3^4, (1^2^3^4)^(1^2^2^3^4));
          XOR two arrays of numbers to find out the duplicate
          1,2,  3,4
          1,2,2,3,4
          XOR first and second set and XOR both set. The duplicate will be the answer.
+         XOR is commutative (can change order of numbers) a*b=b*a
+         and associative (doesn't matter how the numbers are grouped by parentheses): (a+b)+c=a+(b+c)
          */
         /*
          Review:
@@ -84,14 +158,14 @@ int main(int argc, const char * argv[]) {
 //        Numbers *numbers = [[Numbers alloc] init];
 //        [numbers setup];
 
-        Array *array = [[Array alloc] init];
-        [array setup];
+//        Array *array = [[Array alloc] init];
+//        [array setup];
 //        [array twoDimenionalArray];
 //        [array blockExecution];
 
         
-//        String *string = [[String alloc] init];
-//        [string setup];
+        String *string = [[String alloc] init];
+        [string setup];
 //        [string distanceBetweenTwoWordsSetup];
 //        [string filterWordSetup];
         
