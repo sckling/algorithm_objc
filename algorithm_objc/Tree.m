@@ -56,6 +56,14 @@
     //NSArray *array = @[@"c", @"b", @"f"];
     NSArray *array = @[@20, @8, @4, @12, @10, @14, @22, @99, @90, @80, @95];
     TreeNode *root = [self createBinarySearchTree:array];
+    [root breadthFirstTraverseByLevelSingleQueue:root];
+    NSString *serialize = [root serialize:root];
+//    NSString *serialize = [root serializeBFS:root];
+    NSLog(@"Serialize: %@", serialize);
+//    TreeNode *new = [root deserializeBFS:serialize];
+    TreeNode *new = [root deserialize:serialize];
+    [new breadthFirstTraverseByLevelSingleQueue:new];
+    
 //    NSLog(@"Path to sum 32: %d", [root pathEqualToSum:root sum:32]);
 //    NSLog(@"Path to sum 40: %d", [root pathEqualToSum:root sum:40]);
 //    NSLog(@"Path to sum 54: %d", [root pathEqualToSum:root sum:54]);
@@ -67,7 +75,12 @@
 //    }];
     
 //    NSLog(@"Depth of tree: %ld", [root depthOfTree:root]);
-//    NSLog(@"Largest number: %lu", [root secondLargestInteger:root]);
+	TreeNode *t = [root largestNodeInBST:root];
+	NSLog(@"Largest node in BST: %@", t.value);
+	
+	t = [root secondLargestNodeInBST:root parent:nil];
+	NSLog(@"Second largest node in BST: %@", t.value);
+	
 //    [root checkBST:root];
 //    NSLog(@"Diameter of tree: %d", [root diameterOfTree:root]);
     
@@ -76,9 +89,9 @@
 //    value = 92;
 //    printf("Largest value smaller than %ld: %ld\n", value, [[root largestValue2:root value:value].value integerValue]);
     
-    [root breadthFirstTraverseByLevelSingleQueue:root];
-    [root reverseTree:root];
-    [root breadthFirstTraverseByLevelSingleQueue:root];
+//    [root breadthFirstTraverseByLevelSingleQueue:root];
+//    [root reverseTree:root];
+//    [root breadthFirstTraverseByLevelSingleQueue:root];
     
 //    NSMutableArray *path = [NSMutableArray arrayWithCapacity:array.count];
 //    [root allPathsOfTree:root path:path];

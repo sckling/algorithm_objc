@@ -19,11 +19,52 @@
     [self insert:@"hello"];
     [self insert:@"holla"];
     [self insert:@"help"];
-    [self printAllWords:self.root word:[NSString new]];
-    NSLog(@"Found? %d", [self search:@"hello"]);
-    NSLog(@"Found? %d", [self search:@"holla"]);
-    NSLog(@"Found? %d", [self search:@"holle"]);
-    NSLog(@"Found? %d", [self search:@"hel"]);
+//    [self printAllWords:self.root word:[NSString new]];
+//    NSLog(@"Found? %d", [self search:@"hello"]);
+//    NSLog(@"Found? %d", [self search:@"holla"]);
+//    NSLog(@"Found? %d", [self search:@"holle"]);
+//    NSLog(@"Found? %d", [self search:@"hel"]);
+    
+    [self searchSuggestions:@"h"];
+    [self searchSuggestions:@"hell"];
+}
+
+/*
+  Naive solution is to compare each word in dictionary and see if it matches the prefix
+  Runtime O(n), however, you need to compare every word even though only there's a single match.
+  Trie is the best data structure than dictionary since we only evaluate words that match the preifx.
+  While it's still O(n) if all words match prefix, average runtime is a lot faster.
+ */
+- (void)searchSuggestions:(NSString *)prefix {
+    NSString *word = [NSString new];
+    // Traverse each letter of the keyword
+    TrieNode *n = self.root;
+    for (int i=0; i<prefix.length; i++) {
+        // Search for matched match in current node.children
+        NSString *letter = [NSString stringWithFormat:@"%c", [prefix characterAtIndex:i]];
+        if (n.children[letter]) {
+            // Store each matched letter into a string
+            word = [word stringByAppendingString:letter];
+            n = n.children[letter];
+        }
+    }
+    // Found the last node that contains all matched letters. Need to print all words of its children
+    [self printWords:n word:word];
+}
+
+- (void)printWords:(TrieNode *)node word:(NSString *)word {
+    if (!node) {
+        return;
+    }
+    if (node.isEndOfWord) {
+        printf("%s\n", [word UTF8String]);
+    }
+    NSArray *letters = node.children.allKeys;
+    for (NSString *letter in letters) {
+        word = [word stringByAppendingString:letter];
+        [self printWords:node.children[letter] word:word];
+        word = [word substringToIndex:word.length-1];
+    }
 }
 
 - (void)insert:(NSString *)word {

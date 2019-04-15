@@ -115,7 +115,7 @@
     while ([self hasParent:index] && [self.heap[parentIndex] isGreaterThan:self.heap[index]]) {
         [self.heap exchangeObjectAtIndex:parentIndex withObjectAtIndex:index];
         index = parentIndex;
-        parentIndex = parentIndex;
+        parentIndex = [self parentIndex:index];
     }
 }
 

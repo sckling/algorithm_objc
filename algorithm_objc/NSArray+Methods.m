@@ -10,39 +10,6 @@
 
 @implementation NSArray (Methods)
 
-- (void)findPairsOfElementsEqualToSum:(NSUInteger)sum {
-    NSMutableDictionary *dict = [NSMutableDictionary new];
-    for (int i=0; i<self.count; i++) {
-        if (dict[self[i]]) {
-            NSMutableArray *values = dict[self[i]];
-            NSNumber *value = [NSNumber numberWithInt:i];
-            [values addObject:value];
-            dict[self[i]] = values;
-        }
-        else {
-            NSMutableArray *values = [NSMutableArray new];
-            NSNumber *value = [NSNumber numberWithInt:i];
-            [values addObject:value];
-            dict[self[i]] = values;
-        }
-    }
-    for (NSNumber *key in [dict allKeys]) {
-        NSInteger pairValue = sum - [key integerValue];
-        NSNumber *counterValue = [NSNumber numberWithInteger:pairValue];
-        
-        if ([counterValue compare:key] == NSOrderedAscending || NSOrderedSame) {
-
-        }
-        
-        
-        if (dict[counterValue]) {
-            NSLog(@"Found pairs: %@, Position: %@, Counter values: %@, Position: %@", key, dict[key], counterValue, dict[counterValue]);
-            [dict removeObjectForKey:key];
-            [dict removeObjectForKey:counterValue];
-        }
-    }
-}
-
 - (NSInteger)binarySearch:(NSUInteger)start end:(NSUInteger)end number:(NSUInteger)number {
     if (start > end) {
         // key not found

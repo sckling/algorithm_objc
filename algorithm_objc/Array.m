@@ -21,37 +21,6 @@
 
 @implementation Array
 
-- (void)twoDimenionalArray {
-    int num1=3, num2=4;
-    NSLog(@"i=3, j=4");
-    //scanf("%d %d", &num1, &num2);
-    
-    NSMutableArray *arr = [NSMutableArray arrayWithCapacity:(num1*num2)];
-    // initialize it with 0s
-    for(int i=0; i < (num1*num2); i++) [arr addObject:@0];
-    
-    // replace 0s with something more interesting
-    for(int i=0; i < num1; i++) {
-        for(int j=0; j < num2; j++) {
-            arr[i*num2+j] = @(i+j*2);
-        }
-    }
-    // access a value: i*num2+j, where i,j are the indexes for the bidimensional array
-    // sam as arr[1][3]
-    //    j0 j1 j2 j3
-    // i0
-    // i1
-    // i2
-    NSLog(@"arr[1][3]: %@", arr[1*num2+3]);
-    NSLog(@"arr[2][1]: %@", arr[2*num2+1]);
-    for(int i=0; i < num1; i++) {
-        for(int j=0; j < num2; j++) {
-            printf("%i ", [arr[i*num2+j] intValue]);
-        }
-        printf("\n");
-    }
-}
-
 - (void)passArrayByReferenceSetup {
     // If want to pass by reference, should pass NSMutableArray instead
     NSArray *array1 = @[@1, @2];
@@ -70,7 +39,7 @@
 
 - (void)setup {
     /*
-     For array problems or anything that needs to sum up lots of number, becareful about int overflow or divided by zero
+     For array problems or anything that needs to sum up lots of number, be careful about int overflow or divided by zero
      */
 //    NSArray *array = @[@3, @0, @-1, @4, @5, @0, @2, @0];
 //    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[array mutableCopy]]);
@@ -79,7 +48,7 @@
 //    NSLog(@"moveZerosToStart: %@", [array moveZerosToStartUsingSwap:[NSMutableArray arrayWithObjects:@0, @2, @2, @5, @0, nil]]);
 //    NSLog(@"moveZerosToStart: %@", [array moveZerosToStart:[NSMutableArray arrayWithObjects:@0, @2, @2, @5, @0, nil]]);
 
-    [self passArrayByReferenceSetup];
+//    [self passArrayByReferenceSetup];
 //
 //    [self maximumContinousSumSetup];
 //
@@ -118,6 +87,262 @@
 //    [self compressRepeatNumberSetup];
     
 //    [self compressConsecutiveNumbersSetup];
+    
+//    [self findKthElementSetup];
+    
+//    [self lowestMissingPositiveIntegerSetup];
+    
+//    [self findMinInCircularArraySetup];
+    
+    [self findMaxNonAdjacentSumSetup];
+}
+
+- (void)findMaxNonAdjacentSumSetup {
+    NSArray *a = @[@2, @4, @6, @100, @5];
+    NSLog(@"Max=14, received: %d", [self findMaxNonAdjacentSum:a]);
+    
+    a = @[@5, @1, @1, @-5];
+    NSLog(@"Min=6, received: %d", [self findMaxNonAdjacentSum:a]);
+}
+
+- (int)findMaxNonAdjacentSum:(NSArray *)a {
+    NSMutableDictionary *cache = [NSMutableDictionary new];
+    int max = 0;
+    for (int i=0; i<a.count; i++) {
+        max = MAX(max, [self findMaxNonAdjacentSumRecurr:a cache:cache index:i]);
+    }
+    return max;
+}
+
+- (int)findMaxNonAdjacentSumRecurr:(NSArray *)a cache:(NSMutableDictionary *)cache index:(int)index {
+    if (index >= a.count) {
+        return 0;
+    }
+    if (cache[@(index)]) {
+        return [cache[@(index)] intValue];
+    }
+    int max = 0;
+    for (int i = index+2; i<a.count; i++) {
+        max = MAX(max, [self findMaxNonAdjacentSumRecurr:a cache:cache index:i]);
+    }
+    max += [a[index] intValue];
+    NSLog(@"max: %d, %d", index, max);
+    cache[@(index)] = @(max);
+    return max;
+}
+
+- (void)findMinInCircularArraySetup {
+    NSArray *a = @[@5, @6, @7, @8, @9, @2, @3];
+    NSLog(@"Min=2, received: %d", [self findMinInCircularArray:a]);
+    
+    a = @[@1, @2, @3, @4];
+    NSLog(@"Min=1, received: %d", [self findMinInCircularArray:a]);
+    
+    a = @[@2, @1];
+    NSLog(@"Min=1, received: %d", [self findMinInCircularArray:a]);
+    
+    a = @[@5, @6, @7, @8, @8, @8, @1, @1, @1, @2];
+    NSLog(@"Min=1, received: %d", [self findMinInCircularArray:a]);
+    
+    a = @[@9, @9];
+    NSLog(@"Min=1, received: %d", [self findMinInCircularArray:a]);
+}
+
+- (int)findMinInCircularArray:(NSArray *)a {
+    int low = 0;
+    int high = (int)a.count - 1;
+    while (high >= low) {
+        if (low == high) {
+            return [a[low] intValue];
+        }
+        int mid = low + (high-low)/2;
+        if (mid-1 >= 0 && [a[mid-1] isGreaterThan:a[mid]]) {
+            return [a[mid] intValue];
+        }
+        else if ([a[high] isLessThan:a[mid]]) {
+            low = mid+1;
+        }
+        else {
+            high = mid-1;
+        }
+    }
+    return [a[low] intValue];
+}
+
+//- (int)binarySearchInCircularArray:(NSArray *)a start:(int)s end:(int)e {
+//    if (s > e) {
+//        return [a[0] intValue];
+//    }
+//    if (s == e) {
+//        return [a[s] intValue];
+//    }
+//    int mid = s + (e-s)/2;
+//    if ([a[mid-1] isGreaterThan:a[mid]]) {
+//        return [self binarySearchInCircularArray:a start:s end:mid-1];
+//    }
+//    if ([a[mid-1] isGreaterThan:a[mid]]) {
+//        return [self binarySearchInCircularArray:a start:s end:mid-1];
+//    }
+//
+//
+//}
+
+/*
+ Given an array of integers, find the first missing positive integer in linear time and constant space.
+ In other words, find the lowest positive integer that does not exist in the array.
+ The array can contain duplicates and negative numbers as well.
+ You can modify the input array in-place.
+ */
+- (void)lowestMissingPositiveIntegerSetup {
+    NSArray *a = @[@3, @4, @-1, @1, @1];
+    NSLog(@"Lowest +ve is 2, receive: %d", [self lowestMissingPositiveInteger:[a mutableCopy]]);
+    
+    a = @[@1, @2, @0];
+    NSLog(@"Lowest +ve is 3, receive: %d", [self lowestMissingPositiveInteger:[a mutableCopy]]);
+    
+    a = @[@1, @2, @3];
+    NSLog(@"Lowest +ve is 4, receive: %d", [self lowestMissingPositiveInteger:[a mutableCopy]]);
+}
+
+- (int)lowestMissingPositiveInteger:(NSMutableArray *)a {
+    for (int i=0; i<a.count; i++) {
+        int j = [a[i] intValue];
+        while (j>0 && j<=a.count && (j-1 != i)) {
+            if ([a[i] isEqualTo:a[j-1]]) {
+                break;
+            }
+            [a exchangeObjectAtIndex:i withObjectAtIndex:j-1];
+            j = [a[i] intValue];
+        }
+//        if (j > 0 && j-1 != i) {
+//            [self swap:a i:i j:j];
+//        }
+    }
+    for (int i=0; i<a.count; i++) {
+        if ([a[i] intValue] <= 0) {
+            return i+1;
+        }
+    }
+    return (int)a.count+1;
+}
+
+- (void)swap:(NSMutableArray *)a i:(int)i j:(int)j {
+    // Handle duplicate values
+    if ([a[i] isEqualTo:a[j-1]]) {
+        a[i] = @(0);
+        return;
+    }
+    [a exchangeObjectAtIndex:i withObjectAtIndex:j-1];
+    j = [a[i] intValue];
+//    NSLog(@"a: %@", a);
+    if (j > 0 && j-1 != i) {
+        [self swap:a i:i j:j];
+    }
+    return;
+}
+
+- (void)findKthElementSetup {
+    NSArray *a = @[@2, @4, @1, @3, @5];
+    for (int i = 1; i<=5; i++) {
+//        NSLog(@"t:%d, received: %d", i, [self findKthElementMaxHeap:a target:i]);
+        NSLog(@"t:%d, received: %d", i, [self findKthElementNoHeap:a target:i]);
+    }
+    
+    int t=14;
+    a = @[@2, @4, @0, @5];
+    NSLog(@"4th element: 5, received: %d", [self findKthElement:a target:t]);
+
+    t=1;
+    a = @[@1, @1];
+    NSLog(@"2nd element:1, received: %d", [self findKthElement:a target:t]);
+}
+
+- (int)findKthElementNoHeap:(NSArray *)a target:(int)k {
+    return [self findKthElementNoHeapRecurr:[a mutableCopy] target:k start:0 end:(int)a.count-1];
+}
+
+/*
+ Idea is to do a quicksort and only recursively sort left part if left size is over k or right part if size is below k
+ 2,4,1,3,5 -> p=a[0]:2, k=3
+ 2,3,1,4,5 -> p=a[2]:1, k=3
+ 2,3,1 -> p=2
+ 2,1,3
+ */
+- (int)findKthElementNoHeapRecurr:(NSMutableArray *)a target:(int)k start:(int)s end:(int)e {
+    if (k >= 0 && k <= e-s+1) {
+        int p = [self parition:a start:s end:e];
+        if (p-s == k-1) {
+            return [a[p] intValue];
+        }
+        // If pivot > k, means all the smaller numbers are in the left side. Only sort the left side
+        if (p-s > k-1) {
+            return [self findKthElementNoHeapRecurr:a target:k start:s end:p-1];
+        }
+        // If pivot < k, means all the smaller numbers are in the right side. Only sort the left side
+        else if (p-s < k-1) {
+            return [self findKthElementNoHeapRecurr:a target:k-p+s-1 start:p+1 end:e];
+        }
+//        return [a[p] intValue];
+    }
+    return -99;
+}
+
+- (int)parition:(NSMutableArray *)a start:(int)s end:(int)e {
+    int l = s;
+    NSNumber *pivot = a[e];
+    for (int i=s; i<e; i++) {
+        if ([a[i] isLessThan:pivot]) {
+            [a exchangeObjectAtIndex:i withObjectAtIndex:l];
+            l++;
+        }
+    }
+    [a exchangeObjectAtIndex:l withObjectAtIndex:e];
+    return l;
+}
+
+/*
+ Solution 1:
+ Build a max heap when traversing the array.
+ If heap size < k, insert element in heap
+ Else if n<heap.max, insert n in heap and extract heap.max; else throw away the number
+ O(n*log k)
+ */
+- (int)findKthElement:(NSArray *)a target:(int)k {
+    if (a.count == 0 || k == 0 || k > a.count ) {
+        return -99;
+    }
+    MaxHeap *max = [MaxHeap new];
+    for (NSNumber *n in a) {
+        if ([max size] < k) {
+            [max insertElement:n];      // O(k)
+        }
+        else {
+            if ([n isLessThan:[max peek]]) {
+                [max insertElement:n];  // O(log n)
+                [max extract];          // O(log n)
+            }
+        }
+    }
+    return [[max peek] intValue];
+}
+
+- (int)findKthElementMaxHeap:(NSArray *)a target:(int)k {
+    if (a.count == 0 || k == 0 || k > a.count ) {
+        return -99;
+    }
+    MaxHeap *max = [MaxHeap new];
+    // O(k)
+    for (int i=0; i<k; i++) {
+        [max insertElement:a[i]];
+    }
+    // O((n-k) * log k)
+    for (int i=k; i<a.count; i++) {
+        if ([a[i] isLessThan: [max peek]]) {
+            [max insertElement:a[i]];
+            [max extract];
+        }
+    }
+    return [[max peek] intValue];
 }
 
 - (void)binarySearchSetup {
@@ -141,11 +366,6 @@
     NSArray *words = @[@"ape", @"peel", @"pale", @"apple", @"appple"];
     // ape+pl = apple, e+pal= ap?le, ????e, ????e
     NSLog(@"Sticker count: %lu", (unsigned long)[words stickerCount]);
-}
-
-- (void)findPairsOfElementsSetup {
-    NSArray *array2 = @[@2, @7, @2, @-2, @5, @-7];
-    [array2 findPairsOfElementsEqualToSum:7];
 }
 
 /*
@@ -788,11 +1008,11 @@
     [maxHeap insertElement:@20];
     [maxHeap insertElement:@50];
     
-    NSLog(@"Max: %@", [maxHeap poll]);
-    NSLog(@"%@", [maxHeap poll]);
-    NSLog(@"%@", [maxHeap poll]);
-    NSLog(@"%@", [maxHeap poll]);
-    NSLog(@"%@", [maxHeap poll]);
+    NSLog(@"Max: %@", [maxHeap extract]);
+    NSLog(@"%@", [maxHeap extract]);
+    NSLog(@"%@", [maxHeap extract]);
+    NSLog(@"%@", [maxHeap extract]);
+    NSLog(@"%@", [maxHeap extract]);
 }
 
 - (void)runningMedianUsingHeapsSetup {
@@ -864,7 +1084,7 @@
         [maxHeap insertElement:min];
     }
     else if (maxHeap.size-minHeap.size > 1) {
-        NSNumber *max = [maxHeap poll];
+        NSNumber *max = [maxHeap extract];
         [minHeap insertElement:max];
     }
 }

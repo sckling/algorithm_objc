@@ -16,8 +16,6 @@
 
 - (void)filterWordSetup;
 
-- (void)distanceBetweenTwoWordsSetup;
-
 - (void)removeDuplicateLettersSetup;
 
 @end

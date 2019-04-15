@@ -31,11 +31,42 @@
 @implementation MaxHeap
 
 - (instancetype)init {
+    return [self initWithArray:[NSArray new]];
+}
+
+- (instancetype)initWithArray:(NSArray *)array {
     self = [super init];
     if (self != nil) {
-        _heap = [NSMutableArray new];
+        _heap = [array mutableCopy];
+        if (_heap.count > 0) {
+            [self buildHeap];
+        }
     }
     return self;
+}
+
+- (void)buildHeap {
+    NSInteger i = (self.heap.count-1)/2;
+    while (i>=0) {
+        [self heapify:i];
+        i--;
+    }
+}
+
+- (void)heapify:(NSInteger)index {
+    NSInteger left = [self leftChildIndex:index];
+    NSInteger right = [self rightChildIndex:index];
+    NSInteger largest = index;
+    if (left < self.heap.count && [self.heap[left] isGreaterThan:self.heap[index]]) {
+        largest = left;
+    }
+    if (right < self.heap.count && [self.heap[right] isGreaterThan:self.heap[largest]]) {
+        largest = right;
+    }
+    if (largest != index) {
+        [self.heap exchangeObjectAtIndex:index withObjectAtIndex:largest];
+        [self heapify:largest];
+    }
 }
 
 /*
@@ -101,6 +132,12 @@
     return [self rightChildIndex:index] < self.heap.count;
 }
 
+// O(1)
+- (NSNumber *)peek {
+    return self.heap.count > 0 ? self.heap[0] : nil;
+}
+
+// O(log n)
 - (void)insertElement:(NSNumber *)element {
     // To insert new element, add it to the last of the array and heapify up
     [self.heap addObject:element];
@@ -114,8 +151,21 @@
     while ([self hasParent:index] && [self.heap[parentIndex] isLessThan:self.heap[index]]) {
         [self.heap exchangeObjectAtIndex:parentIndex withObjectAtIndex:index];
         index = parentIndex;
-        parentIndex = parentIndex;
+        parentIndex = [self parentIndex:index];
     }
+}
+
+// O(log n)
+- (NSNumber *)extract {
+    if (self.heap.count == 0) {
+        return nil;
+    }
+    // To remove max, need to put the last element to the top and heapify down
+    NSNumber *max = self.heap[0];
+    self.heap[0] = [self.heap lastObject];
+    [self.heap removeLastObject];
+    [self heapifyDown];
+    return max;
 }
 
 - (void)heapifyDown {
@@ -132,23 +182,6 @@
         [self.heap exchangeObjectAtIndex:largerIndex withObjectAtIndex:index];
         index = largerIndex;
     }
-}
-
-- (NSNumber *)poll {
-    if (self.heap.count == 0) {
-        return nil;
-    }
-    // To remove max, need to put the last element to the top and heapify down
-    NSNumber *max = self.heap[0];
-    self.heap[0] = [self.heap lastObject];
-    [self.heap removeLastObject];
-    [self heapifyDown];
-    
-    return max;
-}
-
-- (NSNumber *)peek {
-    return self.heap.count > 0 ? self.heap[0] : nil;
 }
 
 @end

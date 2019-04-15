@@ -29,6 +29,75 @@
     return copy;
 }
 
+- (NSString *)serialize:(TreeNode *)node {
+    if (!node) {
+        return @"#";
+    }
+    return [NSString stringWithFormat:@"%@,%@,%@", node.value, [self serialize:node.left], [self serialize:node.right]];
+}
+
+- (TreeNode *)deserialize:(NSString *)string {
+    NSArray<NSString *> *a = [string componentsSeparatedByString:@","];
+    return [self deserializeDFS:[a mutableCopy]];
+}
+
+- (TreeNode *)deserializeDFS:(NSMutableArray *)a {
+    if (a.count == 0 || [a[0] isEqualToString:@"#"]) {
+        [a removeObjectAtIndex:0];
+        return nil;
+    }
+    TreeNode *node = [[TreeNode alloc] initWithValue:@([[a firstObject] integerValue])];
+    [a removeObjectAtIndex:0];
+    node.left = [self deserializeDFS:a];
+    node.right = [self deserializeDFS:a];
+    return node;
+}
+
+- (NSString *)serializeBFS:(TreeNode *)root {
+    NSMutableString *s = [NSMutableString new];
+    NSMutableArray *q = [NSMutableArray new];
+    [q addObject:root];
+    
+    while (q.count > 0) {
+        TreeNode *n = [q firstObject];
+        [q removeObjectAtIndex:0];
+        NSString *next = n.value ? [NSString stringWithFormat:@"%@,", n.value] : @"n,";
+        [s appendString:next];
+        if (n.value) {
+            [q addObject:n.left ? n.left : [TreeNode new]];
+            [q addObject:n.right ? n.right : [TreeNode new]];
+        }
+    }
+    return s;
+}
+
+- (TreeNode *)deserializeBFS:(NSString *)nodes {
+    NSMutableArray *q = [NSMutableArray new];
+    NSArray<NSString *> *a = [nodes componentsSeparatedByString:@","];
+    int i = 0;
+    TreeNode *node = [[TreeNode alloc] initWithValue:a[i++]];
+    [q addObject:node];
+    while (q.count > 0) {
+        TreeNode *n = [q firstObject];
+        [q removeObjectAtIndex:0];
+
+        NSNumber *left = [a[i] isEqualToString:@"n"] ? nil : @([a[i] integerValue]);
+        if (left) {
+            n.left = [[TreeNode alloc] initWithValue:left];
+            [q addObject:n.left];
+        }
+        i++;
+        NSNumber *right = [a[i] isEqualToString:@"n"] ? nil : @([a[i] integerValue]);
+        if (right) {
+            n.right = [[TreeNode alloc] initWithValue:right];
+            [q addObject:n.right];
+        }
+        i++;
+    }
+    return node;
+}
+
+
 /*
  NSArray *array = @[@20, @8, @4, @12, @10, @14, @22, @99, @90, @80, @95];
  TreeNode *root = [self createBinarySearchTree:array];
@@ -390,62 +459,42 @@
     }
 }
 
-- (void)deSerialize:(TreeNode **)node array:(NSMutableArray *)array {
-    if (array.count > 0) {
-        NSNumber *value = [array firstObject];
-        if ([value isEqualTo:@-1]) {
-            return;
-        }
-        *node = [[TreeNode alloc] initWithValue:value];
-//        *(node.left) = node;
-//        [self deSerialize:*(node.left) array:array];
-    }
-}
-
-- (TreeNode *)deSerialize1:(TreeNode *)node array:(NSMutableArray *)array {
-    //NSLog(@"node: %@ array: %@", node.value, array);
-    if (array.count > 0) {
-        NSNumber *value = [array firstObject];
-        [array removeObjectAtIndex:0];
-        if ([value isEqualTo:@-1]) {
-            return nil;
-        }
-        node = [[TreeNode alloc] initWithValue:value];
-        node.left = [self deSerialize1:node.left array:array];
-        node.right = [self deSerialize1:node.right array:array];
-        return node;
-    }
-    return nil;
-}
-
 // For unit test demo only
 - (NSInteger)addNums:(NSInteger)num1 num2:(NSInteger)num2 {
     return num1 + num2;
 }
 
-// Doesn't work on BST that the largest right node has left node(s)
-- (NSInteger)secondLargestInteger:(TreeNode *)node {
-    static NSInteger second;
-    static NSInteger maxSoFar;
-    if (node == nil) {
-        return 0;
-    }
-    // Go all the way to the leftmost
-    [self secondLargestInteger:node.left];
-    
-    NSInteger value = [(NSNumber *)node.value integerValue];
-    if (value > maxSoFar) {
-        maxSoFar = value;
-    }
-    NSLog(@"value: %lu", value);
-    NSLog(@"max value: %lu", maxSoFar);
-    [self secondLargestInteger:node.right];
-    if ((value>second)&&(value < maxSoFar)) {
-        second = value;
-    }
-    //NSLog(@"2nd value: %lu", second);
-    return second;
+/*
+ We know in a BST, the right node is always bigger. So we traverse to right node if available
+ We can pass the current node for every traverse. When at the end of node, return nil and the previous stack and return it's value
+ */
+- (TreeNode *)largestNodeInBST:(TreeNode *)node {
+	if (!node) {
+		return nil;
+	}
+	if (!node.left && !node.right) {
+		return node;
+	}
+	if (node.right) {
+		return [self largestNodeInBST:node.right];
+	}
+	return [self largestNodeInBST:node.left];;
 }
+
+
+- (TreeNode *)secondLargestNodeInBST:(TreeNode *)node parent:(TreeNode *)parent {
+	if (!node) {
+		return nil;
+	}
+	if (!node.left && !node.right) {
+		return parent ? parent : node;
+	}
+	if (node.right) {
+		return [self secondLargestNodeInBST:node.right parent:node];
+	}
+	return [self secondLargestNodeInBST:node.left parent:node];
+}
+
 
 - (NSInteger)largestValueSmallerThanK:(TreeNode *)node value:(NSInteger)value {
     static NSInteger prev;

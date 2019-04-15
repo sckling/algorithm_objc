@@ -1,0 +1,213 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid1\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid101\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid201\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid301\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid401\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid5}
+{\list\listtemplateid6\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid501\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid6}
+{\list\listtemplateid7\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid601\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid7}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}{\listoverride\listid6\listoverridecount0\ls6}{\listoverride\listid7\listoverridecount0\ls7}}
+\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs28 \cf0 Things  to memorize before interview\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\b0 \cf0 How to mod and convert dec to binary/hex, etc.\
+30->hex: 30%16=14->E, 30/16=1, ans: 1E\
+7->binary: 5%2=1, 5/2=2%2=0. 2/2=1%2=1, ans: 101\
+KMP search pattern\
+5 % 7 = 5, 9 % 7 = 2\
+\
+**Review all previous Google & fb questions\
+
+\b \
+
+\b0 0. Ask for constraints such as memory, input size, etc.
+\b \
+
+\b0 1. Start with 1 or 2 test case.\
+2. Write down all edge cases and revisit them later. Don't stick on too much details.\
+3. Draw charts, tree diagrams, tables and walk thru it to make sure it works with 1 to 2 cases.\
+4. Always takes care of empty or 1 elements, all strings are the same, off by 1, etc.\
+5. Don't struggle on whether to use < or <=. Put a mark to revisit.\
+6. Array problems always be cautious about index out of bounds.\
+7. Mention naive solution to show you know something but don't code.\
+8. Don't worry about space or memorization to start with. Optimize later.\
+9. Write pseudo code to verify algorithm works. All the above should be less than 30 minutes.\
+10. Write code\
+11. Test code and make sure its Bugs Free!!
+\b \
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 Recursion\
+\pard\tx220\tx720\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li720\fi-720\pardirnatural\partightenfactor0
+\ls1\ilvl0
+\b0 \cf0 {\listtext	\uc0\u8259 	}Write the base case and determine what to return.\
+{\listtext	\uc0\u8259 	}Can return the current val and let previous stack to compute it, or compute the result (print path) and return it.\
+{\listtext	\uc0\u8259 	}The body is usually add new info and perform recursive calls like left or right trees\
+{\listtext	\uc0\u8259 	}Determine what to return once receive the results back: max(recurr(path.left), recurr(path.right)\
+{\listtext	\uc0\u8259 	}Backtracking means remove the previously added value for each recursive call.\
+{\listtext	\uc0\u8259 	}Dynamic programming usually involve save the current result and check it before each new stack. Look for repeated work.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\b \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 Dynamic Programming\
+\pard\tx220\tx720\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li720\fi-720\pardirnatural\partightenfactor0
+\ls2\ilvl0
+\b0 \cf0 {\listtext	\uc0\u8259 	}Come up with a recursive solution\
+{\listtext	\uc0\u8259 	}Store the intermediate results in an array of dictionary\
+{\listtext	\uc0\u8259 	}For each recursive call, check if solution already exists. If yes, return it. Else compute the solution.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 \
+
+\b Back Tracking
+\b0 \
+Use depth first search to explore solution at each level. If not working, back track and try next solution.\
+N-Queen problems: First check if the partial solution for current round is valid.\
+If yes, update with current solution and continue. If all the way success, return true. Else remove the partial solution and try next one.\
+In general:\
+\pard\tx220\tx720\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li720\fi-720\pardirnatural\partightenfactor0
+\ls3\ilvl0\cf0 {\listtext	\uc0\u8259 	}If can reach end of path, print result and return true\
+{\listtext	\uc0\u8259 	}For each available next path, add it to the current solution\
+{\listtext	\uc0\u8259 	}Check if new solution is valid. If yes, recursive call with new solution\
+{\listtext	\uc0\u8259 	}If result == true, done\
+{\listtext	\uc0\u8259 	}Else, back tracking by remove the added path and loop to next path\
+{\listtext	\uc0\u8259 	}If nothing left, return false\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\b \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 Graph
+\b0 \
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls4\ilvl0\cf0 {\listtext	\uc0\u8259 	}DFS is good for finding destination in a maze\
+{\listtext	\uc0\u8259 	}BFS is good for finding shortest path in a maze\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\b \cf0 Matrix
+\b0 \
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls5\ilvl0\cf0 {\listtext	\uc0\u8259 	}Use Set instead of Array to keep track of visited cells (improved space complexity and less error prone to array out-of-bounds)\
+{\listtext	\uc0\u8259 	}Make sure goes to all 4 directions regardless since visited matrix will ensure every cell in the matrix is only visited once,\
+{\listtext	\uc0\u8259 	}If it's a binary matrix, ask interviewer if the original matrix can be modified in order to further reduce space complexity by not having a visited Set.\
+{\listtext	\uc0\u8259 	}Think about a matrix class and has a visited property?\
+{\listtext	\uc0\u8259 	}Must do questions: biggest island or row/column, largest/total count of square/rectangle, print all path, shortest path from A to B\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\b \cf0 Array/Number
+\b0 \
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls6\ilvl0\cf0 {\listtext	\uc0\u8259 	}ALWAYS THINK OF THE FOLLOWING EDGE CASES: empty array, 1 elements, repeated elements, pattern not found, +ve/-ve\
+{\listtext	\uc0\u8259 	}Save of-by-one checking at the end. Don't worry about < or <=, put a * next to it and revisit once the general algorithm is done\
+{\listtext	\uc0\u8259 	}Sometimes you need to update the min/max value on every loop.\
+{\listtext	\uc0\u8259 	}If solution is O(n), think about pre-process the array once since it only O(n). For example, traverse entire array to find max.\
+{\listtext	\uc0\u8259 	}Try use two pointers from start and end and traverse to middle\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\b \cf0 Heap
+\b0 \
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls7\ilvl0\cf0 {\listtext	\uc0\u8259 	}Build heap is O(n) instead of O(n log n) because half of the nodes are leaf nodes and requires O(1) to\
+{\listtext	\uc0\u8259 	}Insert and delete is O(log n)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+Find all the pattern\
+lin\
+Find the min/max of certain combinations or string\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\b \cf0 Mission peace coding questions:
+\b0 \
+https://github.com/mission-peace/interview/wiki\
+\
+
+\b Algorithms:
+\b0 \
+https://brilliant.org/wiki/algorithm/\
+https://brilliant.org/wiki/breadth-first-search-bfs/\
+https://brilliant.org/wiki/depth-first-search-dfs/\
+\
+
+\b Daily Coding Problem:
+\b0 \
+Last visited problem #41\
+\
+
+\b Visit these problems:\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\b0 \cf0 https://www.geeksforgeeks.org/must-do-coding-questions-for-companies-like-amazon-microsoft-adobe/\
+https://www.geeksforgeeks.org/maximum-size-rectangle-binary-sub-matrix-1s/\
+\pard\tx642\pardeftab642\pardirnatural\partightenfactor0
+\cf0 https://www.geeksforgeeks.org/largest-rectangle-under-histogram/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 https://www.geeksforgeeks.org/print-all-possible-paths-from-top-left-to-bottom-right-of-a-mxn-matrix/\
+https://www.geeksforgeeks.org/kth-smallestlargest-element-unsorted-array/\
+https://www.geeksforgeeks.org/nearly-sorted-algorithm/\
+https://www.geeksforgeeks.org/merge-k-sorted-arrays/\
+https://www.geeksforgeeks.org/n-queen-problem-backtracking-3/\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 https://www.geeksforgeeks.org/lru-cache-implementation/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 https://www.geeksforgeeks.org/serialize-deserialize-binary-tree/\
+https://www.geeksforgeeks.org/construct-binary-tree-string-bracket-representation/\
+Implement NSNotification like this:\
+https://eezytutorials.com/ios/nsnotificationcenter-by-example.php#.XJjtqxNKjeD\
+https://nshipster.com/nsnotification-and-nsnotificationcenter/\
+Job sequence\
+\
+Quick-select in the find kth largest element in array\
+https://www.baeldung.com/java-kth-largest-element\
+\
+\
+Elevator controller\
+- Push each elevator requests into a queue.\
+- Assume on each stop, it takes 3 seconds for open/close doors and enter/exit people. Each floor pass takes 1 second.\
+- Can ignore direction and insert in between current and destination floor. Assume requests have to add to the end of queue.\
+- Assume the controller class has an array to store a list of elevator objects. The algorithm is to find the elevator that takes the short time to arrive.\
+- Didn't mention this but there should be a cycle to update the queues for a fixed interval like every second.\
+\
+Class Elevator\
+- NSString *name\
+- NSArray<NSNumber *>queue;\
+\
+Class Request\
+- int entryFloor\
+- int destinationFloor\
+\
+Class Controller\
+- NSArray<Elevator *> elevators;\
+\
+- (Elevator *)requestFloor:(Request *)req \{\
+  int min = 0;\
+  Elevator *final = [Elevator new];\
+  for (Elevator *e in self.elevators \{\
+    int time = 0;\
+    for (NSNumber *floor in e.queue) \{\
+       time += floor * 3;\
+       time += abs([floor lastObject] - req.entryFloor);  // time it takes from last floor to requested floor\
+       if (time < min) \{\
+           min = time;\
+           final = e;\
+       \}\
+   \}\
+   // This is based on assumption that elevators have fancy glass panel that lets people to enter their destination floor\
+   // Otherwise it doesn't make sense since you can only press the destination floor button after you enter the elevator, not at the time you request it.\
+   [e addObject: req.entry];\
+   [e addObject: req.destination;\
+\}\
+\
+}

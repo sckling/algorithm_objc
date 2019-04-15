@@ -15,7 +15,6 @@
 		19463C451C824A3A0076ED00 /* String.m in Sources */ = {isa = PBXBuildFile; fileRef = 19463C441C824A3A0076ED00 /* String.m */; };
 		19463C461C824A3A0076ED00 /* String.m in Sources */ = {isa = PBXBuildFile; fileRef = 19463C441C824A3A0076ED00 /* String.m */; };
 		195E7DE21C7D54190085121E /* Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 195E7DE11C7D54190085121E /* Matrix.m */; };
-		195E7DE31C7D54190085121E /* Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 195E7DE11C7D54190085121E /* Matrix.m */; };
 		19601AC21BF154E00096DA27 /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 19601AC11BF154E00096DA27 /* Member.m */; };
 		196466F91C17C7B100FA9E4D /* UndirectedGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 196466F81C17C7B100FA9E4D /* UndirectedGraph.m */; };
 		196CAFE61DEE3845000974EC /* MinHeap.m in Sources */ = {isa = PBXBuildFile; fileRef = 196CAFE51DEE3845000974EC /* MinHeap.m */; };
@@ -28,9 +27,16 @@
 		19D2E3321DC11F050056073E /* Vertex.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D2E3311DC11F050056073E /* Vertex.m */; };
 		19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E41BD1F772004F31AF /* EdgeNode.m */; };
 		19F696E81BD1F84D004F31AF /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F696E71BD1F84D004F31AF /* Graph.m */; };
+		430530D521F1A8C6008C495D /* Anagram.m in Sources */ = {isa = PBXBuildFile; fileRef = 430530D421F1A8C6008C495D /* Anagram.m */; };
+		430530D921F67007008C495D /* DP.m in Sources */ = {isa = PBXBuildFile; fileRef = 430530D821F67007008C495D /* DP.m */; };
 		4349ED3F21BB364A00DD6BF8 /* NotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4349ED3E21BB364A00DD6BF8 /* NotificationCenter.m */; };
 		43927F1920672B8F007EE991 /* Trie.m in Sources */ = {isa = PBXBuildFile; fileRef = 43927F1820672B8F007EE991 /* Trie.m */; };
+		439A9DAA225412A700F9A76D /* Sudoku.m in Sources */ = {isa = PBXBuildFile; fileRef = 439A9DA9225412A700F9A76D /* Sudoku.m */; };
+		43C6BE5D2200243B003B93B3 /* Old Code.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C6BE5C2200243B003B93B3 /* Old Code.c */; };
 		43D5D9A22066F40D00C769BE /* TrieNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D5D9A12066F40D00C769BE /* TrieNode.m */; };
+		43EF335A2246FF1300A05EE1 /* Set.m in Sources */ = {isa = PBXBuildFile; fileRef = 43EF33592246FF1300A05EE1 /* Set.m */; };
+		43EF335D2247F8F700A05EE1 /* GameOfLife.m in Sources */ = {isa = PBXBuildFile; fileRef = 43EF335C2247F8F700A05EE1 /* GameOfLife.m */; };
+		43F90FA92234F28A0018587B /* NTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F90FA82234F28A0018587B /* NTree.m */; };
 		E41E2B1B1C2618A9008DD8B3 /* ArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E41E2B1A1C2618A9008DD8B3 /* ArrayTests.m */; };
 		E41E2B1C1C261BAA008DD8B3 /* NSArray+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */; };
 		E42659D71BCA39D3001B49C4 /* NSArray+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */; };
@@ -92,12 +98,26 @@
 		19F696E41BD1F772004F31AF /* EdgeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeNode.m; sourceTree = "<group>"; };
 		19F696E61BD1F84D004F31AF /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
 		19F696E71BD1F84D004F31AF /* Graph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph.m; sourceTree = "<group>"; };
+		430530D321F1A8C6008C495D /* Anagram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Anagram.h; sourceTree = "<group>"; };
+		430530D421F1A8C6008C495D /* Anagram.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Anagram.m; sourceTree = "<group>"; };
+		430530D721F67007008C495D /* DP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DP.h; sourceTree = "<group>"; };
+		430530D821F67007008C495D /* DP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DP.m; sourceTree = "<group>"; };
 		4349ED3D21BB364A00DD6BF8 /* NotificationCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationCenter.h; sourceTree = "<group>"; };
 		4349ED3E21BB364A00DD6BF8 /* NotificationCenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationCenter.m; sourceTree = "<group>"; };
 		43927F1720672B8F007EE991 /* Trie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Trie.h; sourceTree = "<group>"; };
 		43927F1820672B8F007EE991 /* Trie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Trie.m; sourceTree = "<group>"; };
+		439A9DA8225412A700F9A76D /* Sudoku.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sudoku.h; sourceTree = "<group>"; };
+		439A9DA9225412A700F9A76D /* Sudoku.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Sudoku.m; sourceTree = "<group>"; };
+		43C6BE5C2200243B003B93B3 /* Old Code.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Old Code.c"; sourceTree = "<group>"; };
+		43D3801F223D408A00F23160 /* Notes.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Notes.rtf; sourceTree = "<group>"; };
 		43D5D9A02066F40D00C769BE /* TrieNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrieNode.h; sourceTree = "<group>"; };
 		43D5D9A12066F40D00C769BE /* TrieNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrieNode.m; sourceTree = "<group>"; };
+		43EF33582246FF1300A05EE1 /* Set.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Set.h; sourceTree = "<group>"; };
+		43EF33592246FF1300A05EE1 /* Set.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Set.m; sourceTree = "<group>"; };
+		43EF335B2247F8F700A05EE1 /* GameOfLife.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameOfLife.h; sourceTree = "<group>"; };
+		43EF335C2247F8F700A05EE1 /* GameOfLife.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameOfLife.m; sourceTree = "<group>"; };
+		43F90FA72234F28A0018587B /* NTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTree.h; sourceTree = "<group>"; };
+		43F90FA82234F28A0018587B /* NTree.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTree.m; sourceTree = "<group>"; };
 		E41E2B1A1C2618A9008DD8B3 /* ArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrayTests.m; sourceTree = "<group>"; };
 		E42659D51BCA39D3001B49C4 /* NSArray+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Methods.h"; sourceTree = "<group>"; };
 		E42659D61BCA39D3001B49C4 /* NSArray+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Methods.m"; sourceTree = "<group>"; };
@@ -151,6 +171,8 @@
 				193A42851C485335004AF854 /* Dictionary.m */,
 				193A427F1C4851AF004AF854 /* NSDictionary+Methods.h */,
 				193A42801C4851AF004AF854 /* NSDictionary+Methods.m */,
+				43EF33582246FF1300A05EE1 /* Set.h */,
+				43EF33592246FF1300A05EE1 /* Set.m */,
 			);
 			name = Dictionary;
 			sourceTree = "<group>";
@@ -160,6 +182,8 @@
 			children = (
 				19463C431C824A3A0076ED00 /* String.h */,
 				19463C441C824A3A0076ED00 /* String.m */,
+				430530D321F1A8C6008C495D /* Anagram.h */,
+				430530D421F1A8C6008C495D /* Anagram.m */,
 				19ACC4401CC59E9F00E2736E /* Numbers.h */,
 				19ACC4411CC59E9F00E2736E /* Numbers.m */,
 			);
@@ -171,14 +195,13 @@
 			children = (
 				191B128E1E00FF9700AC38CC /* Block.h */,
 				191B128F1E00FF9700AC38CC /* Block.m */,
+				43EF335B2247F8F700A05EE1 /* GameOfLife.h */,
+				43EF335C2247F8F700A05EE1 /* GameOfLife.m */,
 				4349ED3D21BB364A00DD6BF8 /* NotificationCenter.h */,
 				4349ED3E21BB364A00DD6BF8 /* NotificationCenter.m */,
-				195E7DE01C7D54190085121E /* Matrix.h */,
-				195E7DE11C7D54190085121E /* Matrix.m */,
-				1901CC111CC06B2F00BECDE3 /* Recursion.h */,
-				1901CC121CC06B2F00BECDE3 /* Recursion.m */,
 				191B12931E01D4BA00AC38CC /* Interval.h */,
 				191B12941E01D4BA00AC38CC /* Interval.m */,
+				43C6BE5C2200243B003B93B3 /* Old Code.c */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -186,6 +209,8 @@
 		19F696E91BD1F856004F31AF /* Trees */ = {
 			isa = PBXGroup;
 			children = (
+				43F90FA72234F28A0018587B /* NTree.h */,
+				43F90FA82234F28A0018587B /* NTree.m */,
 				E42659DB1BCB389D001B49C4 /* Tree.h */,
 				E42659DC1BCB389D001B49C4 /* Tree.m */,
 				E4A908B61BCA1CD500FA77B6 /* TreeNode.h */,
@@ -228,6 +253,21 @@
 			name = Graphs;
 			sourceTree = "<group>";
 		};
+		430530D621F66FC7008C495D /* Dynamic Programming */ = {
+			isa = PBXGroup;
+			children = (
+				430530D721F67007008C495D /* DP.h */,
+				430530D821F67007008C495D /* DP.m */,
+				195E7DE01C7D54190085121E /* Matrix.h */,
+				195E7DE11C7D54190085121E /* Matrix.m */,
+				1901CC111CC06B2F00BECDE3 /* Recursion.h */,
+				1901CC121CC06B2F00BECDE3 /* Recursion.m */,
+				439A9DA8225412A700F9A76D /* Sudoku.h */,
+				439A9DA9225412A700F9A76D /* Sudoku.m */,
+			);
+			path = "Dynamic Programming";
+			sourceTree = "<group>";
+		};
 		43D5D99F2066F3A900C769BE /* Trie */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,7 +301,9 @@
 			isa = PBXGroup;
 			children = (
 				E4A908A31BCA1B3A00FA77B6 /* main.m */,
+				43D3801F223D408A00F23160 /* Notes.rtf */,
 				19F696EA1BD1F862004F31AF /* Arrays */,
+				430530D621F66FC7008C495D /* Dynamic Programming */,
 				191B128D1E00FE9800AC38CC /* Heaps */,
 				19463C421C824A0A0076ED00 /* Strings and Numbers */,
 				193A42821C4851CF004AF854 /* Dictionary */,
@@ -380,16 +422,23 @@
 				196466F91C17C7B100FA9E4D /* UndirectedGraph.m in Sources */,
 				195E7DE21C7D54190085121E /* Matrix.m in Sources */,
 				E42659DD1BCB389D001B49C4 /* Tree.m in Sources */,
+				430530D521F1A8C6008C495D /* Anagram.m in Sources */,
 				193A42811C4851AF004AF854 /* NSDictionary+Methods.m in Sources */,
+				43C6BE5D2200243B003B93B3 /* Old Code.c in Sources */,
 				1978EAE01DCA9A3E00DCDD0F /* BinarySearch.m in Sources */,
 				E4A908A41BCA1B3A00FA77B6 /* main.m in Sources */,
 				19463C451C824A3A0076ED00 /* String.m in Sources */,
 				4349ED3F21BB364A00DD6BF8 /* NotificationCenter.m in Sources */,
 				E42659DA1BCB1C67001B49C4 /* Array.m in Sources */,
 				19601AC21BF154E00096DA27 /* Member.m in Sources */,
+				43F90FA92234F28A0018587B /* NTree.m in Sources */,
+				439A9DAA225412A700F9A76D /* Sudoku.m in Sources */,
 				19ACC4421CC59E9F00E2736E /* Numbers.m in Sources */,
 				E4A908B81BCA1CD500FA77B6 /* TreeNode.m in Sources */,
+				430530D921F67007008C495D /* DP.m in Sources */,
+				43EF335D2247F8F700A05EE1 /* GameOfLife.m in Sources */,
 				19F696E51BD1F772004F31AF /* EdgeNode.m in Sources */,
+				43EF335A2246FF1300A05EE1 /* Set.m in Sources */,
 				196CAFE61DEE3845000974EC /* MinHeap.m in Sources */,
 				193A42861C485335004AF854 /* Dictionary.m in Sources */,
 				191B12951E01D4BA00AC38CC /* Interval.m in Sources */,
@@ -407,7 +456,6 @@
 				19ACC4431CC59E9F00E2736E /* Numbers.m in Sources */,
 				E4A908B11BCA1BDE00FA77B6 /* Tests.m in Sources */,
 				E41E2B1B1C2618A9008DD8B3 /* ArrayTests.m in Sources */,
-				195E7DE31C7D54190085121E /* Matrix.m in Sources */,
 				E4A908BA1BCA1D4400FA77B6 /* TreeNodeTests.m in Sources */,
 				E4A908BC1BCA1E1100FA77B6 /* TreeNode.m in Sources */,
 				E41E2B1C1C261BAA008DD8B3 /* NSArray+Methods.m in Sources */,

@@ -13,7 +13,61 @@
 - (void)setup {
 //    [self basicTests];
 //    [self binarySearchCharacterSetup];
-    [self smallestCharacterSetup];
+//    [self smallestCharacterSetup];
+    [self findElementInRotationArraySetup];
+}
+
+- (void)findElementInRotationArraySetup {
+    NSArray *a = @[@4,@5,@6,@7,@0,@1,@2];
+    NSLog(@"K=5, expected:1, receieved: %@", [self findElementInRotationArray:a num:@5]);
+    
+    a = @[@4,@5,@6,@7,@0,@1,@2];
+    NSLog(@"K=1, expected:5, receieved: %@", [self findElementInRotationArray:a num:@1]);
+    
+    a = @[@2,@4,@5,@6];
+    NSLog(@"K=6, expected:3, receieved: %@", [self findElementInRotationArray:a num:@6]);
+	NSLog(@"K=4, expected:1, receieved: %@", [self findElementInRotationArray:a num:@4]);
+    
+    a = @[@6,@9,@0,@4,@5];
+    NSLog(@"K=9, expected:1, receieved: %@", [self findElementInRotationArray:a num:@9]);
+    NSLog(@"K=5, expected:4, receieved: %@", [self findElementInRotationArray:a num:@5]);
+    NSLog(@"K=10, expected:-1, receieved: %@", [self findElementInRotationArray:a num:@10]);
+	
+	a = @[@4,@9,@0,@4,@4];
+	NSLog(@"K=9, expected:1, receieved: %@", [self findElementInRotationArray:a num:@4]);
+}
+
+- (NSNumber *)findElementInRotationArray:(NSArray *)a num:(NSNumber *)k {
+    if (a.count == 0 || !a) {
+        return nil;
+    }
+    int s = 0;
+    int e = (int)a.count-1;
+    while (s <= e) {
+        int m = s + (e-s)/2;
+        if ([k isEqual:a[m]]) {
+            return @(m);
+        }
+        // Rotation is on the left
+        if ([a[s] isGreaterThan:a[m]]) {
+            if ([k isGreaterThan:a[m]] && [k isLessThanOrEqualTo:a[e]]) {
+                s = m+1;
+            }
+            else {
+                e = m-1;
+            }
+        }
+        // Rotation is on the right or no rotation (doesn't matter)
+		else {
+            if ([k isGreaterThan:a[s]] && [k isLessThanOrEqualTo:a[m]]) {
+                e = m-1;
+            }
+            else {
+                s = m+1;
+            }
+        }
+    }
+    return @-1;
 }
 
 - (void)basicTests {

@@ -11,7 +11,6 @@
 @interface Array : NSEnumerator
 
 - (void)setup;
-- (void)twoDimenionalArray;
 - (double)rollingMedian:(NSNumber *)number;
 
 @end

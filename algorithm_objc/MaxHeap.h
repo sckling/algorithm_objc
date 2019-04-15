@@ -11,8 +11,9 @@
 @interface MaxHeap : NSObject
 
 - (void)insertElement:(NSNumber *)element;
-- (NSNumber *)poll;
+- (NSNumber *)extract;
 - (NSNumber *)peek;
 - (NSInteger)size;
+- (instancetype)initWithArray:(NSArray *)array  NS_DESIGNATED_INITIALIZER;
 
 @end

@@ -55,8 +55,403 @@
     
 //    [self longestSubstringWithUniqueCharactersSetup];
     
-    [self removeDuplicateLettersSetup];
+//    [self removeDuplicateLettersSetup];
+    
+//    [self minWordsFromSentenceSetup];
+    
+//    [self findNeedleInHaystackSetup];
+    
+//    [self regexValidationSetup];
+    
+//    [self compressStringSetup];
+	
+//	[self swapRgbSetup];
+	
+	[self distanceBetweenTwoWordsSetup];
 }
+
+- (void)swapRgbSetup {
+	NSArray *a = @[@"g", @"b", @"r", @"r", @"b", @"r", @"g"];
+	NSLog(@"%@", [self swapRgbOnePass:[a mutableCopy]]);
+	
+	a = @[@"b", @"b", @"r", @"r", @"b", @"g", @"b"];
+	NSLog(@"%@", [self swapRgbOnePass:[a mutableCopy]]);
+	
+}
+
+- (NSArray *)swapRgbOnePass:(NSMutableArray *)a {
+	int low = 0;
+	int mid = 0;
+	int high = (int)a.count-1;
+	
+	while (mid<=high) {
+		// If r, swap with mid pos (g) and increment both
+		if ([a[mid] isEqualTo:@"r"]) {
+			[a exchangeObjectAtIndex:mid++ withObjectAtIndex:low++];
+		}
+		// If g, since it's a mid postion, increment by 1 and no swap
+		else if ([a[mid] isEqualTo:@"g"]) {
+			mid++;
+		}
+		// If b, swap it to end. Don't increase mid since need to evaluate in next loop
+		else if ([a[mid] isEqualTo:@"b"]) {
+			[a exchangeObjectAtIndex:mid withObjectAtIndex:high--];
+		}
+	}
+	return a;
+}
+
+- (NSArray *)swapRGB:(NSMutableArray *)a {
+	int g = [self findFirstNonR:a];
+	int b = [self findFirstNonB:a];
+
+	for (int i=g; i<=b; i++) {
+		// Swap r with last g position
+		if ([a[i] isEqualTo:@"r"]) {
+			if (i > g) {
+				[a exchangeObjectAtIndex:i withObjectAtIndex:g++];
+			}
+		}
+		// Swap b to last non b position. Need to keep current position to evalute the swapped char because if could be r or g
+		else if ([a[i] isEqualTo:@"b"]) {
+			[a exchangeObjectAtIndex:i-- withObjectAtIndex:b--];
+		}
+	}
+	return a;
+}
+
+- (int)findFirstNonR:(NSArray *)a {
+	int r = 0;
+	for (int i=0; i<a.count; i++) {
+		if ([a[i] isNotEqualTo:@"r"]) {
+			r = i;
+			break;
+		}
+	}
+	return r;
+}
+
+- (int)findFirstNonB:(NSArray *)a {
+	int b = (int)a.count-1;
+	for (int i=(int)a.count-1; i>=0; i--) {
+		if ([a[i] isNotEqualTo:@"b"]) {
+			b = i;
+			break;
+		}
+	}
+	return b;
+}
+
+- (void)compressStringSetup {
+    NSString *s = @"AAAABBBCCDAA";
+    NSString *e = @"4A3B2C1D2A";
+    NSString *r = [self compressString:s];
+    NSLog(@"Expected: %@, receive: %@, result:%d", e, r, [e isEqualToString:r]);
+    
+    s = @"aaaaa";
+    e = @"5a";
+    r = [self compressString:s];
+    NSLog(@"Expected: %@, receive: %@, result:%d", e, r, [e isEqualToString:r]);
+    
+    s = @"b";
+    e = @"1b";
+    r = [self compressString:s];
+    NSLog(@"Expected: %@, receive: %@, result:%d", e, r, [e isEqualToString:r]);
+    
+    s = @"";
+    e = @"";
+    r = [self compressString:s];
+    NSLog(@"Expected: %@, receive: %@, result:%d", e, r, [e isEqualToString:r]);
+}
+
+- (NSString *)compressString:(NSString *)s {
+    NSString *result = [NSString new];
+    // Start with 2nd char and compare to prev char.
+    // If same, increase count by 1
+    // If not, add count to result string and reset count to 1
+    if (!s || s.length == 0) {
+        return @"";
+    }
+    int count = 1;
+    for (int i=1; i<s.length; i++) {
+        if ([s characterAtIndex:i-1] == [s characterAtIndex:i]) {
+            count++;
+        }
+        else {
+            result = [result stringByAppendingString:[NSString stringWithFormat:@"%d%c", count, [s characterAtIndex:i-1]]];
+            count = 1;
+        }
+    }
+    return [result stringByAppendingString:[NSString stringWithFormat:@"%d%c", count, [s characterAtIndex:s.length-1]]];
+}
+
+/*
+Implement regular expression matching with the following special characters:
+
+. (period) which matches any single character
+* (asterisk) which matches zero or more of the preceding element
+That is, implement a function that takes in a string and a valid regular expression and returns whether or not the string matches the regular expression.
+
+For example, given the regular expression "ra." and the string "ray", your function should return true. The same regular expression on the string "raymond" should return false.
+
+Given the regular expression ".*at" and the string "chat", your function should return true. The same regular expression on the string "chats" should return false.
+ */
+
+- (void)regexValidationSetup {
+    NSString *s = @"ray";
+    NSString *e = @"ra.";
+    NSLog(@"%@, %@ = Yes, received: %d", s, e, [self regexValidation:s regex:e]);
+    
+    s = @"raymond";
+    e = @"ra.";
+    NSLog(@"%@, %@ = No, received: %d", s, e, [self regexValidation:s regex:e]);
+    
+    s = @"chat";
+    e = @".*at";
+    NSLog(@"%@, %@ = Yes, received: %d", s, e, [self regexValidation:s regex:e]);
+    
+    s = @"chats";
+    e = @".*at";
+    NSLog(@"%@, %@ = No, received: %d", s, e, [self regexValidation:s regex:e]);
+    
+    s = @"chats";
+    e = @"c*";
+    NSLog(@"%@, %@ = Yes, received: %d", s, e, [self regexValidation:s regex:e]);
+    
+    s = @"c";
+    e = @"*c";
+    NSLog(@"%@, %@ = Yes, received: %d", s, e, [self regexValidation:s regex:e]);
+}
+
+- (BOOL)regexValidation:(NSString *)s regex:(NSString *)e {
+    int i=0;
+    int j=0;
+    while (i<s.length && j<e.length) {
+        if ([s characterAtIndex:i] == [e characterAtIndex:j] || [e characterAtIndex:j] == '.') {
+            i++;
+            j++;
+        }
+        else if ([e characterAtIndex:j] == '*') {
+            // * is the last in expression. Means can matches all the rest of string
+            if (j == e.length-1) {
+                return YES;
+            }
+            // Search for match the next char from *: *y, y
+            while (i<s.length) {
+                if ([s characterAtIndex:i++] == [e characterAtIndex:j+1]) {
+                    // Since j+1 already compared, next to move to next char to sync with i
+                    j += 2;
+                    break;
+                }
+            }
+        }
+        // chars not matched
+        else {
+            return false;
+        }
+    }
+    NSLog(@"i %d, s %ld, j %d, e %ld", i, s.length, j, e.length);
+    // Need to make sure both string and expression at the end. Otherwise means one of them is not complete and hence false
+    if (i!=s.length || j!=e.length) {
+        
+        return NO;
+    }
+    return YES;
+}
+
+
+/*
+ function int[] grep(string haystack, string needle)
+ haystack = "aaabcdddbbddabcdefghi"
+ needle = "abc"
+ [2,12]
+ 
+ h = "bbbbb"
+ n = "b"
+[0,1,2,3,4]
+ n = 'bb"
+ [0,1,2,3];
+ 
+ O(h.length)
+ h = 5, from 0 to 5-2+1 = 4
+ if either strings are empty, return empty array
+ for each char in haystack till legnth-needl.length
+  if char == needle[0]
+     findMatch
+     if matched, add curr idx to arr
+ 
+ findMatch
+   for each char of h from idx and each char of n from 0
+     if h[i] != n[j] return false
+   return true
+ 
+ Worst case O(h * n)
+ aabaabaab
+ aaa
+ 
+ aaaaaaaaa
+ aaa
+ 
+ i 0 1 2
+ j 0 1 2
+ l 0 1 2
+ 
+ Set a last match idx and when done matching, start from that instead of next idx
+ */
+
+- (void)findNeedleInHaystackSetup {
+    NSString *haystack = @"aaabcdddbbddabcdefghi";
+    NSString *needle = @"abc";
+//    NSLog(@"result: %@", [self findNeedleInHaystack:haystack string:needle]);
+    NSLog(@"result: %@", [self findNeedleInHaystack_KMP:haystack string:needle]);
+    
+    haystack = @"bbbbbbbbbbbbb";
+    needle = @"bbb";
+//    NSLog(@"result: %@", [self findNeedleInHaystack:haystack string:needle]);
+    NSLog(@"result: %@", [self findNeedleInHaystack_KMP:haystack string:needle]);
+    
+    needle = @"abcdabca";
+    NSLog(@"00001231: %@", [self findNeedleInHaystack_KMP:haystack string:needle]);
+    
+    needle = @"abcaby";
+    NSLog(@"000120: %@", [self findNeedleInHaystack_KMP:haystack string:needle]);
+    
+//    needle = @"";
+//    NSLog(@"result: %@", [self findNeedleInHaystack:haystack string:needle]);
+}
+
+- (NSArray *)findNeedleInHaystack_KMP:(NSString *)h string:(NSString *)n {
+    NSArray *pattern = [self buildSubstringPattern:n];
+    NSMutableArray *res = [NSMutableArray new];
+    // for t[i] and pat[length]
+    // if same, i++ and length++, if length = pattern.length, save i=p.length+1
+    // if not the same and if length ==0, i++
+    // else compare again with length = pat[kmp[length-1]]
+    int length = 0;
+    for (int i=0; i<h.length; i++) {
+        if ([h characterAtIndex:i] == [n characterAtIndex:length]) {
+            length++;
+            // If entire pattern matched, save the start index
+            if (length == n.length) {
+                // Look back to previous element to determin how far it needs to compare the characters
+                length = [pattern[length-1] intValue];
+                [res addObject:@(i-n.length+1)];
+            }
+        }
+        else {
+            if (length > 0) {
+                length = [pattern[length-1] intValue];
+                i--;
+            }
+        }
+    }
+    return res;
+}
+
+/*
+ abxabc    aaa   abc
+ 000120    012   000
+ */
+- (NSArray *)buildSubstringPattern:(NSString *)n {
+    if (n.length == 0 || n == nil) {
+        return nil;
+    }
+    NSMutableArray *kmp = [[NSMutableArray alloc] initWithCapacity:n.length];
+    [kmp addObject:@0];
+    int length = 0;
+    int i=1;
+    while (i<n.length) {
+        if ([n characterAtIndex:i] == [n characterAtIndex:length]) {
+            kmp[i] = @(length+1);
+            length++;
+            i++;
+        }
+        else {
+            if (length > 0) {
+                length = [kmp[length-1] intValue];
+            }
+            else {
+                kmp[i] = @0;
+                i++;
+            }
+        }
+    }
+    return kmp;
+}
+
+- (NSArray *)findNeedleInHaystack:(NSString *)h string:(NSString *)n {
+    if (h.length == 0 || h == nil || n.length == 0 || h == nil) {
+        return @[];
+    }
+    NSMutableArray *res = [NSMutableArray new];
+    int lastMatch = 0;
+    for (int i=0; i<=h.length-n.length; i++) {
+        for (int j=0; i<n.length; j++) {
+            if ([h characterAtIndex:j+i] != [n characterAtIndex:j]) {
+                lastMatch = i+j;
+            }
+            else if ([self matchWords:h idx:i string:n]) {
+                [res addObject:@(i)];
+            }
+        }
+    }
+    return res;
+}
+
+- (BOOL)matchWords:(NSString *)h idx:(int)idx string:(NSString *)n {
+    for (int i=0; i<n.length; i++) {
+        if ([h characterAtIndex:idx+i] != [n characterAtIndex:i]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (void)minWordsFromSentenceSetup {
+    NSString *s = @"jumpedoversomething";
+    NSSet *set = [NSSet setWithObjects:@"jumped", @"over", @"some", @"thing", @"something", nil];
+    [self minWordsFromSentence:set string:s];
+    
+    s = @"nothing";
+    [self minWordsFromSentence:set string:s];
+}
+
+- (NSArray *)minWordsFromSentence:(NSSet *)set string:(NSString *)s {
+    NSMutableDictionary *res = [NSMutableDictionary new];
+    NSMutableArray *idx = [NSMutableArray new];
+    NSString *t = [NSString new];
+    int start = 0;
+    for (int i=0; i<s.length; i++) {
+        t = [s substringWithRange:NSMakeRange(start, i-start+1)];
+        // jumped, i=5, idx [0], start=6
+        // over,  i=9, idx[0,6] -> [0,9], [6,9], start = 10
+        // some, i=13, idx[0,6,10] -> [0,13], [6,13], [10,13], start=14
+        // thing i=18, idx[0,6,10,14] -> [10,18]
+        // res = [0,5], [6,9], [10,13], [10,18]
+        if ([set containsObject:t]) {
+            [idx addObject:@(start)];
+            start = i+1;
+            for (NSNumber *n in idx) {
+                t = [s substringWithRange:NSMakeRange([n intValue], i-[n intValue]+1)];
+                if ([set containsObject:t]) {
+                    [res setObject:@(i) forKey:n];
+                    break;
+                }
+            }
+        }
+    }
+    if (res.count == 0) {
+        return @[];
+    }
+    NSMutableArray *words = [NSMutableArray new];
+    for (NSNumber *r in res.allKeys) {
+        t = [s substringWithRange:NSMakeRange([r intValue], [res[r] intValue]-[r intValue]+1)];
+        [words addObject:t];
+        NSLog(@"k: %@, v: %@, %@", r, res[r], t);
+    }
+    return words;
+}
+
 
 - (void)removeDuplicateLettersSetup {
     NSString *string = @"combat";
@@ -146,15 +541,12 @@
     y = @"";
 }
 
-
-
-
 /*
  Given a string, find the longest substring which contains 2 unique characters.
  For example, "abcbbbbcccbdddadacb" => "bcbbbbcccb"
  
  Clarifications:
- 1. Return the longest substring or just the lenght? The substring
+ 1. Return the longest substring or just the length? The substring
  2. What to return if no substring meets the requirement? Return nil
  
  Algorithm:
@@ -173,15 +565,80 @@
  */
 
 - (void)longestSubstringWithTwoUniqueCharactersSetup {
-    NSString *string = @"abcbbbbcccbdddadacb";
+    NSString *string = @"abcbbccbdddadacb";
     NSLog(@"Longest substrings: %@, %@", string, [self longestSubstringWithTwoUniqueCharacters:string]);
+    NSLog(@"Longest substrings k=1->3, %d", [self longestSubstringWith_K_uniqueCharacters:string k:1]);
+    NSLog(@"Longest substrings k=2->7, %d", [self longestSubstringWith_K_uniqueCharacters:string k:2]);
+    NSLog(@"Longest substrings k=3->10, %d", [self longestSubstringWith_K_uniqueCharacters:string k:3]);
+    
     string = @"abbbecbbbbcccbdddadacb";
     NSLog(@"Longest substrings: %@, %@", string, [self longestSubstringWithTwoUniqueCharacters:string]);
+    
     string = @"aabbb";
     NSLog(@"Longest substrings: %@, %@", string, [self longestSubstringWithTwoUniqueCharacters:string]);
+    
     string = @"aaaaaaaaa";
     NSLog(@"Longest substrings: %@, %@", string, [self longestSubstringWithTwoUniqueCharacters:string]);
 }
+
+- (int)longestSubstringWith_K_uniqueCharacters:(NSString *)s k:(int)k {
+    if (s.length < k || k < 1) {
+        return (int)s.length;
+    }
+    int max = 0;
+    int start = 0;
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    for (int i=0; i<s.length; i++) {
+        NSString *c = [NSString stringWithFormat:@"%c", [s characterAtIndex:i]];
+        dict[c] = @(i);
+        // Substring total numbers of unique char exceed k
+        if (dict.count > k) {
+            // Sort dict to find the lowest position of unique character
+            // Add that postion+1 -> next lowest character
+            // Remove the origin char to make room for next one.
+            NSArray *array = [dict keysSortedByValueUsingComparator: ^NSComparisonResult(id obj1, id obj2) {
+                return obj1 > obj2;
+            }];
+//            NSLog(@"s:%d, e:%d 0:%@:%@, 1:%@:%@", start, i, array[0], dict[array[0]], array[1], dict[array[1]]);
+            start = [dict[array[0]] intValue]+1;
+            [dict removeObjectForKey:array[0]];
+        }
+        // Need to update max for every iteraction instead of only when exceed k
+        // This is to handle repeated same character
+        max = MAX(max, i-start+1);
+    }
+    return max;
+}
+
+/*
+ NSMutableSet *set = [NSMutableSet new];
+ int start = 0;
+ int next = 0;
+ //    NSString *lastChar = [NSString stringWithFormat:@"%c", [s characterAtIndex:0]];
+ for (int i=0; i<s.length; i++) {
+ NSString *c = [NSString stringWithFormat:@"%c", [s characterAtIndex:i]];
+ // Case 1: set < k and c is new: add c to set and next=i
+ if (set.count < k && ![set containsObject:c]) {
+ [set addObject:c];
+ next = i;
+ }
+ // Case 2: set <= k and c is existing, check if it's a switch of char. If yes, update next
+ else if (set.count <= k && [set containsObject:c]) {
+ if ([s characterAtIndex:i] != [s characterAtIndex:i-1]) {
+ next = i;
+ }
+ }
+ // Case 3: Substring exceed k
+ else {
+ max = MAX(max, i-start);
+ [set removeObject:[NSString stringWithFormat:@"%c", [s characterAtIndex:start]]];
+ [set addObject:c];
+ start = next;
+ next = i;
+ }
+ }
+ */
+
 
 - (NSString *)longestSubstringWithTwoUniqueCharacters:(NSString *)string {
     if (string.length <= 2) {
@@ -211,7 +668,7 @@
                 if (i-first > maxSoFar) {
                     maxSoFar = i-first;
                     sub = [string substringWithRange:NSMakeRange(first, i-first)];
-                    NSLog(@"sub: %d %@", i, sub);
+//                    NSLog(@"sub: %d %@", i, sub);
                 }
                 [set removeAllObjects];
                 [set addObject:[NSString stringWithFormat:@"%c", prev]];
@@ -689,6 +1146,57 @@
 }
 */
 
+/*
+ Repeated words? Yes. "the quick fox the crazy deer", distance: the, fox => 1
+ Always matched? No. Return 0 if no match
+ word 1 and word 2 are the same? Try it
+ 
+ Algorithm:
+ Traverse all words and build two sorted array with possible matches: 1,5 & 3,8  O(n)
+ Find the min distance between array1 and array2
+ Can be done brute force by trying to match each element in a1 with a2
+ 
+ Keep 2 pointers:
+ Keep move p1 when there are new found of words
+ When found p2, calculate the distance and update min if needed
+ If found new p2 later, no need to recalculate until found a new p1
+ Can be done in 1 pass
+ 
+ */
+- (void)distanceBetweenTwoWordsSetup {
+	NSArray<NSString *> *words = @[@"the", @"the", @"quick", @"brown", @"fox", @"quick", @"the"];
+	printf("Value should be 2. Received: %d\n", [self distanceBetweenTwoWords:@"fox" word:@"the" words:words]);
+	printf("Value should be 1. Received: %d\n", [self distanceBetweenTwoWords:@"quick" word:@"fox" words:words]);
+	printf("Value should be 0. Received: %d\n", [self distanceBetweenTwoWords:@"quick" word:@"some" words:words]);
+	printf("Value should be 0. Received: %d\n", [self distanceBetweenTwoWords:@"no" word:@"no" words:words]);
+	printf("Value of the same word should be 0. Received: %d\n", [self distanceBetweenTwoWords:@"the" word:@"the" words:words]);
+}
+
+- (int)distanceBetweenTwoWords:(NSString *)w1 word:(NSString *)w2 words:(NSArray *)words {
+	int distance = INT_MAX;
+	int p1 = -1;
+	int p2 = -1;
+	for (int i=0; i<words.count; i++) {
+		if ([words[i] isEqualToString:w1]) {
+			p1 = i;
+		}
+		if ([words[i] isEqualToString:w2]) {
+			p2 = i;
+		}
+		distance = [self minDistance:p1 num:p2 min:distance];
+	}
+	return (p1 == -1 || p2 == -1) ? 0 : distance;
+}
+
+- (int)minDistance:(int)i num:(int)j min:(int)min {
+	if (i == -1 || j == -1) {
+		return INT_MAX;
+	}
+	return MIN(min, abs(i-j));
+	
+}
+
+
 - (NSInteger)distanceBetweenWordOne:(NSString *)wordOne wordTwo:(NSString *)wordTwo dict:(NSDictionary *)words {
     NSArray *array1 = words[wordOne];
     NSArray *array2 = words[wordTwo];
@@ -704,7 +1212,7 @@
     return [self minDistance:array1 array:array2];
 }
 
--(void)distanceBetweenTwoWordsSetup {
+-(void)minDistanceSetup {
     NSArray *array1 = @[@2, @5, @9, @20, @25];
     NSArray *array2 = @[@7, @8, @12, @18];
     NSLog(@"Min: %ld", [self minDistance:array1 array:array2]);
@@ -757,8 +1265,6 @@
     }
     return minSoFar;
 }
-
-
 
 - (void)isBracketsCountCorrectSetUp {
     // Case1: (()) stack count 0, YES
@@ -1433,67 +1939,6 @@
     else {
         NSLog(@"Missing: %@", noteDict);
     }
-}
-
-/*
- Given two strings a and b, that may or may not be of the same length, determine the minimum number of character deletions required to make a and b anagrams. Any characters can be deleted from either of the strings.
- 
- Example: cde, abc, output = 4
- 1. s1: remove d and e to get c
- 2. s2: remove a and b to get c
- */
-
-- (void)anagramsSetup {
-    NSString *s1 = @"fsqoiaidfaukvngpsugszsnseskicpejjvytviya";
-    NSString *s2 = @"ksmfgsxamduovigbasjchnoskolfwjhgetnmnkmcphqmpwnrrwtymjtwxget";
-//    int answer = 42;
-    printf("%d\n", [self anagrams:s1 string:s2]);
-}
-
-/*
- Solution:
- cde, abc -> c
- abb, caab -> ab
- 1. put first string in hash
- 2. loop second string and check each character
- 3. Add matched character to another hash
- 4. H2: c, n=2
- 5. loop string one again and remove unmatched character
- 6. Return n
- */
-
-- (int)anagrams:(NSString *)s1 string:(NSString *)s2 {
-    int n=0;
-    unichar c = 'c';
-    NSString *cha = [NSString stringWithCharacters:&c length:1];
-    NSLog(@"char: %@", cha);
-    NSCountedSet *set1 = [[NSCountedSet alloc] initWithCapacity:s1.length];
-    NSCountedSet *set2 = [[NSCountedSet alloc] initWithCapacity:s2.length];
-    for (int i=0; i<s1.length; i++) {
-        NSString *c = [NSString stringWithFormat:@"%c", [s1 characterAtIndex:i]];
-        [set1 addObject:c];
-    }
-    for (int i=0; i<s2.length; i++) {
-        NSString *c = [NSString stringWithFormat:@"%c", [s2 characterAtIndex:i]];
-        // character matched in s1, added to a new hash
-        if ([set1 countForObject:c] > 0) {
-            [set2 addObject:c];
-            [set1 removeObject:c];
-        }
-        else {
-            n++;
-        }
-    }
-    for (int i=0; i<s1.length; i++) {
-        NSString *c = [NSString stringWithFormat:@"%c", [s1 characterAtIndex:i]];
-        if ([set2 countForObject:c] > 0) {
-            [set2 removeObject:c];
-        }
-        else {
-            n++;
-        }
-    }
-    return n;
 }
 
 - (void)palindromeSetup {

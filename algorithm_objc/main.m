@@ -20,6 +20,11 @@
 #import "Recursion.h"
 #import "Interval.h"
 #import "Trie.h"
+#import "Anagram.h"
+#import "DP.h"
+#import "Set.h"
+#import "GameOfLife.h"
+#import "Sudoku.h"
 
 /*
  Shortcuts:
@@ -34,8 +39,6 @@
  dict[i] += 3
  
  Sort values of dict, sort strings
-
- 
  */
 
 /*
@@ -58,6 +61,68 @@
  
  key: set(i,t,e,m), value: item, mite
  */
+@interface Node : NSObject
+@property(strong) Node *next;
+@property int val;
+@end
+
+@implementation Node
+@end
+
+//MyQueue class
+@interface MyQueue : NSObject
+@property(strong) Node *head;
+@property(strong) Node *tail;
+- (void)push_back:(int)val;
+- (int)pop_front;
+- (void)display;
+@end
+
+@implementation MyQueue
+
+- (void)push_back:(int)val {
+    Node *n = [Node new];
+    n.val = val;
+    // If no head pointer, it's an emoty q init new head and tail
+    if (!self.head) {
+        self.head = n;
+        self.tail = self.head;
+    }
+    // q has existing nodes, add a new one to the tail
+    else {
+        self.tail.next = n;
+        self.tail = n;
+    }
+}
+
+- (int)pop_front {
+    if (!self.head) {
+        return -1;
+    }
+    int ret = self.head.val;
+    Node *n = self.head;
+    self.head = self.head.next;
+    // Set previous head to nil to prevent memory leak
+    n = nil;
+    // If head is nil, q is empty and set tail to nil to prevent memory leak
+    if (!self.head) {
+        self.tail = nil;
+    }
+    return ret;
+}
+
+- (void)display {
+    printf("Display all elements in q: ");
+    Node *n = self.head;
+    while (n) {
+        printf("%d ", n.val);
+        n = n.next;
+    }
+    printf("\n");
+}
+
+@end
+
 NSSet *convertStringToSet(NSString *s) {
     NSMutableSet *set = [NSMutableSet new];
     for (int i=0; i<s.length; i++) {
@@ -85,20 +150,33 @@ NSArray *anagramCheck(NSArray *words, NSString *word) {
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        NSArray *a = @[@"on", @"no", @"bye"];
-        NSLog(@"anagram 'on': %@", anagramCheck(a, @"on"));
-        a = @[@"ton", @"item", @"mite", @"bye"];
-        NSLog(@"anagram 'item': %@", anagramCheck(a, @"item"));
-        a = @[@"ton", @"item", @"mite", @"bye"];
-        NSLog(@"anagram no match: %@", anagramCheck(a, @"something"));
+//        MyQueue *q = [MyQueue new];
+//        [q push_back:1];
+//        [q push_back:2];
+//        [q push_back:3];
+//        [q push_back:4];
+//        [q display];                     // Print 1 2 3 4
+//        assert( 1 == [q pop_front] );    // Pop 1
+//        assert( 2 == [q pop_front] );    // Pop 2
+//        assert( 3 == [q pop_front] );    // Pop 3
+//        assert( 4 == [q pop_front] );    // Pop 4
+//        assert(-1 == [q pop_front] );    // Nothing to pop, return -1
+        
+//        NSArray *a = @[@"on", @"no", @"bye"];
+//        NSLog(@"anagram 'on': %@", anagramCheck(a, @"on"));
+//        a = @[@"ton", @"item", @"mite", @"bye"];
+//        NSLog(@"anagram 'item': %@", anagramCheck(a, @"item"));
+//        a = @[@"ton", @"item", @"mite", @"bye"];
+//        NSLog(@"anagram no match: %@", anagramCheck(a, @"something"));
         
         // Use nested arrays for multi-dimensional arrays
         // Design and code a task scheduler that can take unsynchronized or synchronized tasks.
         // Google iOS: Design an image browsing app
         // Big O of n*(n-1)*(n-2)*(n-3)... = n*(n+1)/2
-        
-        /*
-         NSLog(@"XOR: %d, %d, %d", 4^2^3^4^3, 1^2^2^3^4, (1^2^3^4)^(1^2^2^3^4));
+		
+//         NSLog(@"XOR: %d, %d, %d", 4^2^3^4^3, 1^2^2^3^4, (1^2^3^4)^(1^2^2^3^4));
+//		NSLog(@"XOR: %d %d", 4^2^4^4^3^3^3, 5^(4^2^4^4^3^3^3));
+		 /*
          XOR two arrays of numbers to find out the duplicate
          1,2,  3,4
          1,2,2,3,4
@@ -140,6 +218,18 @@ int main(int argc, const char * argv[]) {
          
          The system design question was more focused on a Nest-specific scenario.
          */
+		
+//		Sudoku *s = [Sudoku new];
+//		[s setup];
+//		[s printBoard];
+//		printf("Found solution? %s\n", [s solveSudoku] ? "Yes" : "No");
+//		[s printBoard];
+		
+//        DP *dp = [[DP alloc] init];
+//        [dp setup];
+        
+//        Anagram *anagram = [[Anagram alloc] init];
+//        [anagram setup];
         
 //        Trie *trie = [[Trie alloc] init];
 //        [trie setup];
@@ -149,28 +239,30 @@ int main(int argc, const char * argv[]) {
         
 //        BinarySearch *binarySearch = [[BinarySearch alloc] init];
 //        [binarySearch setup];
+
 //        Dictionary *dict = [[Dictionary alloc] init];
 //        [dict setup];
-        
-//        Matrix *matrix = [[Matrix alloc] init];
-//        [matrix setup];
-        
+		
+        Matrix *matrix = [[Matrix alloc] init];
+        [matrix setup];
+		
 //        Numbers *numbers = [[Numbers alloc] init];
 //        [numbers setup];
 
 //        Array *array = [[Array alloc] init];
 //        [array setup];
-//        [array twoDimenionalArray];
-//        [array blockExecution];
-
         
-        String *string = [[String alloc] init];
-        [string setup];
-//        [string distanceBetweenTwoWordsSetup];
-//        [string filterWordSetup];
-        
+//        String *string = [[String alloc] init];
+//        [string setup];
+		
 //        Recursion *recursion = [[Recursion alloc] init];
 //        [recursion setup];
+		
+//		Set *set = [Set new];
+//		[set setup];
+		
+//		GameOfLife *game = [[GameOfLife alloc] initWithSize:5];
+//		[game start:2];
 
 //        BOOL stop = NO;
 //        while (stop == NO) {
@@ -186,7 +278,7 @@ int main(int argc, const char * argv[]) {
 
 //        Tree *tree = [[Tree alloc] init];
 //        [tree setup];
-        
+		
 //        Graph *graph = [[Graph alloc] initWithMember];
 //        [graph setupSocialGraphWithLevel];
 //        [graph setupSocialGraph];
@@ -195,9 +287,9 @@ int main(int argc, const char * argv[]) {
 //        [socialGraph printSocialGraphSetup];
 //        [socialGraph getRankedCourses:@"Joe"];
         
-        //Graph *graph = [[Graph alloc] initWithSize:9];
-        //[graph setup];
-        
+//        Graph *graph = [[Graph alloc] initWithSize:9];
+//        [graph setup];
+		
         // done: lca, binary tree and binary search tree
         // is BST balanced?
         // done: find all the paths of a binary tree
